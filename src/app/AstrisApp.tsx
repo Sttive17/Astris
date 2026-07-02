@@ -8,7 +8,7 @@ import {
   Shield, MapPin, Clock, Activity, Calendar, Star, BarChart2, FileText,
   Settings, LogOut, AlertCircle,
 } from "lucide-react";
-import { getCurrentUser, loginUser, logoutUser, registerUser, signInWithGoogle, getCandidates, getCompanies, getMatchesForCandidate, getMatchesForCompany, supabase } from "../lib/supabase";
+import { getCurrentUser, loginUser, logoutUser, registerUser, signInWithGoogle, getCandidates, getCompanies, getMatchesForCandidate, getMatchesForCompany, supabase, saveCandidateProfile } from "../lib/supabase";
 import astrisImg from "../imports/astris.png";
 import genuineImg from "../imports/genuine.png";
 import vibralatinaImg from "../imports/vibralatina.png";
@@ -3786,7 +3786,17 @@ export default function App() {
                 {role === "candidate" && screen === "quiz" && (
                   <CandidateQuiz lang={lang} axisIndex={quizAxis} answers={quizAnswers} onAnswer={handleAnswer}
                     onPrev={() => quizAxis > 0 ? setQuizAxis((a) => a - 1) : setScreen("onboarding")}
-                    onNext={() => quizAxis < QUIZ_AXES.length - 1 ? setQuizAxis((a) => a + 1) : setScreen("profile")} />
+                    onNext={async () => {
+              if (quizAxis < QUIZ_AXES.length - 1) {
+                setQuizAxis((a) => a + 1);
+              } else {
+                const user = await getCurrentUser();
+                if (user?.id) {
+                  await saveCandidateProfile(user.id, quizAnswers, accTheme, accFont);
+                }
+                setScreen("profile");
+              }
+            }} />
                 )}
                 {role === "candidate" && screen === "profile" && (
                   <CandidateProfile lang={lang} answers={quizAnswers} />

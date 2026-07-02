@@ -249,3 +249,26 @@ export async function getMatchesForCompany(companyId: string) {
 export async function logoutUser() {
   await supabase.auth.signOut();
 }
+
+export async function saveCandidateProfile(userId: string, quizAnswers: any, theme: string, font: string) {
+  try {
+    // Upsert into candidates table
+    const { error: candErr } = await supabase.from("candidates").upsert({
+      user_id: userId,
+      quiz_answers: quizAnswers,
+      accessibility_theme: theme,
+      accessibility_font: font,
+      updated_at: new Date().toISOString()
+    });
+    if (candErr) console.error("Error saving candidate data:", candErr);
+    
+    // Mark onboarding as completed in users_profiles
+    const { error: profErr } = await supabase.from("users_profiles").update({
+      completed_onboarding: true
+    }).eq("id", userId);
+    if (profErr) console.error("Error marking onboarding completed:", profErr);
+    
+  } catch (err) {
+    console.error("Unexpected error saving profile:", err);
+  }
+}
