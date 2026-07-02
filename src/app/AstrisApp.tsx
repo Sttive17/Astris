@@ -1421,15 +1421,16 @@ function PublicPageShell({ lang, currentView, onNavigate, onOpenAuth, onLang, ti
   children: React.ReactNode;
 }) {
   const t = useT(lang);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-40 border-b border-border" style={{ backgroundColor: "var(--background)" }}>
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-8">
           <button onClick={() => onNavigate("landing")} className="flex items-center gap-3">
-            <img src={astrisImg} alt="Astris Logo" className="h-14 w-14 object-contain" />
-            <span className="text-xl font-bold tracking-tight text-foreground">Astris</span>
+            <img src={astrisImg} alt="Astris Logo" className="h-10 w-10 md:h-14 md:w-14 object-contain" />
+            <span className="text-lg md:text-xl font-bold tracking-tight text-foreground">Astris</span>
           </button>
-          <nav className="flex items-center gap-3 md:gap-6">
+          <nav className="hidden lg:flex items-center gap-6">
             {[
               { key: "about", label: t("landing.nav.about") },
               { key: "support", label: t("landing.nav.support") },
@@ -1444,14 +1445,49 @@ function PublicPageShell({ lang, currentView, onNavigate, onOpenAuth, onLang, ti
               </button>
             ))}
           </nav>
-          <div className="flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-3">
             <button onClick={onLang} className="flex items-center gap-2 rounded-lg border border-border px-3 py-1.5 text-sm font-medium hover:bg-secondary" aria-label="Cambiar idioma">
               <Globe size={16} />{lang.toUpperCase()}
             </button>
             <button onClick={() => onOpenAuth(undefined, "login")} className="rounded-xl border-2 border-border px-5 py-2.5 text-sm font-semibold" style={{ backgroundColor: "var(--background)", color: "var(--foreground)" }}>{t("landing.nav.login")}</button>
             <button onClick={() => onOpenAuth(undefined, "register")} className="rounded-xl px-5 py-2.5 text-sm font-semibold" style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)" }}>{t("landing.nav.register")}</button>
           </div>
+          
+          {/* Mobile menu toggle */}
+          <div className="flex lg:hidden items-center gap-3">
+            <button onClick={onLang} className="flex items-center justify-center p-2 rounded-lg border border-border hover:bg-secondary">
+               <Globe size={18} />
+            </button>
+            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 -mr-2 text-foreground">
+              {mobileMenuOpen ? <X size={24} /> : <div className="space-y-1.5"><div className="w-6 h-0.5 bg-foreground"></div><div className="w-6 h-0.5 bg-foreground"></div><div className="w-6 h-0.5 bg-foreground"></div></div>}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile menu dropdown */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden border-t border-border bg-background px-4 py-6 space-y-6">
+            <nav className="flex flex-col gap-4">
+              {[
+                { key: "about", label: t("landing.nav.about") },
+                { key: "support", label: t("landing.nav.support") },
+                { key: "partners", label: t("landing.nav.partners") },
+              ].map((item) => (
+                <button
+                  key={item.key}
+                  onClick={() => { onNavigate(item.key as PublicView); setMobileMenuOpen(false); }}
+                  className={`text-lg text-left font-medium ${currentView === item.key ? "text-foreground" : "text-muted-foreground"}`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </nav>
+            <div className="flex flex-col gap-3 pt-4 border-t border-border">
+              <button onClick={() => { onOpenAuth(undefined, "login"); setMobileMenuOpen(false); }} className="w-full rounded-xl border-2 border-border px-5 py-3 text-center text-base font-semibold" style={{ backgroundColor: "var(--background)", color: "var(--foreground)" }}>{t("landing.nav.login")}</button>
+              <button onClick={() => { onOpenAuth(undefined, "register"); setMobileMenuOpen(false); }} className="w-full rounded-xl px-5 py-3 text-center text-base font-semibold" style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)" }}>{t("landing.nav.register")}</button>
+            </div>
+          </div>
+        )}
       </header>
 
       <main className="px-4 md:px-8 py-6 md:py-12 md:px-4 md:px-16 lg:px-4 lg:px-20">
