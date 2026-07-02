@@ -18,12 +18,30 @@ import { AdminPanel } from "./components/admin/AdminPanel";
 // ── Types ─────────────────────────────────────────────────────────────────────
 
 type Lang = "es" | "en" | "pt" | "fr";
-type ModalStep = "language" | "auth" | "role" | "register" | "login" | "none";
+type ModalStep = "language" | "register" | "login" | "none";
 type Role = "candidate" | "company" | "mentor" | "admin";
 type PaletteKey = "azul" | "tierra" | "contraste" | "verde";
 type FontKey = "atkinson" | "lexend";
 type PublicView = "landing" | "about" | "support" | "partners";
 type QuizAnswers = Record<number, Record<number, number | number[]>>;
+
+function getInitialLang(): Lang {
+  if (typeof window === "undefined") return "es";
+  const stored = window.localStorage.getItem("astris_lang");
+  if (stored === "es" || stored === "en" || stored === "pt" || stored === "fr") {
+    return stored as Lang;
+  }
+  const browserLang = window.navigator.language?.toLowerCase() ?? "";
+  if (browserLang.startsWith("pt")) return "pt";
+  if (browserLang.startsWith("fr")) return "fr";
+  if (browserLang.startsWith("en")) return "en";
+  return "es";
+}
+
+function getInitialModalStep(): ModalStep {
+  if (typeof window === "undefined") return "none";
+  return window.localStorage.getItem("astris_lang") ? "none" : "language";
+}
 
 // ── Translations ──────────────────────────────────────────────────────────────
 
@@ -71,7 +89,7 @@ const T: Record<Lang, Record<string, any>> = {
     "landing.nav.register": "Registrarme",
     "landing.hero.t1": "Nos adaptamos a ti",
     "landing.hero.t2": "para que aproveches todo tu potencial.",
-    "landing.hero.sub": "No preguntamos qué tienes — preguntamos cómo vuelas.\nAstris te encuentra donde eres,\ny construye contigo el lugar donde brillarás.",
+    "landing.hero.sub": "Astris construye contigo el lugar donde brillarás.",
     "landing.hero.cand": "Soy candidato/a",
     "landing.hero.comp": "Soy una empresa",
     "landing.prob.title": "Las barreras invisibles del mercado laboral",
@@ -187,7 +205,7 @@ const T: Record<Lang, Record<string, any>> = {
     "landing.nav.register": "Register",
     "landing.hero.t1": "We adapt to you",
     "landing.hero.t2": "so you reach your full potential.",
-    "landing.hero.sub": "We don't ask what you have — we ask how you soar.\nAstris finds you where you are,\nand builds with you the place where you'll shine.",
+    "landing.hero.sub": "Astris builds with you the place where you will shine.",
     "landing.hero.cand": "I'm a Candidate",
     "landing.hero.comp": "I'm a Company",
     "landing.prob.title": "The invisible barriers of the job market",
@@ -303,7 +321,7 @@ const T: Record<Lang, Record<string, any>> = {
     "landing.nav.register": "Cadastrar-me",
     "landing.hero.t1": "Nós nos adaptamos a você",
     "landing.hero.t2": "para que você alcance todo o seu potencial.",
-    "landing.hero.sub": "Não perguntamos o que você tem — perguntamos como você voa.\nA Astris te encontra onde você está,\ne constrói com você o lugar onde você vai brilhar.",
+    "landing.hero.sub": "A Astris constrói com você o lugar onde você vai brilhar.",
     "landing.hero.cand": "Sou candidato/a",
     "landing.hero.comp": "Sou uma empresa",
     "landing.prob.title": "As barreiras invisíveis do mercado de trabalho",
@@ -419,7 +437,7 @@ const T: Record<Lang, Record<string, any>> = {
     "landing.nav.register": "S'inscrire",
     "landing.hero.t1": "Nous nous adaptons à vous",
     "landing.hero.t2": "pour que vous atteigniez tout votre potentiel.",
-    "landing.hero.sub": "Nous ne demandons pas ce que vous avez — nous demandons comment vous volez.\nAstris vous trouve là où vous êtes,\net construit avec vous l'endroit où vous brillerez.",
+    "landing.hero.sub": "Astris construit avec vous l'endroit où vous brillerez.",
     "landing.hero.cand": "Je suis candidat(e)",
     "landing.hero.comp": "Je suis une entreprise",
     "landing.prob.title": "Les barrières invisibles du marché de l'emploi",
@@ -1195,71 +1213,18 @@ function LanguageModal({ onSelect }: { onSelect: (l: Lang) => void }) {
 
 // ── Auth Modal ────────────────────────────────────────────────────────────────
 
-function AuthModal({ lang, onNew, onExisting, onAdmin, onBack }: { lang: Lang; onNew: () => void; onExisting: () => void; onAdmin: () => void; onBack: () => void }) {
-  const t = useT(lang);
-  return (
-    <Overlay>
-      <div className="w-full max-w-lg rounded-2xl overflow-hidden" style={{ backgroundColor: "var(--card)" }}>
-        <div className="px-10 py-8 border-b border-border text-center relative">
-          <button onClick={onBack} className="absolute left-6 top-8 flex items-center gap-1.5 text-sm text-muted-foreground cursor-pointer">
-            <ChevronLeft size={15} aria-hidden="true" />{t("login.back")}
-          </button>
-          <div className="text-2xl font-bold text-foreground mb-1">{t("auth.title")}</div>
-          <div className="text-muted-foreground text-base mt-2">{t("auth.q")}</div>
-        </div>
-        <div className="p-8 flex flex-col gap-4">
-          <button onClick={onNew} className="flex items-start gap-4 p-5 rounded-xl border-2 text-left cursor-pointer" style={{ borderColor: "var(--primary)", backgroundColor: "var(--secondary)" }}>
-            <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ backgroundColor: "var(--primary)" }}>
-              <User size={18} aria-hidden="true" style={{ color: "var(--primary-foreground)" }} />
-            </div>
-            <div>
-              <div className="font-bold text-foreground text-base">{t("auth.new")}</div>
-              <div className="text-sm text-muted-foreground mt-0.5">{t("auth.new.sub")}</div>
-            </div>
-          </button>
-          <button onClick={onExisting} className="flex items-start gap-4 p-5 rounded-xl border-2 text-left cursor-pointer" style={{ borderColor: "var(--border)", backgroundColor: "var(--background)" }}>
-            <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ backgroundColor: "var(--muted)" }}>
-              <Briefcase size={18} aria-hidden="true" className="text-foreground" />
-            </div>
-            <div>
-              <div className="font-bold text-foreground text-base">{t("auth.existing")}</div>
-              <div className="text-sm text-muted-foreground mt-0.5">{t("auth.existing.sub")}</div>
-            </div>
-          </button>
-          <button onClick={onAdmin} className="flex items-start gap-4 p-5 rounded-xl border-2 text-left cursor-pointer" style={{ borderColor: "var(--border)", backgroundColor: "var(--background)" }}>
-            <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ backgroundColor: "var(--muted)" }}>
-              <Shield size={18} aria-hidden="true" className="text-foreground" />
-            </div>
-            <div>
-              <div className="font-bold text-foreground text-base">Admin</div>
-              <div className="text-sm text-muted-foreground mt-0.5">Administrative access</div>
-            </div>
-          </button>
-        </div>
-      </div>
-    </Overlay>
-  );
-}
-
 // ── Login Modal ───────────────────────────────────────────────────────────────
 
-function LoginModal({ lang, onLogin, onBack, error, loading, initialRole = "candidate" }: {
+function LoginModal({ lang, onLogin, onBack, error, loading }: {
   lang: Lang;
-  onLogin: (role: Role, email?: string, password?: string) => void;
+  onLogin: (email?: string, password?: string) => void;
   onBack: () => void;
   error?: string | null;
   loading?: boolean;
-  initialRole?: Role;
 }) {
   const t = useT(lang);
-  const [loginRole, setLoginRole] = useState<Role>(initialRole);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const ROLES: Array<{ id: Role; label: string }> = [
-    { id: "candidate", label: t("role.candidate") },
-    { id: "company", label: t("role.company") },
-    { id: "mentor", label: t("role.mentor") },
-  ];
   return (
     <Overlay>
       <div className="w-full max-w-md rounded-2xl overflow-hidden" style={{ backgroundColor: "var(--card)" }}>
@@ -1283,52 +1248,36 @@ function LoginModal({ lang, onLogin, onBack, error, loading, initialRole = "cand
             <label className="block text-sm font-semibold text-foreground mb-2">{t("login.pass")}</label>
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-4 py-3 rounded-xl border-2 border-border text-foreground text-base" style={{ backgroundColor: "var(--input-background)" }} placeholder="••••••••" />
           </div>
-          {initialRole !== "admin" && (
-            <div>
-              <label className="block text-sm font-semibold text-foreground mb-2">{t("login.role")}</label>
-              <div className="flex gap-2">
-                {ROLES.map((r) => (
-                  <button key={r.id} onClick={() => setLoginRole(r.id)} className="flex-1 py-2.5 rounded-xl border-2 text-sm font-semibold cursor-pointer" style={{ borderColor: loginRole === r.id ? "var(--primary)" : "var(--border)", backgroundColor: loginRole === r.id ? "var(--secondary)" : "var(--background)", color: "var(--foreground)" }}>
-                    {r.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-          <button onClick={() => onLogin(loginRole, email || undefined, password || undefined)} disabled={loading} className="w-full py-4 rounded-xl font-bold text-base cursor-pointer" style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)", opacity: loading ? 0.6 : 1 }}>
+          <button onClick={() => onLogin(email || undefined, password || undefined)} disabled={loading} className="w-full py-4 rounded-xl font-bold text-base cursor-pointer" style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)", opacity: loading ? 0.6 : 1 }}>
             {loading ? "..." : t("login.submit")}
           </button>
 
-          {loginRole !== "admin" && (
-            <>
-              <div className="relative flex items-center py-2">
-                <div className="flex-grow border-t border-border"></div>
-                <span className="flex-shrink-0 mx-4 text-muted-foreground text-sm font-medium">o</span>
-                <div className="flex-grow border-t border-border"></div>
-              </div>
+          <div className="relative flex items-center py-2">
+            <div className="flex-grow border-t border-border"></div>
+            <span className="flex-shrink-0 mx-4 text-muted-foreground text-sm font-medium">o</span>
+            <div className="flex-grow border-t border-border"></div>
+          </div>
 
-              <button
-                onClick={async () => {
-                  try {
-                    await signInWithGoogle(loginRole, 'login');
-                  } catch (e) {
-                    console.error(e);
-                  }
-                }}
-                disabled={loading}
-                className="w-full py-4 rounded-xl font-bold text-base flex items-center justify-center gap-3 border-2 border-border cursor-pointer hover:bg-secondary transition-colors"
-                style={{ backgroundColor: "var(--card)", color: "var(--foreground)" }}
-              >
-                <svg className="w-5 h-5" viewBox="0 0 24 24">
-                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
-                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
-                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
-                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
-                </svg>
-                Continuar con Google
-              </button>
-            </>
-          )}
+          <button
+            onClick={async () => {
+              try {
+                await signInWithGoogle(undefined, 'login');
+              } catch (e) {
+                console.error(e);
+              }
+            }}
+            disabled={loading}
+            className="w-full py-4 rounded-xl font-bold text-base flex items-center justify-center gap-3 border-2 border-border cursor-pointer hover:bg-secondary transition-colors"
+            style={{ backgroundColor: "var(--card)", color: "var(--foreground)" }}
+          >
+            <svg className="w-5 h-5" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+            </svg>
+            Continuar con Google
+          </button>
         </div>
       </div>
     </Overlay>
@@ -3465,8 +3414,8 @@ function NavBar({ lang, role, screen, onNav, onLang, onLogout, darkMode, onDarkT
 
 export default function App() {
   // Modal flow
-  const [modalStep, setModalStep] = useState<ModalStep>("none");
-  const [lang, setLang] = useState<Lang>("es");
+  const [modalStep, setModalStep] = useState<ModalStep>(() => getInitialModalStep());
+  const [lang, setLang] = useState<Lang>(() => getInitialLang());
   const [role, setRole] = useState<Role | null>(null);
   const [pendingRole, setPendingRole] = useState<Role>("candidate");
   const [loggedIn, setLoggedIn] = useState(false);
@@ -3571,20 +3520,8 @@ export default function App() {
   // ── FIX: language change when logged in must NOT restart auth flow ──────────
   const handleLangSelect = (l: Lang) => {
     setLang(l);
+    window.localStorage.setItem("astris_lang", l);
     setModalStep("none");
-  };
-
-  const handleAuthNew = () => {
-    if (!pendingRole) setPendingRole("candidate");
-    setModalStep("register");
-  };
-  const handleAuthExisting = () => {
-    if (!pendingRole) setPendingRole("candidate"); // Default for login modal
-    setModalStep("login");
-  };
-  const handleAuthAdmin = () => {
-    setPendingRole("admin");
-    setModalStep("login");
   };
 
   // ── Real Supabase register ──────────────────────────────────────────────────
@@ -3616,14 +3553,14 @@ export default function App() {
   };
 
   // ── Real Supabase login ─────────────────────────────────────────────────────
-  const handleLogin = async (r: Role, email?: string, password?: string) => {
+  const handleLogin = async (email?: string, password?: string) => {
     if (email && password) {
       setAuthLoading(true);
       setAuthError(null);
       try {
         await loginUser(email, password);
         const user = await getCurrentUser();
-        const resolvedRole = user?.role ?? r;
+        const resolvedRole = user?.role ?? "candidate";
         setRole(resolvedRole);
         setLoggedIn(true);
         setModalStep("none");
@@ -3634,11 +3571,10 @@ export default function App() {
         setAuthLoading(false);
       }
     } else {
-      // Demo mode (no credentials entered)
-      setRole(r);
+      setRole("candidate");
       setLoggedIn(true);
       setModalStep("none");
-      setScreen(r === "candidate" ? "vacancies" : r === "company" ? "candidates" : "dashboard");
+      setScreen("vacancies");
     }
   };
 
@@ -3648,7 +3584,7 @@ export default function App() {
     setRole(null);
     setScreen("home");
     setPublicView("landing");
-    setModalStep("language");
+    setModalStep("none");
   };
 
   const handleNav = (s: string) => {
@@ -3685,12 +3621,11 @@ export default function App() {
     <div className="min-h-screen bg-background text-foreground" style={{ fontFamily, ...(darkRootStyle as React.CSSProperties) }}>
       {/* Modals */}
       {showModal && modalStep === "language" && <LanguageModal onSelect={handleLangSelect} />}
-      {showModal && modalStep === "auth" && <AuthModal lang={lang} onNew={handleAuthNew} onExisting={handleAuthExisting} onAdmin={handleAuthAdmin} onBack={() => setModalStep("none")} />}
       {showModal && modalStep === "register" && (
-        <RegisterModal lang={lang} role={pendingRole} onRegister={handleRegister} onBack={() => setModalStep("auth")} error={authError} loading={authLoading} googleAuthUser={googleAuthUser} onCompleteGoogle={handleCompleteGoogleRegistration} />
+        <RegisterModal lang={lang} role={pendingRole} onRegister={handleRegister} onBack={() => setModalStep("none")} error={authError} loading={authLoading} googleAuthUser={googleAuthUser} onCompleteGoogle={handleCompleteGoogleRegistration} />
       )}
       {showModal && modalStep === "login" && (
-        <LoginModal lang={lang} initialRole={pendingRole} onLogin={(r, email, pass) => handleLogin(r, email, pass)} onBack={() => setModalStep("auth")} error={authError} loading={authLoading} />
+        <LoginModal lang={lang} onLogin={(email, pass) => handleLogin(email, pass)} onBack={() => setModalStep("none")} error={authError} loading={authLoading} />
       )}
 
       {/* Main content */}
@@ -3699,25 +3634,25 @@ export default function App() {
           {!loggedIn && publicView === "about" && (
             <AboutPage lang={lang} onOpenAuth={(preRole, step) => {
               if (preRole) { setPendingRole(preRole); }
-              setModalStep(step || "auth");
+              setModalStep(step === "register" ? "register" : "login");
             }} onLang={reopenLang} onNavigate={setPublicView} />
           )}
           {!loggedIn && publicView === "support" && (
             <SupportPage lang={lang} onOpenAuth={(preRole, step) => {
               if (preRole) { setPendingRole(preRole); }
-              setModalStep(step || "auth");
+              setModalStep(step === "register" ? "register" : "login");
             }} onLang={reopenLang} onNavigate={setPublicView} />
           )}
           {!loggedIn && publicView === "partners" && (
             <PartnersPage lang={lang} onOpenAuth={(preRole, step) => {
               if (preRole) { setPendingRole(preRole); }
-              setModalStep(step || "auth");
+              setModalStep(step === "register" ? "register" : "login");
             }} onLang={reopenLang} onNavigate={setPublicView} />
           )}
           {!loggedIn && publicView === "landing" && (
             <LandingPage lang={lang} onOpenAuth={(preRole, step) => {
               if (preRole) { setPendingRole(preRole); }
-              setModalStep(step || "auth");
+              setModalStep(step === "register" ? "register" : "login");
             }} onLang={reopenLang} onNavigate={setPublicView} />
           )}
           {loggedIn && role && (
