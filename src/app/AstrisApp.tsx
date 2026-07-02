@@ -1423,7 +1423,7 @@ function PublicPageShell({ lang, currentView, onNavigate, onOpenAuth, onLang, ti
   const t = useT(lang);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen w-full overflow-x-hidden bg-background text-foreground">
       <header className="sticky top-0 z-40 border-b border-border" style={{ backgroundColor: "var(--background)" }}>
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-8">
           <button onClick={() => onNavigate("landing")} className="flex items-center gap-3">
@@ -1731,7 +1731,7 @@ function LandingPage({ lang, onOpenAuth, onLang, onNavigate }: { lang: Lang; onO
   const t = useT(lang);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen w-full overflow-x-hidden bg-background">
       {/* Fixed header */}
       <header className="fixed top-0 left-0 right-0 z-40 border-b border-border backdrop-blur-sm" style={{ backgroundColor: "var(--background)", opacity: 0.97 }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
@@ -1895,7 +1895,7 @@ function CandidateOnboarding({ lang, palette, darkMode, font, onPalette, onDark,
   const fontFamily = font === "lexend" ? "'Lexend', Inter, sans-serif" : "'Atkinson Hyperlegible', Inter, sans-serif";
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
       <div className="px-4 lg:px-20 py-10 border-b border-border">
         <h1 className="text-2xl md:text-3xl font-bold text-foreground">{t("palette.title")}</h1>
         <p className="text-muted-foreground mt-2 text-base max-w-xl">{t("palette.sub")}</p>
@@ -2032,7 +2032,7 @@ function CandidateQuiz({ lang, axisIndex, answers, onAnswer, onPrev, onNext }: {
   const AXIS_KEYS = ["quiz.axis1", "quiz.axis2", "quiz.axis3", "quiz.axis4"];
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
       {/* Progress */}
       <div className="px-4 lg:px-20 py-4 md:py-8 border-b border-border">
         <div className="flex items-center gap-4 mb-3">
@@ -2159,7 +2159,7 @@ function CandidateProfile({ lang, answers }: { lang: Lang; answers: QuizAnswers 
   const t = useT(lang);
   const radarData = Object.keys(answers).length > 0 ? computeRadar(answers) : CANDIDATE_RADAR_FINAL;
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
       <div className="px-4 lg:px-20 py-10 border-b border-border" style={{ backgroundColor: "var(--card)" }}>
         <h1 className="text-2xl md:text-3xl font-bold text-foreground">{t("profile.title")}</h1>
         <div className="flex items-center gap-2 mt-3 text-sm text-muted-foreground max-w-xl">
@@ -2270,7 +2270,7 @@ function CandidateVacancies({ lang, onSelect }: { lang: Lang; onSelect: (id: str
   const MODALITIES = [["all", lang === "es" ? "Todas" : "All"], ["remoto", lang === "es" ? "Remoto" : "Remote"], ["remote", "Remote"], ["híbrido", lang === "es" ? "Híbrido" : "Hybrid"]];
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
       <div className="px-4 lg:px-20 py-10 border-b border-border" style={{ backgroundColor: "var(--card)" }}>
         <h1 className="text-2xl md:text-3xl font-bold text-foreground">{t("vacancies.title")}</h1>
         <p className="text-muted-foreground mt-1">{filtered.length} {lang === "es" ? "vacantes compatibles" : "compatible vacancies"}</p>
@@ -2396,10 +2396,10 @@ function VacancyDetail({ lang, vacancyId, onStart, onBack }: { lang: Lang; vacan
 
   const COMPAT = [{ label: "Modalidad de trabajo", match: true }, { label: "Comunicación asíncrona", match: true }, { label: "Instrucciones escritas", match: true }, { label: "Espacio individual silencioso", match: false }, { label: "Horario flexible", match: true }];
 
-  if (!v) return <div className="min-h-screen flex items-center justify-center text-muted-foreground">{lang === "es" ? "Cargando..." : "Loading..."}</div>;
+  if (!v) return <div className="min-h-screen w-full overflow-x-hidden flex items-center justify-center text-muted-foreground">{lang === "es" ? "Cargando..." : "Loading..."}</div>;
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
       <div className="px-4 lg:px-20 py-4 md:py-8 border-b border-border" style={{ backgroundColor: "var(--card)" }}>
         <button onClick={onBack} className="flex items-center gap-1.5 text-sm text-muted-foreground cursor-pointer mb-4"><ChevronLeft size={15} aria-hidden="true" />{t("back")}</button>
         <div className="flex items-center gap-3 md:gap-6">
@@ -2438,7 +2438,7 @@ function VacancyDetail({ lang, vacancyId, onStart, onBack }: { lang: Lang; vacan
             </div>
           </div>
         </div>
-        <div className="w-72 shrink-0 flex flex-col gap-5">
+        <div className="w-full md:w-72 shrink-0 flex flex-col gap-5">
           <div className="rounded-2xl border border-border p-6" style={{ backgroundColor: "var(--card)" }}>
             <h3 className="font-bold text-foreground mb-4 text-sm">{lang === "es" ? "Ajustes ofrecidos" : "Adjustments offered"}</h3>
             <div className="flex flex-col gap-2">
@@ -2499,7 +2499,7 @@ function MentorSelect({ lang, onSelect }: { lang: Lang; onSelect: () => void }) 
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
       <div className="px-4 lg:px-20 py-10 border-b border-border" style={{ backgroundColor: "var(--card)" }}>
         <h1 className="text-2xl md:text-3xl font-bold text-foreground">{t("mentor.title")}</h1>
         <p className="text-muted-foreground mt-2">{t("mentor.sub")}</p>
@@ -2545,7 +2545,7 @@ function CandidateAccompaniment({ lang }: { lang: Lang }) {
   const t = useT(lang);
   const STAGES = C(lang, "accompStages") as typeof CONTENT.es.accompStages;
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
       <div className="px-4 lg:px-20 py-10 border-b border-border" style={{ backgroundColor: "var(--card)" }}>
         <h1 className="text-2xl md:text-3xl font-bold text-foreground">{t("accomp.title")}</h1>
         <p className="text-muted-foreground mt-2">{t("accomp.sub")}</p>
@@ -2572,7 +2572,7 @@ function CandidateAccompaniment({ lang }: { lang: Lang }) {
           </div>
         </div>
         {/* Mentor info */}
-        <div className="w-72 shrink-0">
+        <div className="w-full md:w-72 shrink-0">
           <div className="rounded-2xl border border-border p-7" style={{ backgroundColor: "var(--card)" }}>
             <h3 className="font-bold text-foreground mb-5 text-sm">{C(lang, "mentorAssigned")}</h3>
             <div className="flex items-center gap-3 mb-5">
@@ -2629,7 +2629,7 @@ function CandidatePostHire({ lang }: { lang: Lang }) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
       <div className="px-4 lg:px-20 py-10 border-b border-border" style={{ backgroundColor: "var(--card)" }}>
         <h1 className="text-2xl md:text-3xl font-bold text-foreground">{t("posthire.title")}</h1>
         <p className="text-muted-foreground mt-1">Veritas Analytics · {lang === "es" ? "Analista de Datos Junior" : "Junior Data Analyst"} · {lang === "es" ? "Día 14 de 60" : "Day 14 of 60"}</p>
@@ -2791,10 +2791,10 @@ function CompanyOrgProfile({ lang }: { lang: Lang }) {
     }
   };
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center text-muted-foreground">Cargando...</div>;
+  if (loading) return <div className="min-h-screen w-full overflow-x-hidden flex items-center justify-center text-muted-foreground">Cargando...</div>;
 
   return (
-    <div className="min-h-screen flex flex-col pb-20">
+    <div className="min-h-screen w-full overflow-x-hidden flex flex-col pb-20">
       <div className="px-4 lg:px-20 py-10 border-b border-border" style={{ backgroundColor: "var(--card)" }}>
         <h1 className="text-2xl md:text-3xl font-bold text-foreground">{t("comp.org.title")}</h1>
         <p className="text-muted-foreground mt-2 max-w-xl">{t("comp.org.sub")}</p>
@@ -2917,7 +2917,7 @@ function CompanyPostVacancy({ lang }: { lang: Lang }) {
   const t = useT(lang);
   const SKILLS = ["Mecanografía", "Microsoft Office", "Lectura intensiva", "Redacción técnica", "Análisis de datos", "Diseño visual", "Comunicación verbal"];
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
       <div className="px-4 lg:px-20 py-10 border-b border-border" style={{ backgroundColor: "var(--card)" }}>
         <h1 className="text-2xl md:text-3xl font-bold text-foreground">{t("comp.vacancy.title")}</h1>
       </div>
@@ -2996,7 +2996,7 @@ function CompanyCandidates({ lang, onSelect }: { lang: Lang; onSelect: (id: stri
   }, [lang]);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
       <div className="px-4 lg:px-20 py-10 border-b border-border" style={{ backgroundColor: "var(--card)" }}>
         <h1 className="text-2xl md:text-3xl font-bold text-foreground">{t("comp.candidates.title")}</h1>
         <p className="text-muted-foreground mt-2">{t("comp.candidates.sub")}</p>
@@ -3055,8 +3055,8 @@ function CompanyCandidateDetail({ lang, candidateId, onBack, onStart }: { lang: 
     loadCandidate();
   }, [candidateId]);
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center text-muted-foreground">Cargando...</div>;
-  if (!candidate) return <div className="min-h-screen flex items-center justify-center text-muted-foreground">Candidato no encontrado.</div>;
+  if (loading) return <div className="min-h-screen w-full overflow-x-hidden flex items-center justify-center text-muted-foreground">Cargando...</div>;
+  if (!candidate) return <div className="min-h-screen w-full overflow-x-hidden flex items-center justify-center text-muted-foreground">Candidato no encontrado.</div>;
 
   const profile = candidate.profile || {};
   const radar = [
@@ -3073,7 +3073,7 @@ function CompanyCandidateDetail({ lang, candidateId, onBack, onStart }: { lang: 
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
       <div className="px-4 lg:px-20 py-4 md:py-8 border-b border-border" style={{ backgroundColor: "var(--card)" }}>
         <button onClick={onBack} className="flex items-center gap-1.5 text-sm text-muted-foreground cursor-pointer mb-4"><ChevronLeft size={15} aria-hidden="true" />{t("back")}</button>
         <div className="flex items-center justify-between">
@@ -3092,7 +3092,7 @@ function CompanyCandidateDetail({ lang, candidateId, onBack, onStart }: { lang: 
           <h2 className="font-bold text-foreground mb-2">{lang === "es" ? "Perfil de compatibilidad" : "Compatibility profile"}</h2>
           <RadarViz data={radar} height={300} outerRadius={100} fontSize={12} />
         </div>
-        <div className="w-72 shrink-0 flex flex-col gap-5">
+        <div className="w-full md:w-72 shrink-0 flex flex-col gap-5">
           <div className="rounded-2xl border border-border p-6" style={{ backgroundColor: "var(--card)" }}>
             <h3 className="font-bold text-foreground mb-4 text-sm">{lang === "es" ? "Entorno requerido" : "Required environment"}</h3>
             <div className="flex flex-col gap-2.5">
@@ -3136,7 +3136,7 @@ function CompanyPostHire({ lang }: { lang: Lang }) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
       <div className="px-4 lg:px-20 py-10 border-b border-border" style={{ backgroundColor: "var(--card)" }}>
         <h1 className="text-2xl md:text-3xl font-bold text-foreground">{t("comp.posthire.title")}</h1>
         <p className="text-muted-foreground mt-1">CAND-A7X2 · {lang === "es" ? "Analista de Datos Junior · Día 14 de 60" : "Junior Data Analyst · Day 14 of 60"}</p>
@@ -3193,7 +3193,7 @@ function CompanyPostHire({ lang }: { lang: Lang }) {
 function MentorDashboard({ lang }: { lang: Lang }) {
   const t = useT(lang);
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
       <div className="border-b border-border" style={{ backgroundColor: "var(--card)" }}>
         <div className="px-4 lg:px-20 py-10 max-w-7xl mx-auto">
           <div className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-1">{t("mentor.dash.title")}</div>
@@ -3246,7 +3246,7 @@ function MentorDashboard({ lang }: { lang: Lang }) {
             ))}
           </div>
         </div>
-        <div className="w-72 shrink-0 flex flex-col gap-5">
+        <div className="w-full md:w-72 shrink-0 flex flex-col gap-5">
           <div className="rounded-2xl border border-border p-6" style={{ backgroundColor: "var(--card)" }}>
             <div className="flex items-center gap-2 mb-4"><Calendar size={15} aria-hidden="true" style={{ color: "var(--primary)" }} /><h3 className="font-bold text-foreground text-sm">{C(lang, "mentorCheckins") as string}</h3></div>
             <div className="flex flex-col gap-3">
@@ -3277,7 +3277,7 @@ function MentorDashboard({ lang }: { lang: Lang }) {
 
 function MentorCheckins({ lang }: { lang: Lang }) {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
       <div className="px-4 lg:px-20 py-10 border-b border-border" style={{ backgroundColor: "var(--card)" }}>
         <h1 className="text-2xl md:text-3xl font-bold text-foreground">{C(lang, "checkinPageTitle") as string}</h1>
         <p className="text-muted-foreground mt-2">{C(lang, "checkinPageSub") as string}</p>
@@ -3310,7 +3310,7 @@ function MentorCheckins({ lang }: { lang: Lang }) {
 
 function MentorCompanies({ lang }: { lang: Lang }) {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
       <div className="px-4 lg:px-20 py-10 border-b border-border" style={{ backgroundColor: "var(--card)" }}>
         <h1 className="text-2xl md:text-3xl font-bold text-foreground">{C(lang, "companiesPageTitle") as string}</h1>
         <p className="text-muted-foreground mt-2">{C(lang, "companiesPageSub") as string}</p>
@@ -3636,7 +3636,7 @@ export default function App() {
 
   if (!appReady) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center" style={{ fontFamily }}>
+      <div className="min-h-screen w-full overflow-x-hidden bg-background flex items-center justify-center" style={{ fontFamily }}>
         <div className="text-muted-foreground text-sm">...</div>
       </div>
     );
@@ -3644,7 +3644,7 @@ export default function App() {
 
   if (authMessage) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center" style={{ fontFamily, ...(darkRootStyle as React.CSSProperties) }}>
+      <div className="min-h-screen w-full overflow-x-hidden bg-background flex items-center justify-center" style={{ fontFamily, ...(darkRootStyle as React.CSSProperties) }}>
         <div className="p-6 rounded-2xl border border-border flex items-center gap-4 shadow-lg" style={{ backgroundColor: "var(--card)" }}>
           <div className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: "var(--primary)", borderTopColor: "transparent" }}></div>
           <p className="text-foreground font-medium">{authMessage}</p>
@@ -3654,7 +3654,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground" style={{ fontFamily, ...(darkRootStyle as React.CSSProperties) }}>
+    <div className="min-h-screen w-full overflow-x-hidden bg-background text-foreground" style={{ fontFamily, ...(darkRootStyle as React.CSSProperties) }}>
       {/* Modals */}
       {showModal && modalStep === "language" && <LanguageModal onSelect={handleLangSelect} />}
       {showModal && modalStep === "register" && (
