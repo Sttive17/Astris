@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { LayoutDashboard, Users, Briefcase, FileText, LogOut, Loader2, Shield, Search, MoreVertical, Ban, Trash2, RotateCcw } from "lucide-react";
 import { getCurrentUser } from "../../lib/supabase";
+import CompaniesView from "./views/CompaniesView";
+import CandidatesView from "./views/CandidatesView";
 import { getDashboardStats, getAdminUsers, softDeleteUser, updateUserRole } from "../../lib/supabase-admin";
 
-type ViewType = "overview" | "users" | "jobs";
+type ViewType = "overview" | "users" | "jobs" | "companies" | "candidates";
 
 export default function AdminDashboard({ onLogout, onBack }: { onLogout: () => void, onBack: () => void }) {
   const [loading, setLoading] = useState(true);
@@ -95,7 +97,14 @@ export default function AdminDashboard({ onLogout, onBack }: { onLogout: () => v
           <button onClick={() => setView("jobs")} className={"w-full flex items-center px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors " + (view === "jobs" ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted")}>
             <Briefcase className="w-4 h-4 mr-3" /> Vacantes
           </button>
-        </nav>
+        
+          <button onClick={() => setView("companies")} className={"w-full flex items-center px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors " + (view === "companies" ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted")}>
+            <Building2 className="w-4 h-4 mr-3" /> Empresas
+          </button>
+          <button onClick={() => setView("candidates")} className={"w-full flex items-center px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors " + (view === "candidates" ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted")}>
+            <FileText className="w-4 h-4 mr-3" /> Candidatos
+          </button>
+</nav>
         <div className="p-4 border-t border-border">
           <button onClick={onLogout} className="w-full flex items-center justify-center px-4 py-2 bg-destructive/10 text-destructive rounded-lg text-sm font-semibold hover:bg-destructive/20 transition-colors">
             <LogOut className="w-4 h-4 mr-2" /> Salir
@@ -218,6 +227,10 @@ export default function AdminDashboard({ onLogout, onBack }: { onLogout: () => v
               </div>
             </div>
           )}
+
+          
+          {view === "companies" && <CompaniesView />}
+          {view === "candidates" && <CandidatesView />}
 
           {view === "jobs" && (
             <div className="flex flex-col items-center justify-center h-full text-center space-y-4 text-muted-foreground anim-fade-in">

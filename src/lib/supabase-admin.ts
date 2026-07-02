@@ -54,3 +54,15 @@ export async function updateUserRole(adminId: string, userId: string, newRole: s
 
   await logAdminAction(adminId, "CHANGE_USER_ROLE", "users_profiles", userId, { newRole });
 }
+
+export async function getAdminCompanies() {
+  const { data, error } = await supabase.from('companies').select('*, users_profiles(email, deleted_at)');
+  if (error) throw error;
+  return data || [];
+}
+
+export async function getAdminCandidates() {
+  const { data, error } = await supabase.from('candidates').select('*, users_profiles(full_name, email, deleted_at)');
+  if (error) throw error;
+  return data || [];
+}
