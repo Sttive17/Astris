@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, type FormEvent } from "react";
 import {
   RadarChart, Radar, PolarAngleAxis, ResponsiveContainer,
 } from "recharts";
@@ -9,9 +9,10 @@ import {
   Settings, LogOut, AlertCircle,
 } from "lucide-react";
 import { getCurrentUser, loginUser, logoutUser, registerUser, signInWithGoogle, getCandidates, getCompanies, getMatchesForCandidate, getMatchesForCompany, supabase } from "../lib/supabase";
-import vibraLatinaImg from "../imports/vibralatina.png";
 import astrisImg from "../imports/astris.png";
 import genuineImg from "../imports/genuine.png";
+import vibralatinaImg from "../imports/vibralatina.png";
+import closerToTheStarsImg from "/closertothestars.png";
 import { AdminPanel } from "./components/admin/AdminPanel";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -21,6 +22,7 @@ type ModalStep = "language" | "auth" | "role" | "register" | "login" | "none";
 type Role = "candidate" | "company" | "mentor" | "admin";
 type PaletteKey = "azul" | "tierra" | "contraste" | "verde";
 type FontKey = "atkinson" | "lexend";
+type PublicView = "landing" | "about" | "support" | "partners";
 type QuizAnswers = Record<number, Record<number, number | number[]>>;
 
 // ── Translations ──────────────────────────────────────────────────────────────
@@ -67,9 +69,9 @@ const T: Record<Lang, Record<string, any>> = {
     "landing.nav.partners": "Aliados",
     "landing.nav.login": "Iniciar sesión",
     "landing.nav.register": "Registrarme",
-    "landing.hero.t1": "No preguntamos qué condición tienes.",
-    "landing.hero.t2": "Preguntamos cómo trabajas mejor.",
-    "landing.hero.sub": "Astris conecta el talento con entornos laborales que se adaptan genuinamente a cómo trabajan las personas — sin diagnósticos, sin barreras invisibles.",
+    "landing.hero.t1": "Nos adaptamos a ti",
+    "landing.hero.t2": "para que aproveches todo tu potencial.",
+    "landing.hero.sub": "No preguntamos qué tienes — preguntamos cómo vuelas.\nAstris te encuentra donde eres,\ny construye contigo el lugar donde brillarás.",
     "landing.hero.cand": "Soy candidato/a",
     "landing.hero.comp": "Soy una empresa",
     "landing.prob.title": "Las barreras invisibles del mercado laboral",
@@ -183,9 +185,9 @@ const T: Record<Lang, Record<string, any>> = {
     "landing.nav.partners": "Partners",
     "landing.nav.login": "Sign in",
     "landing.nav.register": "Register",
-    "landing.hero.t1": "We don't ask what condition you have.",
-    "landing.hero.t2": "We ask how you work best.",
-    "landing.hero.sub": "Astris connects talent with work environments that genuinely adapt to how people work — no diagnoses, no invisible barriers.",
+    "landing.hero.t1": "We adapt to you",
+    "landing.hero.t2": "so you reach your full potential.",
+    "landing.hero.sub": "We don't ask what you have — we ask how you soar.\nAstris finds you where you are,\nand builds with you the place where you'll shine.",
     "landing.hero.cand": "I'm a Candidate",
     "landing.hero.comp": "I'm a Company",
     "landing.prob.title": "The invisible barriers of the job market",
@@ -299,9 +301,9 @@ const T: Record<Lang, Record<string, any>> = {
     "landing.nav.partners": "Aliados",
     "landing.nav.login": "Entrar",
     "landing.nav.register": "Cadastrar-me",
-    "landing.hero.t1": "Não perguntamos que condição você tem.",
-    "landing.hero.t2": "Perguntamos como você trabalha melhor.",
-    "landing.hero.sub": "A Astris conecta talentos com ambientes de trabalho que se adaptam genuinamente à forma de trabalhar das pessoas — sem diagnósticos, sem barreiras invisíveis.",
+    "landing.hero.t1": "Nós nos adaptamos a você",
+    "landing.hero.t2": "para que você alcance todo o seu potencial.",
+    "landing.hero.sub": "Não perguntamos o que você tem — perguntamos como você voa.\nA Astris te encontra onde você está,\ne constrói com você o lugar onde você vai brilhar.",
     "landing.hero.cand": "Sou candidato/a",
     "landing.hero.comp": "Sou uma empresa",
     "landing.prob.title": "As barreiras invisíveis do mercado de trabalho",
@@ -415,9 +417,9 @@ const T: Record<Lang, Record<string, any>> = {
     "landing.nav.partners": "Partenaires",
     "landing.nav.login": "Se connecter",
     "landing.nav.register": "S'inscrire",
-    "landing.hero.t1": "Nous ne demandons pas quelle condition vous avez.",
-    "landing.hero.t2": "Nous demandons comment vous travaillez le mieux.",
-    "landing.hero.sub": "Astris connecte les talents avec des environnements de travail qui s'adaptent genuinement à la façon dont les personnes travaillent — sans diagnostics, sans barrières invisibles.",
+    "landing.hero.t1": "Nous nous adaptons à vous",
+    "landing.hero.t2": "pour que vous atteigniez tout votre potentiel.",
+    "landing.hero.sub": "Nous ne demandons pas ce que vous avez — nous demandons comment vous volez.\nAstris vous trouve là où vous êtes,\net construit avec vous l'endroit où vous brillerez.",
     "landing.hero.cand": "Je suis candidat(e)",
     "landing.hero.comp": "Je suis une entreprise",
     "landing.prob.title": "Les barrières invisibles du marché de l'emploi",
@@ -1142,76 +1144,6 @@ function RadarViz({ data, height = 280, color = "#1B4B7A", outerRadius = 95, fon
   );
 }
 
-// ── Watermark ────────────────────────────────────────────────────────────────
-
-function MicrosoftIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 21 21" aria-hidden="true" style={{ display: "inline-block", verticalAlign: "middle" }}>
-      <rect x="1" y="1" width="9" height="9" fill="#F25022" />
-      <rect x="11" y="1" width="9" height="9" fill="#7FBA00" />
-      <rect x="1" y="11" width="9" height="9" fill="#00A4EF" />
-      <rect x="11" y="11" width="9" height="9" fill="#FFB900" />
-    </svg>
-  );
-}
-
-function Watermark() {
-  return (
-    <div
-      className="fixed bottom-5 right-5 z-30 flex flex-col items-end gap-2.5 pointer-events-none select-none"
-      aria-hidden="true"
-    >
-      <div
-        className="text-xs font-semibold uppercase tracking-widest"
-        style={{ color: "var(--muted-foreground)", opacity: 0.75 }}
-      >
-        Supported by:
-      </div>
-
-      {/* Vibra Latina row */}
-      <div className="flex items-center gap-3">
-        <img
-          src={vibraLatinaImg}
-          alt="Vibra Latina"
-          style={{ height: 42, opacity: 0.9, objectFit: "contain" }}
-        />
-        <span
-          className="text-xl font-bold tracking-tight"
-          style={{ color: "var(--foreground)", opacity: 0.85 }}
-        >
-          Vibra Latina
-        </span>
-      </div>
-
-      {/* Microsoft row */}
-      <div className="flex items-center gap-2" style={{ opacity: 0.8 }}>
-        <MicrosoftIcon />
-        <span
-          className="text-sm font-semibold"
-          style={{ color: "var(--muted-foreground)" }}
-        >
-          Microsoft
-        </span>
-      </div>
-
-      {/* Genuine Foundation row */}
-      <div className="flex items-center gap-2" style={{ opacity: 0.8 }}>
-        <img
-          src={genuineImg}
-          alt="The Genuine Foundation"
-          style={{ height: 32, objectFit: "contain" }}
-        />
-        <span
-          className="text-sm font-semibold"
-          style={{ color: "var(--muted-foreground)" }}
-        >
-          The Genuine Foundation
-        </span>
-      </div>
-    </div>
-  );
-}
-
 // ── Modal Overlay ─────────────────────────────────────────────────────────────
 
 function Overlay({ children }: { children: React.ReactNode }) {
@@ -1529,9 +1461,65 @@ function RegisterModal({ lang, role, onRegister, onBack, error, loading, googleA
   );
 }
 
-// ── Landing Page ──────────────────────────────────────────────────────────────
+function PublicPageShell({ lang, currentView, onNavigate, onOpenAuth, onLang, title, subtitle, children }: {
+  lang: Lang;
+  currentView: PublicView;
+  onNavigate: (view: PublicView) => void;
+  onOpenAuth: (preRole?: Role, step?: "auth" | "login" | "register") => void;
+  onLang: () => void;
+  title: string;
+  subtitle?: string;
+  children: React.ReactNode;
+}) {
+  const t = useT(lang);
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <header className="sticky top-0 z-40 border-b border-border" style={{ backgroundColor: "var(--background)" }}>
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-8">
+          <button onClick={() => onNavigate("landing")} className="flex items-center gap-3">
+            <img src={astrisImg} alt="Astris Logo" className="h-14 w-14 object-contain" />
+            <span className="text-xl font-bold tracking-tight text-foreground">Astris</span>
+          </button>
+          <nav className="flex items-center gap-6">
+            {[
+              { key: "about", label: t("landing.nav.about") },
+              { key: "support", label: t("landing.nav.support") },
+              { key: "partners", label: t("landing.nav.partners") },
+            ].map((item) => (
+              <button
+                key={item.key}
+                onClick={() => onNavigate(item.key as PublicView)}
+                className={`text-sm font-medium transition-colors ${currentView === item.key ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
+          <div className="flex items-center gap-3">
+            <button onClick={onLang} className="flex items-center gap-2 rounded-lg border border-border px-3 py-1.5 text-sm font-medium hover:bg-secondary" aria-label="Cambiar idioma">
+              <Globe size={16} />{lang.toUpperCase()}
+            </button>
+            <button onClick={() => onOpenAuth(undefined, "login")} className="rounded-xl border-2 border-border px-5 py-2.5 text-sm font-semibold" style={{ backgroundColor: "var(--background)", color: "var(--foreground)" }}>{t("landing.nav.login")}</button>
+            <button onClick={() => onOpenAuth(undefined, "register")} className="rounded-xl px-5 py-2.5 text-sm font-semibold" style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)" }}>{t("landing.nav.register")}</button>
+          </div>
+        </div>
+      </header>
 
-function LandingPage({ lang, onOpenAuth, onLang }: { lang: Lang; onOpenAuth: (preRole?: Role) => void; onLang: () => void }) {
+      <main className="px-8 py-12 md:px-16 lg:px-20">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-10">
+            <p className="mb-2 text-sm font-semibold uppercase tracking-[0.3em] text-muted-foreground">Astris</p>
+            <h1 className="text-4xl font-bold tracking-tight text-foreground">{title}</h1>
+            {subtitle && <p className="mt-3 max-w-3xl text-lg leading-relaxed text-muted-foreground">{subtitle}</p>}
+          </div>
+          {children}
+        </div>
+      </main>
+    </div>
+  );
+}
+
+function AboutPage({ lang, onNavigate, onOpenAuth, onLang }: { lang: Lang; onNavigate: (view: PublicView) => void; onOpenAuth: (preRole?: Role, step?: "auth" | "login" | "register") => void; onLang: () => void }) {
   const t = useT(lang);
   const PILLAR_ICONS = [User, Settings, Users, Briefcase];
   const PILLARS = C(lang, "pillars") as typeof CONTENT.es.pillars;
@@ -1545,205 +1533,355 @@ function LandingPage({ lang, onOpenAuth, onLang }: { lang: Lang; onOpenAuth: (pr
   const compareAstris = "Astris";
 
   return (
+    <PublicPageShell lang={lang} currentView="about" onNavigate={onNavigate} onOpenAuth={onOpenAuth} onLang={onLang} title={t("landing.nav.about")} subtitle="Una visión integral del problema que resuelve Astris, las formas de trabajo que impulsa y las organizaciones que la acompañan.">
+      <div className="space-y-10">
+        <section className="rounded-3xl border border-border bg-card p-8">
+          <h2 className="mb-6 text-3xl font-bold text-foreground">{t("landing.prob.title")}</h2>
+          <div className="grid gap-6 md:grid-cols-2">
+            {PROBLEMS.map((p, i) => (
+              <div key={i} className="flex gap-4 rounded-2xl border border-border bg-background p-6">
+                <div className="shrink-0 text-2xl font-bold" style={{ color: "var(--accent)", fontFamily: "DM Mono, monospace" }}>0{i + 1}</div>
+                <p className="leading-relaxed text-foreground">{p}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="rounded-3xl border border-border bg-background p-8">
+          <h2 className="mb-8 text-3xl font-bold text-foreground">{t("landing.pillars.title")}</h2>
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            {PILLARS.map((p, pi) => {
+              const PIcon = PILLAR_ICONS[pi];
+              return (
+                <div key={p.num} className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-7">
+                  <div className="text-4xl font-bold" style={{ color: "var(--muted)", fontFamily: "DM Mono, monospace" }}>{p.num}</div>
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg" style={{ backgroundColor: "var(--secondary)" }}>
+                      <PIcon size={20} aria-hidden="true" style={{ color: "var(--primary)" }} />
+                    </div>
+                    <h3 className="text-lg font-bold text-foreground">{p.title}</h3>
+                  </div>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{p.body}</p>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className="rounded-3xl border border-border bg-card p-8">
+          <h2 className="mb-8 text-3xl font-bold text-foreground">{t("landing.how.title")}</h2>
+          <div className="grid gap-6 lg:grid-cols-4">
+            {HOW.map((h, i) => (
+              <div key={i} className="rounded-2xl border border-border bg-background p-6">
+                <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl text-xl font-bold" style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)", fontFamily: "DM Mono, monospace" }}>{i + 1}</div>
+                <h3 className="mb-2 font-bold text-foreground">{h.phase}</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">{h.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="rounded-3xl border border-border bg-background p-8">
+          <h2 className="mb-8 text-3xl font-bold text-foreground">{t("landing.compare.title")}</h2>
+          <div className="overflow-hidden rounded-2xl border border-border">
+            <div className="grid grid-cols-3 border-b border-border" style={{ backgroundColor: "var(--primary)" }}>
+              <div className="px-6 py-4 text-sm font-bold" style={{ color: "var(--primary-foreground)" }}>{compareAspect}</div>
+              <div className="border-l border-white/20 px-6 py-4 text-sm font-bold" style={{ color: "var(--primary-foreground)" }}>{compareTrad}</div>
+              <div className="border-l border-white/20 px-6 py-4 text-sm font-bold" style={{ color: "var(--primary-foreground)" }}>{compareAstris}</div>
+            </div>
+            {COMPARE.map((row, i) => (
+              <div key={i} className="grid grid-cols-3 border-b border-border last:border-0" style={{ backgroundColor: i % 2 === 0 ? "var(--background)" : "var(--card)" }}>
+                <div className="px-6 py-4 text-sm font-semibold text-foreground">{row.aspect}</div>
+                <div className="border-l border-border px-6 py-4 text-sm text-muted-foreground">{row.trad}</div>
+                <div className="flex items-center gap-2 border-l border-border px-6 py-4 text-sm font-medium" style={{ color: "var(--primary)" }}><Check size={14} aria-hidden="true" style={{ color: "var(--accent)" }} />{row.astris}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="rounded-3xl border border-border bg-card p-8">
+          <h2 className="mb-8 text-3xl font-bold text-foreground">{t("landing.impact.title")}</h2>
+          <div className="grid gap-8 lg:grid-cols-2">
+            <div className="rounded-2xl border border-border bg-background p-7">
+              <h3 className="mb-5 text-lg font-bold text-foreground">{t("landing.impact.cand")}</h3>
+              <ul className="space-y-3">
+                {IMPACT_CAND.map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm leading-relaxed text-foreground"><Check size={16} aria-hidden="true" className="mt-0.5 shrink-0" style={{ color: "var(--accent)" }} />{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="rounded-2xl border border-border bg-background p-7">
+              <h3 className="mb-5 text-lg font-bold text-foreground">{t("landing.impact.comp")}</h3>
+              <ul className="space-y-3">
+                {IMPACT_COMP.map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm leading-relaxed text-foreground"><Check size={16} aria-hidden="true" className="mt-0.5 shrink-0" style={{ color: "var(--accent)" }} />{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section className="rounded-3xl border border-primary/20 bg-primary/5 p-8">
+          <h2 className="mb-3 text-2xl font-bold text-foreground">Organizaciones que acompañan Astris</h2>
+          <p className="mb-6 max-w-2xl text-muted-foreground">El proyecto se apoya en comunidades y organizaciones que aportan visibilidad, acompañamiento y una mirada práctica de inclusión.</p>
+          <div className="flex flex-wrap items-center gap-4">
+            <div className="flex items-center gap-3 rounded-full border border-border bg-background px-4 py-2">
+              <img src={vibralatinaImg} alt="Vibra Latina" className="h-8 w-8 object-contain" />
+              <span className="font-semibold text-foreground">Vibra Latina</span>
+            </div>
+            <div className="flex items-center gap-3 rounded-full border border-border bg-background px-4 py-2">
+              <svg width="20" height="20" viewBox="0 0 21 21" aria-hidden="true" className="shrink-0">
+                <rect x="1" y="1" width="9" height="9" fill="#F25022" />
+                <rect x="11" y="1" width="9" height="9" fill="#7FBA00" />
+                <rect x="1" y="11" width="9" height="9" fill="#00A4EF" />
+                <rect x="11" y="11" width="9" height="9" fill="#FFB900" />
+              </svg>
+              <span className="font-semibold text-foreground">Microsoft</span>
+            </div>
+            <div className="flex items-center gap-3 rounded-full border border-border bg-background px-4 py-2">
+              <img src={genuineImg} alt="The Genuine Foundation" className="h-7 w-7 object-contain" />
+              <span className="font-semibold text-foreground">The Genuine Foundation</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </PublicPageShell>
+  );
+}
+
+function SupportPage({ lang, onNavigate, onOpenAuth, onLang }: { lang: Lang; onNavigate: (view: PublicView) => void; onOpenAuth: (preRole?: Role, step?: "auth" | "login" | "register") => void; onLang: () => void }) {
+  const t = useT(lang);
+  const orgs = [
+    { name: "Vibra Latina", description: "Acompañamiento y visibilidad para iniciativas de impacto social y talento inclusivo.", href: "https://www.vibralatinatx.com/", icon: <img src={vibralatinaImg} alt="Vibra Latina" className="h-10 w-10 object-contain" /> },
+    { name: "Microsoft", description: "Soporte técnico, infraestructura y recursos de innovación para experiencias accesibles.", href: "https://support.microsoft.com/es-us/contactus/", icon: <svg width="24" height="24" viewBox="0 0 21 21" aria-hidden="true" className="shrink-0"><rect x="1" y="1" width="9" height="9" fill="#F25022" /><rect x="11" y="1" width="9" height="9" fill="#7FBA00" /><rect x="1" y="11" width="9" height="9" fill="#00A4EF" /><rect x="11" y="11" width="9" height="9" fill="#FFB900" /></svg> },
+    { name: "The Genuine Foundation", description: "Aliada en la agenda de inclusión, comunidad y oportunidades de conexión real.", href: "https://genuinecup.org/", icon: <img src={genuineImg} alt="The Genuine Foundation" className="h-10 w-10 object-contain" /> },
+  ];
+
+  return (
+    <PublicPageShell lang={lang} currentView="support" onNavigate={onNavigate} onOpenAuth={onOpenAuth} onLang={onLang} title={t("landing.nav.support")} subtitle="Recursos de contacto y apoyo para quienes quieren conocer más sobre Astris, trabajar con nosotros o participar de la red.">
+      <div className="grid gap-6 md:grid-cols-3">
+        {orgs.map((org) => (
+          <div key={org.name} className="rounded-3xl border border-border bg-card p-7">
+            <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10">
+              {org.icon}
+            </div>
+            <h3 className="mb-2 text-xl font-bold text-foreground">{org.name}</h3>
+            <p className="mb-5 text-sm leading-relaxed text-muted-foreground">{org.description}</p>
+            <a href={org.href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80">
+              <ArrowRight size={14} /> Ver enlace
+            </a>
+          </div>
+        ))}
+      </div>
+    </PublicPageShell>
+  );
+}
+
+function PartnersPage({ lang, onNavigate, onOpenAuth, onLang }: { lang: Lang; onNavigate: (view: PublicView) => void; onOpenAuth: (preRole?: Role, step?: "auth" | "login" | "register") => void; onLang: () => void }) {
+  const t = useT(lang);
+  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({ company: "", name: "", email: "", why: "" });
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setSubmitted(true);
+  };
+
+  return (
+    <PublicPageShell lang={lang} currentView="partners" onNavigate={onNavigate} onOpenAuth={onOpenAuth} onLang={onLang} title={t("landing.nav.partners")} subtitle="Si tu empresa quiere participar de Astris, completa este formulario y nos pondremos en contacto para conversar sobre colaboración.">
+      <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="rounded-3xl border border-border bg-card p-8">
+          <h2 className="mb-4 text-2xl font-bold text-foreground">¿Por qué unirse a Astris?</h2>
+          <p className="mb-6 text-base leading-relaxed text-muted-foreground">Astris ayuda a las empresas a descubrir talento compatible, diseñar entornos de trabajo más inclusivos y reducir la rotación desde el primer mes.</p>
+          <div className="space-y-4">
+            {[
+              "Ampliar el talento accesible y muy motivado",
+              "Implementar ajustes razonables con claridad y estructura",
+              "Acompañar procesos de incorporación con mentoría humana",
+            ].map((item) => (
+              <div key={item} className="flex items-start gap-3 rounded-2xl border border-border bg-background px-4 py-3">
+                <Check size={16} aria-hidden="true" className="mt-0.5 shrink-0" style={{ color: "var(--accent)" }} />
+                <span className="text-sm text-foreground">{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="rounded-3xl border border-border bg-background p-8 shadow-sm">
+          {submitted ? (
+            <div className="rounded-2xl border border-primary/20 bg-primary/5 p-6 text-center">
+              <h3 className="mb-2 text-xl font-bold text-foreground">Gracias por tu interés</h3>
+              <p className="text-sm leading-relaxed text-muted-foreground">Hemos recibido tu propuesta. Nos pondremos en contacto pronto para explorar una colaboración con Astris.</p>
+            </div>
+          ) : (
+            <form className="space-y-4" onSubmit={handleSubmit}>
+              <div>
+                <label className="mb-1 block text-sm font-semibold text-foreground">Nombre de la empresa</label>
+                <input value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} required className="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm outline-none focus:border-primary" />
+              </div>
+              <div>
+                <label className="mb-1 block text-sm font-semibold text-foreground">Tu nombre</label>
+                <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required className="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm outline-none focus:border-primary" />
+              </div>
+              <div>
+                <label className="mb-1 block text-sm font-semibold text-foreground">Correo electrónico</label>
+                <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required className="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm outline-none focus:border-primary" />
+              </div>
+              <div>
+                <label className="mb-1 block text-sm font-semibold text-foreground">¿Por qué quieren ser parte de Astris?</label>
+                <textarea value={form.why} onChange={(e) => setForm({ ...form, why: e.target.value })} required rows={5} className="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm outline-none focus:border-primary" />
+              </div>
+              <button type="submit" className="w-full rounded-xl px-5 py-3 text-sm font-semibold text-primary-foreground" style={{ backgroundColor: "var(--primary)" }}>Enviar propuesta</button>
+            </form>
+          )}
+        </div>
+      </div>
+    </PublicPageShell>
+  );
+}
+
+// ── Landing Page ──────────────────────────────────────────────────────────────
+
+function LandingPage({ lang, onOpenAuth, onLang, onNavigate }: { lang: Lang; onOpenAuth: (preRole?: Role, step?: "auth" | "login" | "register") => void; onLang: () => void; onNavigate: (view: PublicView) => void }) {
+  const t = useT(lang);
+
+  return (
     <div className="min-h-screen bg-background">
       {/* Fixed header */}
-      <header className="fixed top-0 left-0 right-0 z-40 border-b border-border" style={{ backgroundColor: "var(--background)" }}>
+      <header className="fixed top-0 left-0 right-0 z-40 border-b border-border backdrop-blur-sm" style={{ backgroundColor: "var(--background)", opacity: 0.97 }}>
         <div className="max-w-7xl mx-auto px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src={astrisImg} alt="Astris Logo" className="w-14 h-14 object-contain" />
+            <img src={astrisImg} alt="Astris Logo" className="w-12 h-12 object-contain" />
             <span className="text-xl font-bold text-foreground tracking-tight">Astris</span>
           </div>
           <nav className="flex items-center gap-6">
-            {["landing.nav.about", "landing.nav.support", "landing.nav.partners"].map((k) => (
-              <span key={k} className="text-sm text-muted-foreground cursor-pointer font-medium hover:text-foreground transition-colors">{t(k)}</span>
+            {[
+              { key: "about", label: t("landing.nav.about") },
+              { key: "support", label: t("landing.nav.support") },
+              { key: "partners", label: t("landing.nav.partners") },
+            ].map((item) => (
+              <button key={item.key} onClick={() => onNavigate(item.key as PublicView)} className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">{item.label}</button>
             ))}
           </nav>
           <div className="flex items-center gap-3">
             <button onClick={onLang} className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium border border-border cursor-pointer hover:bg-secondary" aria-label="Cambiar idioma">
               <Globe size={16} />{lang.toUpperCase()}
             </button>
-            <button onClick={() => onOpenAuth()} className="px-5 py-2.5 rounded-xl text-sm font-semibold border-2 border-border cursor-pointer" style={{ backgroundColor: "var(--background)", color: "var(--foreground)" }}>{t("landing.nav.login")}</button>
-            <button onClick={() => onOpenAuth()} className="px-5 py-2.5 rounded-xl text-sm font-semibold cursor-pointer" style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)" }}>{t("landing.nav.register")}</button>
+            <button onClick={() => onOpenAuth(undefined, "login")} className="px-5 py-2.5 rounded-xl text-sm font-semibold border-2 border-border cursor-pointer" style={{ backgroundColor: "var(--background)", color: "var(--foreground)" }}>{t("landing.nav.login")}</button>
+            <button onClick={() => onOpenAuth(undefined, "register")} className="px-5 py-2.5 rounded-xl text-sm font-semibold cursor-pointer" style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)" }}>{t("landing.nav.register")}</button>
           </div>
         </div>
       </header>
 
       <div className="pt-16">
         {/* Hero */}
-        <section className="px-20 py-28 max-w-7xl mx-auto flex items-center justify-between gap-12">
-          <div className="max-w-3xl">
-            <h1 className="text-[58px] font-bold text-foreground leading-[1.1] mb-6">
-              {t("landing.hero.t1")}<br />
-              <span style={{ color: "var(--primary)" }}>{t("landing.hero.t2")}</span>
-            </h1>
-            <p className="text-xl text-muted-foreground leading-relaxed mb-14">{t("landing.hero.sub")}</p>
-            <div className="flex flex-col gap-4 items-start">
-              <button onClick={() => onOpenAuth("candidate")} className="flex items-center gap-3 px-6 py-4 rounded-xl text-lg font-bold border-2 cursor-pointer" style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)", borderColor: "var(--primary)" }}>
-                <User size={22} aria-hidden="true" />{t("landing.hero.cand")}<ArrowRight size={18} aria-hidden="true" />
-              </button>
-              <button onClick={() => onOpenAuth("company")} className="flex items-center gap-3 px-6 py-4 rounded-xl text-lg font-bold border-2 cursor-pointer" style={{ backgroundColor: "var(--card)", color: "var(--foreground)", borderColor: "var(--border)" }}>
-                <Building2 size={22} aria-hidden="true" />{t("landing.hero.comp")}<ArrowRight size={18} aria-hidden="true" />
-              </button>
-              <button onClick={() => onOpenAuth("mentor")} className="flex items-center gap-3 px-6 py-4 rounded-xl text-lg font-bold border-2 cursor-pointer" style={{ backgroundColor: "var(--card)", color: "var(--foreground)", borderColor: "var(--border)" }}>
-                <Star size={22} aria-hidden="true" />{t("role.mentor")}<ArrowRight size={18} aria-hidden="true" />
-              </button>
-            </div>
-          </div>
-          <div className="shrink-0 flex items-center justify-center anim-float">
-            <img src={astrisImg} alt="Astris Logo" className="w-[380px] h-auto object-contain drop-shadow-2xl" />
-          </div>
-        </section>
+        <section style={{ background: "linear-gradient(135deg, var(--background) 0%, color-mix(in srgb, var(--primary) 6%, var(--background)) 100%)" }} className="relative overflow-hidden">
+          {/* Decorative blobs */}
+          <div className="pointer-events-none absolute -top-32 -right-32 h-[520px] w-[520px] rounded-full opacity-20" style={{ background: "radial-gradient(circle, var(--primary), transparent 70%)" }} />
+          <div className="pointer-events-none absolute -bottom-20 -left-20 h-[340px] w-[340px] rounded-full opacity-10" style={{ background: "radial-gradient(circle, var(--accent), transparent 70%)" }} />
 
-        {/* Problem */}
-        <section className="border-t border-border py-20 px-20" style={{ backgroundColor: "var(--card)" }}>
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl font-bold text-foreground mb-12">{t("landing.prob.title")}</h2>
-            <div className="grid grid-cols-2 gap-6">
-              {PROBLEMS.map((p, i) => (
-                <div key={i} className="flex gap-4 p-6 rounded-2xl border border-border" style={{ backgroundColor: "var(--background)" }}>
-                  <div className="text-2xl font-bold shrink-0" style={{ color: "var(--accent)", fontFamily: "DM Mono, monospace" }}>0{i + 1}</div>
-                  <p className="text-foreground leading-relaxed">{p}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Pillars */}
-        <section className="border-t border-border py-20 px-20">
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl font-bold text-foreground mb-12">{t("landing.pillars.title")}</h2>
-            <div className="grid grid-cols-4 gap-6">
-              {PILLARS.map((p, pi) => {
-                const PIcon = PILLAR_ICONS[pi];
-                return (
-                  <div key={p.num} className="rounded-2xl p-8 border border-border flex flex-col gap-5" style={{ backgroundColor: "var(--card)" }}>
-                    <div className="text-4xl font-bold select-none" style={{ color: "var(--muted)", fontFamily: "DM Mono, monospace" }}>{p.num}</div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: "var(--secondary)" }}>
-                        <PIcon size={20} aria-hidden="true" style={{ color: "var(--primary)" }} />
-                      </div>
-                      <h3 className="text-lg font-bold text-foreground">{p.title}</h3>
-                    </div>
-                    <p className="text-muted-foreground leading-relaxed text-sm">{p.body}</p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* How it works */}
-        <section className="border-t border-border py-20 px-20" style={{ backgroundColor: "var(--card)" }}>
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl font-bold text-foreground mb-14">{t("landing.how.title")}</h2>
-            <div className="flex gap-0 relative">
-              <div className="absolute top-8 left-0 right-0 h-px" style={{ backgroundColor: "var(--border)" }} aria-hidden="true" />
-              {HOW.map((h, i) => (
-                <div key={i} className="flex-1 flex flex-col gap-6 px-6 first:pl-0 last:pr-0 relative">
-                  <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-xl font-bold relative z-10" style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)", fontFamily: "DM Mono, monospace" }}>{i + 1}</div>
-                  <div>
-                    <h3 className="font-bold text-foreground mb-2">{h.phase}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{h.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Comparison table */}
-        <section className="border-t border-border py-20 px-20">
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl font-bold text-foreground mb-12">{t("landing.compare.title")}</h2>
-            <div className="rounded-2xl border border-border overflow-hidden">
-              <div className="grid grid-cols-3 border-b border-border" style={{ backgroundColor: "var(--primary)" }}>
-                <div className="px-8 py-4 text-sm font-bold" style={{ color: "var(--primary-foreground)" }}>{compareAspect}</div>
-                <div className="px-8 py-4 text-sm font-bold border-l border-white/20" style={{ color: "var(--primary-foreground)" }}>{compareTrad}</div>
-                <div className="px-8 py-4 text-sm font-bold border-l border-white/20" style={{ color: "var(--primary-foreground)" }}>{compareAstris}</div>
+          <div className="relative max-w-7xl mx-auto px-10 py-14 flex items-center justify-between gap-12">
+            <div className="max-w-2xl">
+              <h1 className="text-[52px] font-bold text-foreground leading-[1.1] mb-5" style={{ letterSpacing: "-0.02em" }}>
+                {t("landing.hero.t1")}<br />
+                <span style={{ color: "var(--primary)" }}>{t("landing.hero.t2")}</span>
+              </h1>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-10 whitespace-pre-line italic max-w-xl">{t("landing.hero.sub")}</p>
+              <div className="flex flex-wrap gap-3">
+                <button onClick={() => onOpenAuth("candidate")} className="flex items-center gap-3 px-6 py-3.5 rounded-xl text-base font-bold border-2 cursor-pointer transition-transform hover:scale-[1.02]" style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)", borderColor: "var(--primary)" }}>
+                  <User size={20} aria-hidden="true" />{t("landing.hero.cand")}<ArrowRight size={16} aria-hidden="true" />
+                </button>
+                <button onClick={() => onOpenAuth("company")} className="flex items-center gap-3 px-6 py-3.5 rounded-xl text-base font-bold border-2 cursor-pointer transition-transform hover:scale-[1.02]" style={{ backgroundColor: "var(--card)", color: "var(--foreground)", borderColor: "var(--border)" }}>
+                  <Building2 size={20} aria-hidden="true" />{t("landing.hero.comp")}<ArrowRight size={16} aria-hidden="true" />
+                </button>
+                <button onClick={() => onOpenAuth("mentor")} className="flex items-center gap-3 px-6 py-3.5 rounded-xl text-base font-bold border-2 cursor-pointer transition-transform hover:scale-[1.02]" style={{ backgroundColor: "var(--card)", color: "var(--foreground)", borderColor: "var(--border)" }}>
+                  <Star size={20} aria-hidden="true" />{t("role.mentor")}<ArrowRight size={16} aria-hidden="true" />
+                </button>
               </div>
-              {COMPARE.map((row, i) => (
-                <div key={i} className={`grid grid-cols-3 border-b border-border last:border-0 ${i % 2 === 0 ? "" : ""}`} style={{ backgroundColor: i % 2 === 0 ? "var(--background)" : "var(--card)" }}>
-                  <div className="px-8 py-4 text-sm font-semibold text-foreground">{row.aspect}</div>
-                  <div className="px-8 py-4 text-sm text-muted-foreground border-l border-border">{row.trad}</div>
-                  <div className="px-8 py-4 text-sm font-medium border-l border-border flex items-center gap-2" style={{ color: "var(--primary)" }}>
-                    <Check size={14} aria-hidden="true" style={{ color: "var(--accent)" }} />{row.astris}
-                  </div>
-                </div>
-              ))}
+            </div>
+
+            {/* Logo side */}
+            <div className="hidden lg:flex shrink-0 flex-col items-center justify-center">
+              <div className="relative">
+                <div className="absolute inset-0 rounded-full blur-3xl opacity-30" style={{ background: "radial-gradient(circle, var(--primary), transparent 70%)", transform: "scale(1.2)" }} />
+                <img src={astrisImg} alt="Astris Logo" className="relative h-auto w-[340px] object-contain drop-shadow-2xl" />
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Impact */}
-        <section className="border-t border-border py-20 px-20" style={{ backgroundColor: "var(--card)" }}>
+        {/* Partners strip — visible above the fold */}
+        <section className="border-y border-border px-10" style={{ backgroundColor: "var(--card)", paddingTop: "clamp(2rem, 5vh, 4rem)", paddingBottom: "clamp(2rem, 5vh, 4rem)" }}>
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl font-bold text-foreground mb-12">{t("landing.impact.title")}</h2>
-            <div className="grid grid-cols-2 gap-8">
-              {[
-                { titleKey: "landing.impact.cand", Icon: User, items: IMPACT_CAND },
-                { titleKey: "landing.impact.comp", Icon: Building2, items: IMPACT_COMP },
-              ].map((col) => (
-                <div key={col.titleKey} className="rounded-2xl p-8 border border-border" style={{ backgroundColor: "var(--background)" }}>
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: "var(--secondary)" }}>
-                      <col.Icon size={20} aria-hidden="true" style={{ color: "var(--primary)" }} />
-                    </div>
-                    <h3 className="text-lg font-bold text-foreground">{t(col.titleKey)}</h3>
-                  </div>
-                  <ul className="flex flex-col gap-3">
-                    {col.items.map((item, i) => (
-                      <li key={i} className="flex items-start gap-3 text-foreground text-sm leading-relaxed">
-                        <Check size={16} aria-hidden="true" className="shrink-0 mt-0.5" style={{ color: "var(--accent)" }} />{item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Privacy bar */}
-        <section className="border-t border-border py-10 px-20">
-          <div className="max-w-7xl mx-auto flex items-center gap-6">
-            <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: "var(--secondary)" }}>
-              <Shield size={22} aria-hidden="true" style={{ color: "var(--accent)" }} />
-            </div>
-            <p className="text-muted-foreground max-w-2xl text-sm leading-relaxed">
-              <strong className="text-foreground">{C(lang, "privacyTitle")}</strong> {C(lang, "privacyBody")}
+            <p className="text-center text-[10px] font-bold uppercase tracking-[0.22em] text-muted-foreground mb-10">
+              {lang === "es" ? "Respaldado y apoyado por" : lang === "pt" ? "Apoiado por" : lang === "fr" ? "Soutenu par" : "Supported by"}
             </p>
+            <div className="flex items-center justify-center gap-12">
+
+              {/* Closer to the Stars */}
+              <a href="https://closertothestars.org/" target="_blank" rel="noreferrer" title="Closer To The Stars"
+                className="group flex items-center justify-center rounded-3xl border-2 border-border bg-background transition-all hover:border-primary/60 hover:shadow-2xl hover:-translate-y-2 hover:scale-105"
+                style={{ width: 140, height: 140 }}>
+                <img src={closerToTheStarsImg} alt="Closer To The Stars" className="object-contain transition-transform group-hover:scale-110" style={{ width: 100, height: 100 }} />
+              </a>
+
+              {/* Vibra Latina */}
+              <a href="https://www.vibralatinatx.com/" target="_blank" rel="noreferrer" title="Vibra Latina"
+                className="group flex items-center justify-center rounded-3xl border-2 border-border bg-background transition-all hover:border-primary/60 hover:shadow-2xl hover:-translate-y-2 hover:scale-105"
+                style={{ width: 140, height: 140 }}>
+                <img src={vibralatinaImg} alt="Vibra Latina" className="object-contain transition-transform group-hover:scale-110" style={{ width: 100, height: 100 }} />
+              </a>
+
+              {/* Microsoft */}
+              <a href="https://support.microsoft.com/es-us/contactus/" target="_blank" rel="noreferrer" title="Microsoft"
+                className="group flex items-center justify-center rounded-3xl border-2 border-border bg-background transition-all hover:border-primary/60 hover:shadow-2xl hover:-translate-y-2 hover:scale-105"
+                style={{ width: 140, height: 140 }}>
+                <svg width="80" height="80" viewBox="0 0 21 21" aria-hidden="true" className="transition-transform group-hover:scale-110">
+                  <rect x="1" y="1" width="9" height="9" fill="#F25022" />
+                  <rect x="11" y="1" width="9" height="9" fill="#7FBA00" />
+                  <rect x="1" y="11" width="9" height="9" fill="#00A4EF" />
+                  <rect x="11" y="11" width="9" height="9" fill="#FFB900" />
+                </svg>
+              </a>
+
+              {/* The Genuine Foundation */}
+              <a href="https://genuinecup.org/" target="_blank" rel="noreferrer" title="The Genuine Foundation"
+                className="group flex items-center justify-center rounded-3xl border-2 border-border bg-background transition-all hover:border-primary/60 hover:shadow-2xl hover:-translate-y-2 hover:scale-105"
+                style={{ width: 140, height: 140 }}>
+                <img src={genuineImg} alt="The Genuine Foundation" className="object-contain transition-transform group-hover:scale-110" style={{ width: 100, height: 100 }} />
+              </a>
+
+            </div>
           </div>
         </section>
 
-        <footer className="border-t border-border px-20 py-10" style={{ backgroundColor: "var(--card)" }}>
-          <div className="max-w-7xl mx-auto flex flex-col gap-8">
-            <div className="flex items-start justify-between">
-              <div>
-                <div className="text-xl font-bold flex items-center gap-3 text-foreground mb-2">
-                  <img src={astrisImg} alt="Astris" className="w-10 h-10 object-contain" /> Astris
-                </div>
-                <div className="text-sm text-muted-foreground max-w-sm mb-4">{t("landing.footer.program")}</div>
-                <div className="text-xs text-muted-foreground">&copy; {new Date().getFullYear()} Astris. Todos los derechos reservados.</div>
+        {/* Footer */}
+        <footer className="border-t border-border px-10 py-10" style={{ backgroundColor: "var(--background)" }}>
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start justify-between gap-8">
+            <div>
+              <div className="text-xl font-bold flex items-center gap-3 text-foreground mb-2">
+                <img src={astrisImg} alt="Astris" className="w-9 h-9 object-contain" /> Astris
               </div>
-              
-              <div className="flex gap-16">
-                <div className="flex flex-col gap-4">
-                  <span className="font-bold text-foreground text-sm uppercase tracking-wider">Enlaces</span>
-                  <div className="flex flex-col gap-3 text-sm text-muted-foreground">
-                    {(C(lang, "footerLinks") as string[]).map((link) => (
-                      <span key={link} className="cursor-pointer hover:text-primary transition-colors">{link}</span>
-                    ))}
-                  </div>
+              <div className="text-sm text-muted-foreground max-w-xs mb-3">{t("landing.footer.program")}</div>
+              <div className="text-xs text-muted-foreground">&copy; {new Date().getFullYear()} Astris. Todos los derechos reservados.</div>
+            </div>
+
+            <div className="flex gap-16">
+              <div className="flex flex-col gap-4">
+                <span className="font-bold text-foreground text-sm uppercase tracking-wider">Enlaces</span>
+                <div className="flex flex-col gap-3 text-sm text-muted-foreground">
+                  {(C(lang, "footerLinks") as string[]).map((link) => (
+                    <span key={link} className="cursor-pointer hover:text-primary transition-colors">{link}</span>
+                  ))}
                 </div>
-                
-                <div className="flex flex-col gap-4">
-                  <span className="font-bold text-foreground text-sm uppercase tracking-wider">Soporte y Contacto</span>
-                  <div className="flex flex-col gap-3 text-sm text-muted-foreground">
-                    <a href="https://www.vibralatinatx.com/contact-1" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors flex items-center gap-2"><ArrowRight size={14} />Vibra Latina</a>
-                    <a href="https://support.microsoft.com/es-us/contactus/" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors flex items-center gap-2"><ArrowRight size={14} />Microsoft Support</a>
-                    <a href="https://genuinecup.org/" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors flex items-center gap-2"><ArrowRight size={14} />The Genuine Foundation</a>
-                  </div>
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <span className="font-bold text-foreground text-sm uppercase tracking-wider">Soporte y Contacto</span>
+                <div className="flex flex-col gap-3 text-sm text-muted-foreground">
+                  <a href="https://www.vibralatinatx.com/contact-1" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors flex items-center gap-2"><ArrowRight size={14} />Vibra Latina</a>
+                  <a href="https://support.microsoft.com/es-us/contactus/" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors flex items-center gap-2"><ArrowRight size={14} />Microsoft Support</a>
+                  <a href="https://genuinecup.org/" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors flex items-center gap-2"><ArrowRight size={14} />The Genuine Foundation</a>
                 </div>
               </div>
             </div>
@@ -3340,6 +3478,7 @@ export default function App() {
 
   // Navigation
   const [screen, setScreen] = useState("home");
+  const [publicView, setPublicView] = useState<PublicView>("landing");
 
   // Candidate-specific state
   const [palette, setPalette] = useState<PaletteKey>("azul");
@@ -3508,6 +3647,7 @@ export default function App() {
     setLoggedIn(false);
     setRole(null);
     setScreen("home");
+    setPublicView("landing");
     setModalStep("language");
   };
 
@@ -3556,11 +3696,29 @@ export default function App() {
       {/* Main content */}
       {!showModal && (
         <>
-          {!loggedIn && (
-            <LandingPage lang={lang} onOpenAuth={(preRole) => {
+          {!loggedIn && publicView === "about" && (
+            <AboutPage lang={lang} onOpenAuth={(preRole, step) => {
               if (preRole) { setPendingRole(preRole); }
-              setModalStep("auth");
-            }} onLang={reopenLang} />
+              setModalStep(step || "auth");
+            }} onLang={reopenLang} onNavigate={setPublicView} />
+          )}
+          {!loggedIn && publicView === "support" && (
+            <SupportPage lang={lang} onOpenAuth={(preRole, step) => {
+              if (preRole) { setPendingRole(preRole); }
+              setModalStep(step || "auth");
+            }} onLang={reopenLang} onNavigate={setPublicView} />
+          )}
+          {!loggedIn && publicView === "partners" && (
+            <PartnersPage lang={lang} onOpenAuth={(preRole, step) => {
+              if (preRole) { setPendingRole(preRole); }
+              setModalStep(step || "auth");
+            }} onLang={reopenLang} onNavigate={setPublicView} />
+          )}
+          {!loggedIn && publicView === "landing" && (
+            <LandingPage lang={lang} onOpenAuth={(preRole, step) => {
+              if (preRole) { setPendingRole(preRole); }
+              setModalStep(step || "auth");
+            }} onLang={reopenLang} onNavigate={setPublicView} />
           )}
           {loggedIn && role && (
             <div>
@@ -3618,8 +3776,6 @@ export default function App() {
         </>
       )}
 
-      {/* Watermark — always visible, above content */}
-      <Watermark />
     </div>
   );
 }
