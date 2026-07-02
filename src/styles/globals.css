@@ -1,0 +1,109 @@
+/* ── Astris — Motion & Micro-interaction Layer ───────────────────────────────
+   Principles: max 300ms, ease-out curves, no loops, never obligatory.
+   Every animation here is triggered by user interaction or fires once on
+   mount. Nothing plays automatically on its own.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* ── Keyframes ────────────────────────────────────────────────────────────── */
+
+@keyframes astris-overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes astris-modal-in {
+  from { opacity: 0; transform: scale(0.96) translateY(-10px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0); }
+}
+
+@keyframes astris-slide-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes astris-slide-down {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes astris-float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes astris-draw-stroke {
+  from { stroke-dashoffset: var(--circ, 999); }
+  to   { stroke-dashoffset: var(--offset, 0); }
+}
+
+/* ── Animation utility classes ────────────────────────────────────────────── */
+
+.anim-overlay {
+  animation: astris-overlay-in 200ms ease both;
+}
+
+.anim-modal {
+  animation: astris-modal-in 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.anim-slide-up {
+  animation: astris-slide-up 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.anim-slide-down {
+  animation: astris-slide-down 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.anim-float {
+  animation: astris-float 4s ease-in-out infinite;
+}
+
+/* ── Global button micro-interactions ─────────────────────────────────────── */
+
+button {
+  transition:
+    background-color 160ms ease,
+    border-color     160ms ease,
+    color            160ms ease,
+    box-shadow       160ms ease,
+    opacity          160ms ease;
+}
+
+button:not([disabled]):active {
+  transform: scale(0.98);
+  transition-duration: 80ms;
+}
+
+/* ── Card hover lift ──────────────────────────────────────────────────────── */
+
+article {
+  transition: box-shadow 220ms ease, transform 220ms ease;
+}
+
+article:hover {
+  box-shadow: 0 6px 28px rgba(27, 75, 122, 0.11);
+  transform: translateY(-2px);
+}
+
+/* ── Input focus glow ─────────────────────────────────────────────────────── */
+
+input,
+textarea {
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 18%, transparent);
+}
+
+/* ── Nav item transitions ─────────────────────────────────────────────────── */
+
+nav button {
+  transition:
+    background-color 150ms ease,
+    color            150ms ease;
+}
