@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "dev": "vite"
+    "dev": "vite",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
@@ -104,5 +105,5 @@
   "bugs": {
     "url": "https://github.com/IANLAIN/Astris/issues"
   },
-  "homepage": "https://github.com/IANLAIN/Astris#readme"
+  "homepage": "https://astris.port0.org"
 }
