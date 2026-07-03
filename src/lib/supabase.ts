@@ -250,6 +250,29 @@ export async function logoutUser() {
   await supabase.auth.signOut();
 }
 
+export async function resetPasswordForEmail(email: string) {
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.origin,
+  });
+  if (error) throw error;
+}
+
+export async function updatePassword(newPassword: string) {
+  const { error } = await supabase.auth.updateUser({ password: newPassword });
+  if (error) throw error;
+}
+
+export async function updateProfile(userId: string, name: string) {
+  const { error } = await supabase.from("users_profiles").update({ full_name: name }).eq("id", userId);
+  if (error) throw error;
+}
+
+export async function deleteAccount() {
+  const { error } = await supabase.rpc("delete_user");
+  if (error) throw error;
+  await supabase.auth.signOut();
+}
+
 export async function saveCandidateProfile(userId: string, quizAnswers: any, theme: string, font: string) {
   try {
     // Upsert into candidates table

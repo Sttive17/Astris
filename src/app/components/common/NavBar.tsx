@@ -1,9 +1,10 @@
 import {
-  BarChart2, Briefcase, Users, Activity, Building2, FileText, Calendar, Star, Sun, Moon, Globe, LogOut
+  BarChart2, Briefcase, Users, Activity, Building2, FileText, Calendar, Star, Sun, Moon, Globe, LogOut, Settings, User
 } from "lucide-react";
 import { Lang, Role } from "../../types";
 import { useT } from "../../i18n/useT";
 import astrisImg from "../../../imports/astris.png";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 
 export function NavBar({ lang, role, screen, onNav, onLang, onLogout, darkMode, onDarkToggle }: {
   lang: Lang; role: Role; screen: string;
@@ -89,19 +90,36 @@ export function NavBar({ lang, role, screen, onNav, onLang, onLogout, darkMode, 
           {/* Language */}
           <button
             onClick={onLang}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm text-muted-foreground cursor-pointer border border-border"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm text-muted-foreground cursor-pointer border border-border"
             style={{ backgroundColor: "var(--background)" }}
           >
             <Globe size={14} aria-hidden="true" />{lang.toUpperCase()}
           </button>
 
-          <div className="text-xs text-muted-foreground px-3 py-2 rounded-lg border border-border" style={{ backgroundColor: "var(--card)" }}>
-            {ROLE_LABELS[role]}
-          </div>
-
-          <button onClick={onLogout} className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm text-muted-foreground cursor-pointer">
-            <LogOut size={14} aria-hidden="true" />{t("nav.logout")}
-          </button>
+          {/* User Profile Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="flex items-center gap-2 px-3 py-2 rounded-xl border border-border cursor-pointer transition-colors hover:bg-secondary" style={{ backgroundColor: "var(--card)" }}>
+                <User size={15} aria-hidden="true" style={{ color: "var(--primary)" }} />
+                <span className="text-xs font-semibold text-foreground hidden sm:inline">{ROLE_LABELS[role]}</span>
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56 mt-1" style={{ backgroundColor: "var(--card)", borderColor: "var(--border)", color: "var(--foreground)" }}>
+              <DropdownMenuLabel>{lang === "es" ? "Mi Cuenta" : "My Account"}</DropdownMenuLabel>
+              <DropdownMenuSeparator style={{ backgroundColor: "var(--border)" }} />
+              
+              <DropdownMenuItem className="cursor-pointer" onClick={() => onNav("settings")}>
+                <Settings className="mr-2 h-4 w-4" />
+                <span>{lang === "es" ? "Configuración" : "Settings"}</span>
+              </DropdownMenuItem>
+              
+              <DropdownMenuSeparator style={{ backgroundColor: "var(--border)" }} />
+              <DropdownMenuItem className="cursor-pointer text-red-500 focus:text-red-500 focus:bg-red-500/10" onClick={onLogout}>
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>{t("nav.logout")}</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </header>

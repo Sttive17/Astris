@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Lang, ModalStep, Role, PaletteKey, FontKey, QuizAnswers, PublicView } from "./types";
 
 // Supabase
-import { getCurrentUser, loginUser, logoutUser, registerUser, saveCandidateProfile } from "../lib/supabase";
+import { getCurrentUser, loginUser, logoutUser, registerUser, saveCandidateProfile, supabase } from "../lib/supabase";
 
 // i18n
 import { getInitialLang, getInitialModalStep } from "./i18n/useT";
@@ -15,6 +15,7 @@ import { NavBar } from "./components/common/NavBar";
 import { LanguageModal } from "./components/modals/LanguageModal";
 import { LoginModal } from "./components/modals/LoginModal";
 import { RegisterModal } from "./components/modals/RegisterModal";
+import { UpdatePasswordModal } from "./components/modals/UpdatePasswordModal";
 
 // Pages
 import { LandingPage } from "./pages/public/LandingPage";
@@ -31,6 +32,7 @@ import { MentorSelect } from "./pages/candidate/MentorSelect";
 import { CandidateAccompaniment } from "./pages/candidate/CandidateAccompaniment";
 import { CandidatePostHire } from "./pages/candidate/CandidatePostHire";
 
+import { SettingsPage } from "./pages/shared/SettingsPage";
 import { CompanyOrgProfile } from "./pages/company/CompanyOrgProfile";
 import { CompanyPostVacancy } from "./pages/company/CompanyPostVacancy";
 import { CompanyCandidates } from "./pages/company/CompanyCandidates";
@@ -56,15 +58,27 @@ export default function App() {
   const [appReady, setAppReady] = useState(false);
   const [authMessage, setAuthMessage] = useState<string | null>(null);
   const [googleAuthUser, setGoogleAuthUser] = useState<any>(null);
+  const [requirePasswordUpdate, setRequirePasswordUpdate] = useState(false);
 
   // Navigation
   const [screen, setScreen] = useState("home");
   const [publicView, setPublicView] = useState<PublicView>("landing");
 
   // Candidate-specific state
-  const [palette, setPalette] = useState<PaletteKey>("azul");
-  const [darkMode, setDarkMode] = useState(false);
-  const [font, setFont] = useState<FontKey>("atkinson");
+  const [palette, setPaletteState] = useState<PaletteKey>(() => (typeof window !== "undefined" && window.localStorage.getItem("astris_palette") as PaletteKey) || "azul");
+  const [darkMode, setDarkModeState] = useState(() => typeof window !== "undefined" && window.localStorage.getItem("astris_dark") === "true");
+  const [font, setFontState] = useState<FontKey>(() => (typeof window !== "undefined" && window.localStorage.getItem("astris_font") as FontKey) || "atkinson");
+
+  const setPalette = (p: PaletteKey) => { setPaletteState(p); window.localStorage.setItem("astris_palette", p); };
+  const setDarkMode = (d: boolean | ((prev: boolean) => boolean)) => {
+    setDarkModeState((prev) => {
+      const next = typeof d === "function" ? d(prev) : d;
+      window.localStorage.setItem("astris_dark", String(next));
+      return next;
+    });
+  };
+  const setFont = (f: FontKey) => { setFontState(f); window.localStorage.setItem("astris_font", f); };
+
   const [quizAnswers, setQuizAnswers] = useState<QuizAnswers>({});
   const [quizAxis, setQuizAxis] = useState(0);
   const [selectedVacancy, setSelectedVacancy] = useState("V-1042");
@@ -93,7 +107,7 @@ export default function App() {
 
   // ── Palette — scoped to <main> only so NavBar always uses the above dark vars ─
   const pal = PALETTES[palette];
-  const palStyle: Record<string, string> = role === "candidate" && loggedIn ? {
+  const palStyle: Record<string, string> = {
     "--background": darkMode ? "#1A1A2E" : pal.bg,
     "--foreground": darkMode ? "#F0EFEA" : pal.fg,
     "--card": darkMode ? "#252535" : pal.card,
@@ -108,7 +122,7 @@ export default function App() {
     "--accent": pal.accent,
     "--accent-foreground": palette === "contraste" ? "#1A1A04" : "#fff",
     "--input-background": darkMode ? "#1A1A2E" : pal.card,
-  } : {};
+  };
 
   // ── Restore Supabase session on mount ───────────────────────────────────────
   useEffect(() => {
@@ -142,6 +156,16 @@ export default function App() {
         setAppReady(true);
       }
     })();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "PASSWORD_RECOVERY") {
+        setRequirePasswordUpdate(true);
+      }
+    });
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
   }, []);
 
   const handleAnswer = (ai: number, qi: number, val: number | number[]) => {
@@ -271,6 +295,9 @@ export default function App() {
       {showModal && modalStep === "login" && (
         <LoginModal lang={lang} onLogin={(email, pass) => handleLogin(email, pass)} onBack={() => setModalStep("none")} error={authError} loading={authLoading} />
       )}
+      {requirePasswordUpdate && (
+        <UpdatePasswordModal lang={lang} onComplete={() => setRequirePasswordUpdate(false)} />
+      )}
 
       {/* Main content */}
       {!showModal && (
@@ -359,6 +386,20 @@ export default function App() {
                   <AdminDashboard onLogout={handleLogout} onBack={() => setScreen("landing")} />
                 )}
                 {role === "admin" && <AdminPanel lang={lang} screen={screen} />}
+
+                {/* Shared Settings Screen */}
+                {screen === "settings" && (
+                  <SettingsPage 
+                    lang={lang} 
+                    palette={palette} 
+                    darkMode={darkMode} 
+                    font={font} 
+                    onPalette={setPalette} 
+                    onDark={setDarkMode} 
+                    onFont={setFont} 
+                    onLogout={handleLogout}
+                  />
+                )}
               </main>
             </div>
           )}
