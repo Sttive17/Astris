@@ -1,26 +1,50 @@
 import { useState } from "react";
-import { ChevronLeft, AlertCircle, User, Building2, Users, Shield } from "lucide-react";
+import { ChevronLeft, AlertCircle, User, Building2, Users, Shield, ArrowRight } from "lucide-react";
 import { Lang, Role } from "../../types";
 import { useT, C } from "../../i18n/useT";
 import { Overlay } from "../common/Overlay";
 import { signInWithGoogle } from "../../../lib/supabase";
 
 export function RegisterModal({ lang, role, onRegister, onBack, error, loading, googleAuthUser, onCompleteGoogle }: {
-  lang: Lang; role: Role;
-  onRegister: (email: string, password: string, name: string) => Promise<void>;
-  onBack: () => void; error: string | null; loading: boolean;
-  googleAuthUser?: any; onCompleteGoogle?: () => void;
+  lang: Lang; role: Role | null;
+  onRegister: (e: string, p: string, n: string, r: Role, v: string) => void;
+  onBack: () => void;
+  error?: string | null;
+  loading?: boolean;
+  googleAuthUser?: any;
+  onCompleteGoogle?: () => void;
 }) {
   const t = useT(lang);
+  
+  // Step management
+  const [step, setStep] = useState<"select_role" | "credentials">(googleAuthUser ? "credentials" : (role ? "credentials" : "select_role"));
+  const [selectedRole, setSelectedRole] = useState<Role | null>(googleAuthUser ? googleAuthUser.role : (role ?? null));
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const ROLE_ICON: Record<Role, any> = { candidate: User, company: Building2, mentor: Users, admin: Shield };
-  const RoleIcon = ROLE_ICON[role];
+  const [vocation, setVocation] = useState("");
+
+  const ROLE_ICON: Record<string, any> = { candidate: User, company: Building2, mentor: Users, admin: Shield };
+  const RoleIcon = selectedRole ? ROLE_ICON[selectedRole] : User;
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !loading && email && password) {
-      onRegister(email, password, name);
+    if (e.key === 'Enter' && !loading && email && password && selectedRole) {
+      onRegister(email, password, name, selectedRole, vocation);
+    }
+  };
+
+  const handleRoleSelect = (r: Role) => {
+    setSelectedRole(r);
+    setStep("credentials");
+  };
+
+  const handleBack = () => {
+    if (step === "credentials" && !role) {
+      setStep("select_role");
+      setSelectedRole(null);
+    } else {
+      onBack();
     }
   };
 
@@ -46,7 +70,7 @@ export function RegisterModal({ lang, role, onRegister, onBack, error, loading, 
               </svg>
             </div>
             <h3 className="text-xl font-bold text-foreground">Hola, {googleAuthUser.name}</h3>
-            <p className="text-muted-foreground text-sm">Tu cuenta de Google ha sido vinculada. Confirma para crear tu perfil como <b>{role === 'candidate' ? 'Candidato' : role === 'company' ? 'Empresa' : 'Mentor'}</b>.</p>
+            <p className="text-muted-foreground text-sm">Tu cuenta de Google ha sido vinculada. Confirma para crear tu perfil como <b>{selectedRole === 'candidate' ? 'Candidato' : selectedRole === 'company' ? 'Empresa' : 'Mentor'}</b>.</p>
             <button
               onClick={onCompleteGoogle}
               className="w-full mt-4 py-4 rounded-xl font-bold text-base cursor-pointer hover:opacity-90 transition-opacity"
@@ -60,11 +84,62 @@ export function RegisterModal({ lang, role, onRegister, onBack, error, loading, 
     );
   }
 
+  if (step === "select_role") {
+    return (
+      <Overlay>
+        <div className="w-[95%] sm:w-full max-w-lg rounded-2xl overflow-hidden mx-auto" style={{ backgroundColor: "var(--card)" }}>
+          <div className="px-4 md:px-8 py-7 border-b border-border relative">
+            <button onClick={onBack} className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 flex items-center justify-center p-2 text-muted-foreground hover:text-foreground cursor-pointer transition-colors bg-transparent border-0">
+              <ChevronLeft size={20} aria-hidden="true" />
+            </button>
+            <div className="text-xl font-bold text-foreground text-center px-12 md:px-16">
+              {lang === "es" ? "¿Qué tipo de cuenta deseas crear?" : lang === "en" ? "What type of account do you want to create?" : lang === "pt" ? "Que tipo de conta você deseja criar?" : "Quel type de compte souhaitez-vous créer?"}
+            </div>
+          </div>
+          <div className="p-4 md:p-8 flex flex-col gap-4">
+            <button onClick={() => handleRoleSelect("candidate")} className="flex items-center gap-5 p-5 rounded-2xl border-2 border-border bg-background cursor-pointer text-left transition-all hover:border-primary hover:shadow-md group">
+              <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                <User size={24} />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-foreground mb-1">{t("landing.hero.cand")}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{lang === "es" ? "Busco oportunidades laborales accesibles y libres de sesgos." : "I'm looking for accessible and bias-free job opportunities."}</p>
+              </div>
+              <ArrowRight size={20} className="text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
+            </button>
+
+            <button onClick={() => handleRoleSelect("company")} className="flex items-center gap-5 p-5 rounded-2xl border-2 border-border bg-background cursor-pointer text-left transition-all hover:border-primary hover:shadow-md group">
+              <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                <Building2 size={24} />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-foreground mb-1">{t("landing.hero.comp")}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{lang === "es" ? "Quiero publicar vacantes inclusivas y encontrar el mejor talento." : "I want to post inclusive vacancies and find the best talent."}</p>
+              </div>
+              <ArrowRight size={20} className="text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
+            </button>
+
+            <button onClick={() => handleRoleSelect("mentor")} className="flex items-center gap-5 p-5 rounded-2xl border-2 border-border bg-background cursor-pointer text-left transition-all hover:border-primary hover:shadow-md group">
+              <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                <Users size={24} />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-foreground mb-1">{t("role.mentor")}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{lang === "es" ? "Deseo acompañar y orientar a talentos y empresas." : "I want to guide and support talents and companies."}</p>
+              </div>
+              <ArrowRight size={20} className="text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
+            </button>
+          </div>
+        </div>
+      </Overlay>
+    );
+  }
+
   return (
     <Overlay>
       <div className="w-[95%] sm:w-full max-w-md rounded-2xl overflow-hidden mx-auto" style={{ backgroundColor: "var(--card)" }}>
         <div className="px-4 md:px-8 py-7 border-b border-border">
-          <button onClick={onBack} className="flex items-center gap-1.5 text-sm text-muted-foreground cursor-pointer mb-4">
+          <button onClick={handleBack} className="flex items-center gap-1.5 text-sm text-muted-foreground cursor-pointer mb-4">
             <ChevronLeft size={15} aria-hidden="true" />{t("back")}
           </button>
           <div className="flex items-center gap-3">
@@ -92,11 +167,17 @@ export function RegisterModal({ lang, role, onRegister, onBack, error, loading, 
             <label className="block text-sm font-semibold text-foreground mb-2">{t("login.pass")}</label>
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} onKeyDown={handleKeyDown} className="w-full px-4 py-3 rounded-xl border-2 border-border text-foreground text-base" style={{ backgroundColor: "var(--input-background)" }} placeholder="••••••••" />
           </div>
+          <div>
+            <label className="block text-sm font-semibold text-foreground mb-2">
+              {lang === "es" ? "Perfil Profesional / Área de Especialidad" : "Professional Profile / Specialty"}
+            </label>
+            <input type="text" value={vocation} onChange={(e) => setVocation(e.target.value)} onKeyDown={handleKeyDown} className="w-full px-4 py-3 rounded-xl border-2 border-border text-foreground text-base" style={{ backgroundColor: "var(--input-background)" }} placeholder={lang === "es" ? "Ej. Desarrollador Web, Psicóloga" : "e.g. Web Developer, Psychologist"} />
+          </div>
           <button
-            onClick={() => onRegister(email, password, name)}
-            disabled={loading || !email || !password}
+            onClick={() => onRegister(email, password, name, selectedRole!, vocation)}
+            disabled={loading || !email || !password || !selectedRole}
             className="w-full py-4 rounded-xl font-bold text-base"
-            style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)", cursor: loading || !email || !password ? "not-allowed" : "pointer", opacity: loading || !email || !password ? 0.6 : 1 }}
+            style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)", cursor: loading || !email || !password || !selectedRole ? "not-allowed" : "pointer", opacity: loading || !email || !password || !selectedRole ? 0.6 : 1 }}
           >
             {loading ? "..." : C(lang, "registerSubmit")}
           </button>
@@ -110,12 +191,12 @@ export function RegisterModal({ lang, role, onRegister, onBack, error, loading, 
           <button
             onClick={async () => {
               try {
-                await signInWithGoogle(role, 'register');
+                await signInWithGoogle(selectedRole!, 'register');
               } catch (e) {
                 console.error(e);
               }
             }}
-            disabled={loading}
+            disabled={loading || !selectedRole}
             className="w-full py-4 rounded-xl font-bold text-base flex items-center justify-center gap-3 border-2 border-border cursor-pointer hover:bg-secondary transition-colors"
             style={{ backgroundColor: "var(--card)", color: "var(--foreground)" }}
           >

@@ -44,11 +44,11 @@ export function CompanyCandidates({ lang, onSelect }: { lang: Lang; onSelect: (i
           ) : candidates.length === 0 ? (
             <div className="px-7 py-6 md:py-12 text-center text-muted-foreground">No se encontraron candidatos.</div>
           ) : candidates.map((c, i) => (
-            <div key={c.id} className="grid items-center px-7 py-5 border-b border-border last:border-0" style={{ gridTemplateColumns: "1fr 2fr 100px 160px", backgroundColor: i % 2 === 0 ? "var(--background)" : "var(--card)" }}>
-              <div className="font-mono text-sm font-bold" style={{ color: "var(--primary)", fontFamily: "DM Mono, monospace" }}>{c.id}</div>
+            <div key={c.id} className="grid items-center px-7 py-5 border-b border-border last:border-0 hover:bg-secondary/40 transition-colors group" style={{ gridTemplateColumns: "1fr 2fr 100px 160px", backgroundColor: i % 2 === 0 ? "var(--background)" : "var(--card)" }}>
+              <div className="font-mono text-sm font-bold group-hover:text-primary transition-colors" style={{ color: "var(--primary)", fontFamily: "DM Mono, monospace" }}>{c.id.substring(0, 8)}</div>
               <div className="text-sm text-muted-foreground leading-relaxed pr-4">{c.strengths}</div>
               <div className="flex justify-center"><MatchBadge value={c.match} size="sm" /></div>
-              <button onClick={() => onSelect(c.id)} className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold cursor-pointer text-sm" style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)" }}>
+              <button onClick={() => onSelect(c.id)} className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold cursor-pointer text-sm transition-transform hover:scale-105" style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)" }}>
                 {lang === "es" ? "Ver perfil" : "View profile"}<ChevronRight size={14} aria-hidden="true" />
               </button>
             </div>

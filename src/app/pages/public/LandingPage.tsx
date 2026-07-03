@@ -88,15 +88,9 @@ export function LandingPage({ lang, onOpenAuth, onLang, onNavigate }: { lang: La
                 <span style={{ color: "var(--primary)" }}>{t("landing.hero.t2")}</span>
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed mb-10 whitespace-pre-line italic max-w-xl">{t("landing.hero.sub")}</p>
-              <div className="flex flex-col sm:flex-row flex-wrap gap-3 w-full sm:w-auto">
-                <button onClick={() => onOpenAuth("candidate")} className="flex items-center justify-center sm:justify-start gap-3 w-full sm:w-auto px-6 py-3.5 rounded-xl text-base font-bold border-2 cursor-pointer transition-transform hover:scale-[1.02]" style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)", borderColor: "var(--primary)" }}>
-                  <User size={20} aria-hidden="true" />{t("landing.hero.cand")}<ArrowRight size={16} aria-hidden="true" />
-                </button>
-                <button onClick={() => onOpenAuth("company")} className="flex items-center justify-center sm:justify-start gap-3 w-full sm:w-auto px-6 py-3.5 rounded-xl text-base font-bold border-2 cursor-pointer transition-transform hover:scale-[1.02]" style={{ backgroundColor: "var(--card)", color: "var(--foreground)", borderColor: "var(--border)" }}>
-                  <Building2 size={20} aria-hidden="true" />{t("landing.hero.comp")}<ArrowRight size={16} aria-hidden="true" />
-                </button>
-                <button onClick={() => onOpenAuth("mentor")} className="flex items-center justify-center sm:justify-start gap-3 w-full sm:w-auto px-6 py-3.5 rounded-xl text-base font-bold border-2 cursor-pointer transition-transform hover:scale-[1.02]" style={{ backgroundColor: "var(--card)", color: "var(--foreground)", borderColor: "var(--border)" }}>
-                  <Star size={20} aria-hidden="true" />{t("role.mentor")}<ArrowRight size={16} aria-hidden="true" />
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3 w-full sm:w-auto mt-8">
+                <button onClick={() => onOpenAuth(undefined, "register")} className="flex items-center justify-center sm:justify-start gap-3 w-full sm:w-auto px-8 py-4 rounded-xl text-lg font-bold cursor-pointer transition-transform hover:scale-[1.02] border-0" style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)" }}>
+                  {lang === "es" ? "Únete a Astris" : lang === "pt" ? "Junte-se a Astris" : lang === "fr" ? "Rejoignez Astris" : "Join Astris"}<ArrowRight size={20} aria-hidden="true" />
                 </button>
               </div>
             </div>

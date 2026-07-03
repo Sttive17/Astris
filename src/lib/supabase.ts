@@ -11,7 +11,8 @@ export async function registerUser(
   email: string,
   password: string,
   name: string,
-  role: "candidate" | "company" | "mentor" | "admin"
+  role: "candidate" | "company" | "mentor" | "admin",
+  vocation: string = ""
 ) {
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -32,6 +33,7 @@ export async function registerUser(
         email: email,
         full_name: name || data.user.user_metadata?.full_name || email.split("@")[0],
         role,
+        vocation,
         completed_onboarding: false,
       };
       const { error: upsertErr } = await supabase.from("users_profiles").upsert(upsertBody);
@@ -100,9 +102,11 @@ export async function getCurrentUser() {
   const pendingRole = localStorage.getItem("astris_pending_role");
   const intent = localStorage.getItem("astris_google_intent");
   
+  const isRecovery = window.location.hash.includes("type=recovery");
+  
   let needsRegistration = false;
 
-  if (pendingRole || intent) {
+  if ((pendingRole || intent) && !isRecovery) {
     if (!profile || !profile.role) {
       needsRegistration = true; // Siempre mostrar confirmación de registro para nuevos usuarios de Google
       
@@ -127,6 +131,10 @@ export async function getCurrentUser() {
         error = null;
       }
     }
+    localStorage.removeItem("astris_pending_role");
+    localStorage.removeItem("astris_google_intent");
+  } else if (isRecovery) {
+    // Clear residual intents to prevent ghost registration flashes
     localStorage.removeItem("astris_pending_role");
     localStorage.removeItem("astris_google_intent");
   }
@@ -159,6 +167,8 @@ export async function getCurrentUser() {
     email: session.user.email ?? "",
     name: profile.full_name ?? session.user.email ?? "",
     role: profile.role as "candidate" | "company" | "mentor",
+    avatarUrl: profile.avatar_url ?? "",
+    vocation: profile.vocation ?? "",
     completedOnboarding: profile.completed_onboarding ?? false,
     needsRegistration,
   };
@@ -262,8 +272,12 @@ export async function updatePassword(newPassword: string) {
   if (error) throw error;
 }
 
-export async function updateProfile(userId: string, name: string) {
-  const { error } = await supabase.from("users_profiles").update({ full_name: name }).eq("id", userId);
+export async function updateProfile(userId: string, name: string, avatarUrl: string = "", vocation: string = "") {
+  const { error } = await supabase.from("users_profiles").update({ 
+    full_name: name,
+    avatar_url: avatarUrl,
+    vocation: vocation
+  }).eq("id", userId);
   if (error) throw error;
 }
 

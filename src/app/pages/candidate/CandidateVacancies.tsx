@@ -101,15 +101,15 @@ export function CandidateVacancies({ lang, onSelect }: { lang: Lang; onSelect: (
           {loadingVac ? (
             <div className="flex items-center justify-center py-20 text-muted-foreground">{lang === "es" ? "Cargando vacantes..." : "Loading jobs..."}</div>
           ) : filtered.map((v) => (
-            <article key={v.id} className="rounded-2xl border border-border p-7 flex items-center gap-7" style={{ backgroundColor: "var(--card)" }}>
+            <article key={v.id} className="rounded-2xl border border-border p-7 flex flex-col md:flex-row items-start md:items-center gap-7 transition-all duration-300 hover:shadow-xl hover:border-primary group" style={{ backgroundColor: "var(--card)" }}>
               <MatchBadge value={v.match} size="lg" />
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-4 mb-2">
                   <div>
-                    <h3 className="text-xl font-bold text-foreground">{v.title}</h3>
+                    <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">{v.title}</h3>
                     <div className="text-muted-foreground">{v.company} · {v.sector}</div>
                   </div>
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground shrink-0">
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground shrink-0 mt-2 md:mt-0">
                     <span className="flex items-center gap-1.5"><Clock size={13} aria-hidden="true" />{v.type}</span>
                     <span className="flex items-center gap-1.5"><MapPin size={13} aria-hidden="true" />{v.modality}</span>
                   </div>
@@ -122,7 +122,7 @@ export function CandidateVacancies({ lang, onSelect }: { lang: Lang; onSelect: (
                   ))}
                 </div>
               </div>
-              <button onClick={() => onSelect(v.id)} className="shrink-0 flex items-center gap-2 px-5 py-3.5 rounded-xl font-bold cursor-pointer text-sm border-0" style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)" }}>
+              <button onClick={() => onSelect(v.id)} className="w-full md:w-auto shrink-0 flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-bold cursor-pointer text-sm border-0 transition-transform hover:scale-105" style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)" }}>
                 {lang === "es" ? "Ver detalle" : "View detail"}<ArrowRight size={13} aria-hidden="true" />
               </button>
             </article>

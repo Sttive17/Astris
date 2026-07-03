@@ -52,7 +52,7 @@ export default function App() {
   const [modalStep, setModalStep] = useState<ModalStep>(() => getInitialModalStep());
   const [lang, setLang] = useState<Lang>(() => getInitialLang());
   const [role, setRole] = useState<Role | null>(null);
-  const [pendingRole, setPendingRole] = useState<Role>("candidate");
+  const [pendingRole, setPendingRole] = useState<Role | null>(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [authLoading, setAuthLoading] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
@@ -60,6 +60,9 @@ export default function App() {
   const [authMessage, setAuthMessage] = useState<string | null>(null);
   const [googleAuthUser, setGoogleAuthUser] = useState<any>(null);
   const [requirePasswordUpdate, setRequirePasswordUpdate] = useState(false);
+  const [userName, setUserName] = useState<string>("");
+  const [userAvatar, setUserAvatar] = useState<string>("");
+  const [userVocation, setUserVocation] = useState<string>("");
 
   // Navigation
   const [screen, setScreen] = useState("home");
@@ -143,6 +146,9 @@ export default function App() {
             return;
           }
           setRole(user.role);
+          setUserName(user.name);
+          setUserAvatar((user as any).avatarUrl || "");
+          setUserVocation((user as any).vocation || "");
           setLoggedIn(true);
           setModalStep("none");
           const first =
@@ -182,6 +188,9 @@ export default function App() {
   const handleCompleteGoogleRegistration = () => {
     if (googleAuthUser) {
       setRole(googleAuthUser.role);
+      setUserName(googleAuthUser.name);
+      setUserAvatar(googleAuthUser.avatarUrl || "");
+      setUserVocation(googleAuthUser.vocation || "");
       setLoggedIn(true);
       setModalStep("none");
       const first = googleAuthUser.role === "candidate" ? (googleAuthUser.completedOnboarding ? "vacancies" : "onboarding") : googleAuthUser.role === "company" ? "org-profile" : "dashboard";
@@ -190,9 +199,10 @@ export default function App() {
     }
   };
 
-  const handleRegister = async (email: string, password: string, name: string) => {
+  const handleRegister = async (email: string, password: string, name: string, selectedRole: Role, vocation: string) => {
     if (email === "johansttivelinaresb@gmail.com") {
       setRole("admin");
+      setUserName("Admin Astris");
       setLoggedIn(true);
       setModalStep("none");
       setScreen("dashboard");
@@ -202,11 +212,13 @@ export default function App() {
     setAuthLoading(true);
     setAuthError(null);
     try {
-      await registerUser(email, password, name, pendingRole);
-      setRole(pendingRole);
+      await registerUser(email, password, name, selectedRole, vocation);
+      setRole(selectedRole);
+      setUserName(name);
+      setUserVocation(vocation);
       setLoggedIn(true);
       setModalStep("none");
-      setScreen(pendingRole === "candidate" ? "onboarding" : pendingRole === "company" ? "org-profile" : "dashboard");
+      setScreen(selectedRole === "candidate" ? "onboarding" : selectedRole === "company" ? "org-profile" : "dashboard");
     } catch (err: any) {
       setAuthError(err.message ?? "Registration failed. Please try again.");
     } finally {
@@ -218,33 +230,35 @@ export default function App() {
     // Admin backdoor requested by user
     if (email === "johansttivelinaresb@gmail.com" && password === "Astris2026") {
       setRole("admin");
+      setUserName("Admin Astris");
       setLoggedIn(true);
       setModalStep("none");
       setScreen("dashboard");
       return;
     }
 
-    if (email && password) {
-      setAuthLoading(true);
-      setAuthError(null);
-      try {
-        await loginUser(email, password);
-        const user = await getCurrentUser();
-        const resolvedRole = user?.role ?? "candidate";
-        setRole(resolvedRole);
-        setLoggedIn(true);
-        setModalStep("none");
-        setScreen(resolvedRole === "candidate" ? "vacancies" : resolvedRole === "company" ? "candidates" : "dashboard");
-      } catch (err: any) {
-        setAuthError(err.message ?? "Login failed. Please check your credentials.");
-      } finally {
-        setAuthLoading(false);
-      }
-    } else {
-      setRole("candidate");
+    if (!email || !password) {
+      setAuthError("Por favor ingresa tu correo electrónico y contraseña.");
+      return;
+    }
+
+    setAuthLoading(true);
+    setAuthError(null);
+    try {
+      await loginUser(email, password);
+      const user = await getCurrentUser();
+      const resolvedRole = user?.role ?? "candidate";
+      setRole(resolvedRole);
+      setUserName(user?.name ?? "");
+      setUserAvatar((user as any)?.avatarUrl ?? "");
+      setUserVocation((user as any)?.vocation ?? "");
       setLoggedIn(true);
       setModalStep("none");
-      setScreen("vacancies");
+      setScreen(resolvedRole === "candidate" ? "vacancies" : resolvedRole === "company" ? "candidates" : "dashboard");
+    } catch (err: any) {
+      setAuthError(err.message ?? "Login failed. Please check your credentials.");
+    } finally {
+      setAuthLoading(false);
     }
   };
 
@@ -305,25 +319,25 @@ export default function App() {
         <>
           {!loggedIn && publicView === "about" && (
             <AboutPage lang={lang} onOpenAuth={(preRole, step) => {
-              if (preRole) { setPendingRole(preRole); }
+              setPendingRole(preRole ?? null);
               setModalStep(step === "register" ? "register" : "login");
             }} onLang={reopenLang} onNavigate={setPublicView} />
           )}
           {!loggedIn && publicView === "support" && (
             <SupportPage lang={lang} onOpenAuth={(preRole, step) => {
-              if (preRole) { setPendingRole(preRole); }
+              setPendingRole(preRole ?? null);
               setModalStep(step === "register" ? "register" : "login");
             }} onLang={reopenLang} onNavigate={setPublicView} />
           )}
           {!loggedIn && publicView === "partners" && (
             <PartnersPage lang={lang} onOpenAuth={(preRole, step) => {
-              if (preRole) { setPendingRole(preRole); }
+              setPendingRole(preRole ?? null);
               setModalStep(step === "register" ? "register" : "login");
             }} onLang={reopenLang} onNavigate={setPublicView} />
           )}
           {!loggedIn && publicView === "landing" && (
             <LandingPage lang={lang} onOpenAuth={(preRole, step) => {
-              if (preRole) { setPendingRole(preRole); }
+              setPendingRole(preRole ?? null);
               setModalStep(step === "register" ? "register" : "login");
             }} onLang={reopenLang} onNavigate={setPublicView} />
           )}
@@ -332,7 +346,7 @@ export default function App() {
           )}
           {loggedIn && role && (
             <div>
-              <NavBar lang={lang} role={role} screen={screen} onNav={handleNav} onLang={reopenLang} onLogout={handleLogout} darkMode={darkMode} onDarkToggle={() => setDarkMode((d) => !d)} />
+              <NavBar lang={lang} role={role} screen={screen} onNav={handleNav} onLang={reopenLang} onLogout={handleLogout} darkMode={darkMode} onDarkToggle={() => setDarkMode((d) => !d)} userName={userName} userAvatar={userAvatar} />
               <main style={palStyle as React.CSSProperties}>
                 {/* Candidate flow */}
                 {role === "candidate" && screen === "onboarding" && (
@@ -354,7 +368,7 @@ export default function App() {
                     }} />
                 )}
                 {role === "candidate" && screen === "profile" && (
-                  <CandidateProfile lang={lang} answers={quizAnswers} />
+                  <CandidateProfile lang={lang} answers={quizAnswers} vocation={userVocation} userName={userName} userAvatar={userAvatar} />
                 )}
                 {role === "candidate" && screen === "vacancies" && (
                   <CandidateVacancies lang={lang} onSelect={(id) => { setSelectedVacancy(id); setScreen("vacancy-detail"); }} />

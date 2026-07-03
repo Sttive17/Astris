@@ -17,6 +17,8 @@ export function SettingsPage({ lang, palette, darkMode, font, onPalette, onDark,
 }) {
   const t = useT(lang);
   const [name, setName] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState("");
+  const [vocation, setVocation] = useState("");
   const [userId, setUserId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -29,6 +31,8 @@ export function SettingsPage({ lang, palette, darkMode, font, onPalette, onDark,
       if (user) {
         setUserId(user.id);
         setName(user.name);
+        setAvatarUrl((user as any).avatarUrl || "");
+        setVocation((user as any).vocation || "");
       }
       setLoading(false);
     }
@@ -40,8 +44,8 @@ export function SettingsPage({ lang, palette, darkMode, font, onPalette, onDark,
     setSaving(true);
     setMessage(null);
     try {
-      await updateProfile(userId, name);
-      setMessage({ text: lang === "es" ? "Perfil actualizado correctamente." : "Profile updated successfully.", type: "success" });
+      await updateProfile(userId, name, avatarUrl, vocation);
+      setMessage({ text: lang === "es" ? "Perfil actualizado correctamente. (Recarga la página para ver los cambios)" : "Profile updated successfully. (Reload to see changes)", type: "success" });
     } catch (e: any) {
       setMessage({ text: e.message || "Error al actualizar perfil.", type: "error" });
     } finally {
@@ -88,6 +92,32 @@ export function SettingsPage({ lang, palette, darkMode, font, onPalette, onDark,
               className="w-full px-4 py-3 rounded-xl border-2 border-border text-foreground text-base mb-4" 
               style={{ backgroundColor: "var(--input-background)" }} 
             />
+            
+            <label className="block text-sm font-semibold text-foreground mb-2">{lang === "es" ? "Perfil Profesional / Área de Especialidad" : "Professional Profile"}</label>
+            <input 
+              type="text" 
+              value={vocation} 
+              onChange={(e) => setVocation(e.target.value)} 
+              className="w-full px-4 py-3 rounded-xl border-2 border-border text-foreground text-base mb-4" 
+              style={{ backgroundColor: "var(--input-background)" }} 
+              placeholder={lang === "es" ? "Ej. Desarrollador Web" : "e.g. Web Developer"}
+            />
+
+            <label className="block text-sm font-semibold text-foreground mb-2">{lang === "es" ? "URL de Foto de Perfil" : "Profile Picture URL"}</label>
+            <div className="flex gap-4 items-center mb-6">
+              {avatarUrl && (
+                <img src={avatarUrl} alt="Avatar Preview" className="w-12 h-12 rounded-full object-cover shrink-0 border border-border" />
+              )}
+              <input 
+                type="text" 
+                value={avatarUrl} 
+                onChange={(e) => setAvatarUrl(e.target.value)} 
+                className="flex-1 w-full px-4 py-3 rounded-xl border-2 border-border text-foreground text-base" 
+                style={{ backgroundColor: "var(--input-background)" }} 
+                placeholder="https://..."
+              />
+            </div>
+
             <button onClick={handleSaveProfile} disabled={saving} className="flex items-center gap-2 px-5 py-3 rounded-xl font-bold text-sm cursor-pointer transition-all hover:scale-[1.02]" style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)" }}>
               <Save size={16} /> {saving ? "..." : (lang === "es" ? "Guardar Cambios" : "Save Changes")}
             </button>

@@ -29,14 +29,14 @@ export function MentorDashboard({ lang }: { lang: Lang }) {
           <h3 className="text-xl font-bold text-foreground mb-6">{C(lang, "mentorProcesses") as string}</h3>
           <div className="flex flex-col gap-5">
             {MENTOR_PROCESSES.map((proc) => (
-              <article key={proc.cid} className="rounded-2xl border border-border p-7" style={{ backgroundColor: "var(--card)" }}>
+              <article key={proc.cid} className="rounded-2xl border border-border p-7 transition-all duration-300 hover:shadow-xl hover:border-primary group" style={{ backgroundColor: "var(--card)" }}>
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <div className="flex items-center gap-3 mb-1.5">
                       <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ backgroundColor: proc.stageColor + "22", color: proc.stageColor }}>{proc.stage}</span>
-                      <span className="text-xs text-muted-foreground" style={{ fontFamily: "DM Mono, monospace" }}>{proc.cid}</span>
+                      <span className="text-xs text-muted-foreground group-hover:text-primary transition-colors" style={{ fontFamily: "DM Mono, monospace" }}>{proc.cid}</span>
                     </div>
-                    <h4 className="text-lg font-bold text-foreground">{proc.role}</h4>
+                    <h4 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors">{proc.role}</h4>
                     <div className="text-muted-foreground text-sm">{proc.company}</div>
                   </div>
                   <div className="text-right shrink-0">
@@ -44,15 +44,15 @@ export function MentorDashboard({ lang }: { lang: Lang }) {
                     <div className="text-2xl font-bold text-foreground" style={{ fontFamily: "DM Mono, monospace" }}>{proc.days}d</div>
                   </div>
                 </div>
-                <div className="p-4 rounded-xl mb-4 border border-border" style={{ backgroundColor: "var(--background)" }}>
+                <div className="p-4 rounded-xl mb-4 border border-border group-hover:border-primary/30 transition-colors" style={{ backgroundColor: "var(--background)" }}>
                   <div className="text-xs font-bold text-muted-foreground uppercase tracking-wide mb-1.5">{C(lang, "sessionNotes") as string}</div>
                   <p className="text-sm text-foreground leading-relaxed">{proc.notes}</p>
                 </div>
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                   <div><div className="text-xs text-muted-foreground mb-0.5">{C(lang, "nextAction") as string}</div><div className="text-sm font-semibold text-foreground">{proc.action}</div></div>
-                  <div className="flex gap-3">
-                    <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold cursor-pointer text-sm border border-border" style={{ backgroundColor: "var(--background)", color: "var(--foreground)" }}><MessageSquare size={14} aria-hidden="true" />{C(lang, "notes") as string}</button>
-                    <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold cursor-pointer text-sm" style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)" }}><Calendar size={14} aria-hidden="true" />{C(lang, "scheduleSession") as string}</button>
+                  <div className="flex flex-wrap gap-3 w-full md:w-auto">
+                    <button className="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold cursor-pointer text-sm border border-border transition-colors hover:bg-secondary hover:border-primary/50" style={{ backgroundColor: "var(--background)", color: "var(--foreground)" }}><MessageSquare size={14} aria-hidden="true" />{C(lang, "notes") as string}</button>
+                    <button className="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold cursor-pointer text-sm transition-transform hover:scale-105" style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)" }}><Calendar size={14} aria-hidden="true" />{C(lang, "scheduleSession") as string}</button>
                   </div>
                 </div>
               </article>

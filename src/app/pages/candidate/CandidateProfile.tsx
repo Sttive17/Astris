@@ -1,20 +1,32 @@
-import { Shield } from "lucide-react";
+import { Shield, User } from "lucide-react";
 import { Lang, QuizAnswers } from "../../types";
 import { useT, computeRadar } from "../../i18n/useT";
 import { CANDIDATE_RADAR_FINAL } from "../../mockData";
 import { RadarViz } from "../../components/common/RadarViz";
 import { QUIZ_AXES } from "../../i18n/content";
 
-export function CandidateProfile({ lang, answers }: { lang: Lang; answers: QuizAnswers }) {
+export function CandidateProfile({ lang, answers, userName, userAvatar, vocation }: { lang: Lang; answers: QuizAnswers, userName?: string, userAvatar?: string, vocation?: string }) {
   const t = useT(lang);
   const radarData = Object.keys(answers).length > 0 ? computeRadar(answers) : CANDIDATE_RADAR_FINAL;
   return (
     <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
-      <div className="px-4 lg:px-20 py-10 border-b border-border" style={{ backgroundColor: "var(--card)" }}>
-        <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">{t("profile.title")}</h1>
-        <div className="flex items-center gap-2 text-sm text-muted-foreground mt-4">
-          <Shield size={16} aria-hidden="true" />
-          <p>{t("profile.privacy")}</p>
+      <div className="px-4 lg:px-20 py-10 border-b border-border flex items-center justify-between" style={{ backgroundColor: "var(--card)" }}>
+        <div>
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">Tu perfil</h1>
+          <p className="text-muted-foreground mt-2 max-w-xl">{lang === "es" ? "Aquí tienes un resumen de tu perfil profesional y tus preferencias." : "Here is a summary of your professional profile and preferences."}</p>
+        </div>
+        <div className="hidden sm:flex items-center gap-4 text-right">
+          <div>
+            <div className="text-lg font-bold text-foreground">{userName || "Candidato Astris"}</div>
+            {vocation && <div className="text-sm font-medium text-primary mt-1">{vocation}</div>}
+          </div>
+          <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-border shrink-0 flex items-center justify-center bg-secondary">
+            {userAvatar ? (
+              <img src={userAvatar} alt="Profile" className="w-full h-full object-cover" />
+            ) : (
+              <User size={28} className="text-muted-foreground" />
+            )}
+          </div>
         </div>
       </div>
 

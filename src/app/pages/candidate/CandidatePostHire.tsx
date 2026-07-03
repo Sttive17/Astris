@@ -5,7 +5,7 @@ import { supabase } from "../../../lib/supabase";
 
 export function CandidatePostHire({ lang }: { lang: Lang }) {
   const t = useT(lang);
-  const [status] = useState(1);
+  const [status, setStatus] = useState(1);
   const STATUS_LABELS = C(lang, "statusLabels") as string[];
   const [q1, setQ1] = useState("");
   const [q2, setQ2] = useState("");
@@ -41,12 +41,17 @@ export function CandidatePostHire({ lang }: { lang: Lang }) {
         {/* Status */}
         <div className="rounded-2xl border border-border p-4 md:p-8" style={{ backgroundColor: "var(--card)" }}>
           <h2 className="font-bold text-foreground mb-6">{t("posthire.status")}</h2>
-          <div className="flex gap-4">
+          <div className="flex gap-4 flex-col sm:flex-row">
             {STATUS_LABELS.map((label, i) => (
-              <div key={i} className="flex-1 py-5 rounded-xl border-2 text-center cursor-pointer font-semibold text-sm" style={{ borderColor: status === i ? "var(--primary)" : "var(--border)", backgroundColor: status === i ? "var(--secondary)" : "var(--background)", color: "var(--foreground)" }}>
+              <button 
+                key={i} 
+                onClick={() => setStatus(i)}
+                className="flex-1 py-5 rounded-xl border-2 text-center cursor-pointer font-semibold text-sm transition-all hover:scale-[1.02]" 
+                style={{ borderColor: status === i ? "var(--primary)" : "var(--border)", backgroundColor: status === i ? "var(--secondary)" : "var(--background)", color: "var(--foreground)" }}
+              >
                 {status === i && <div className="w-2 h-2 rounded-full bg-primary mx-auto mb-2" aria-hidden="true" />}
                 {label}
-              </div>
+              </button>
             ))}
           </div>
         </div>

@@ -6,10 +6,11 @@ import { useT } from "../../i18n/useT";
 import astrisImg from "../../../imports/astris.png";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 
-export function NavBar({ lang, role, screen, onNav, onLang, onLogout, darkMode, onDarkToggle }: {
+export function NavBar({ lang, role, screen, onNav, onLang, onLogout, darkMode, onDarkToggle, userName, userAvatar }: {
   lang: Lang; role: Role; screen: string;
   onNav: (s: string) => void; onLang: () => void; onLogout: () => void;
   darkMode: boolean; onDarkToggle: () => void;
+  userName?: string; userAvatar?: string;
 }) {
   const t = useT(lang);
   const CANDIDATE_NAV = [
@@ -99,9 +100,15 @@ export function NavBar({ lang, role, screen, onNav, onLang, onLogout, darkMode, 
           {/* User Profile Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="flex items-center gap-2 px-3 py-2 rounded-xl border border-border cursor-pointer transition-colors hover:bg-secondary" style={{ backgroundColor: "var(--card)" }}>
-                <User size={15} aria-hidden="true" style={{ color: "var(--primary)" }} />
-                <span className="text-xs font-semibold text-foreground hidden sm:inline">{ROLE_LABELS[role]}</span>
+              <button className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-border cursor-pointer transition-colors hover:bg-secondary" style={{ backgroundColor: "var(--card)" }}>
+                {userAvatar ? (
+                  <img src={userAvatar} alt={userName} className="w-6 h-6 rounded-full object-cover" />
+                ) : (
+                  <User size={15} aria-hidden="true" style={{ color: "var(--primary)" }} />
+                )}
+                <span className="text-xs font-semibold text-foreground hidden sm:inline max-w-[120px] truncate" title={userName || ROLE_LABELS[role]}>
+                  {userName || ROLE_LABELS[role]}
+                </span>
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56 mt-1" style={{ backgroundColor: "var(--card)", borderColor: "var(--border)", color: "var(--foreground)" }}>

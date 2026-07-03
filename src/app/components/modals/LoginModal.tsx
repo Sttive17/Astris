@@ -24,9 +24,18 @@ export function LoginModal({ lang, onLogin, onBack, error, loading }: {
   const displayError = localError || error;
   const isBusy = localLoading || loading;
 
+  const handleLoginSubmit = () => {
+    if (!email || !password) {
+      setLocalError(lang === "es" ? "Por favor ingresa tu correo electrónico y contraseña." : "Please enter your email and password.");
+      return;
+    }
+    setLocalError(null);
+    onLogin(email, password);
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !isBusy) {
-      if (mode === "login") onLogin(email || undefined, password || undefined);
+      if (mode === "login") handleLoginSubmit();
       else handleReset();
     }
   };
@@ -90,7 +99,7 @@ export function LoginModal({ lang, onLogin, onBack, error, loading }: {
           
           {mode === "login" ? (
             <>
-              <button onClick={() => onLogin(email || undefined, password || undefined)} disabled={isBusy} className="w-full py-4 rounded-xl font-bold text-base cursor-pointer" style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)", opacity: isBusy ? 0.6 : 1 }}>
+              <button onClick={handleLoginSubmit} disabled={isBusy || !email || !password} className="w-full py-4 rounded-xl font-bold text-base cursor-pointer" style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)", opacity: (isBusy || !email || !password) ? 0.6 : 1 }}>
                 {isBusy ? "..." : t("login.submit")}
               </button>
               <div className="relative flex items-center py-2">
