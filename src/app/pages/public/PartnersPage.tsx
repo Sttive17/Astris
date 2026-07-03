@@ -4,7 +4,7 @@ import { Lang, Role, PublicView } from "../../types";
 import { useT } from "../../i18n/useT";
 import { PublicPageShell } from "./PublicPageShell";
 
-export function PartnersPage({ lang, onNavigate, onOpenAuth, onLang }: { lang: Lang; onNavigate: (view: PublicView) => void; onOpenAuth: (preRole?: Role, step?: "auth" | "login" | "register") => void; onLang: () => void }) {
+export function PartnersPage({ lang, onNavigate, onOpenAuth, onLang, darkMode, onDarkToggle }: { lang: Lang; onNavigate: (view: PublicView) => void; onOpenAuth: (preRole?: Role, step?: "auth" | "login" | "register") => void; onLang: () => void; darkMode: boolean; onDarkToggle: () => void; }) {
   const t = useT(lang);
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({ company: "", name: "", email: "", why: "" });
@@ -15,7 +15,7 @@ export function PartnersPage({ lang, onNavigate, onOpenAuth, onLang }: { lang: L
   };
 
   return (
-    <PublicPageShell lang={lang} currentView="partners" onNavigate={onNavigate} onOpenAuth={onOpenAuth} onLang={onLang} title={t("landing.nav.partners")} subtitle="Si tu empresa quiere participar de Astris, completa este formulario y nos pondremos en contacto para conversar sobre colaboración.">
+    <PublicPageShell lang={lang} currentView="partners" onNavigate={onNavigate} onOpenAuth={onOpenAuth} onLang={onLang} darkMode={darkMode} onDarkToggle={onDarkToggle} title={t("landing.nav.partners")} subtitle="Si tu empresa quiere participar de Astris, completa este formulario y nos pondremos en contacto para conversar sobre colaboración.">
       <div className="max-w-2xl mx-auto w-full">
         <div className="rounded-3xl border border-border bg-background p-4 md:p-8 shadow-sm">
           {submitted ? (

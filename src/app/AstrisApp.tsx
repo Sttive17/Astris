@@ -321,25 +321,25 @@ export default function App() {
             <AboutPage lang={lang} onOpenAuth={(preRole, step) => {
               setPendingRole(preRole ?? null);
               setModalStep(step === "register" ? "register" : "login");
-            }} onLang={reopenLang} onNavigate={setPublicView} />
+            }} onLang={reopenLang} onNavigate={setPublicView} darkMode={darkMode} onDarkToggle={() => setDarkMode((d) => !d)} />
           )}
           {!loggedIn && publicView === "support" && (
             <SupportPage lang={lang} onOpenAuth={(preRole, step) => {
               setPendingRole(preRole ?? null);
               setModalStep(step === "register" ? "register" : "login");
-            }} onLang={reopenLang} onNavigate={setPublicView} />
+            }} onLang={reopenLang} onNavigate={setPublicView} darkMode={darkMode} onDarkToggle={() => setDarkMode((d) => !d)} />
           )}
           {!loggedIn && publicView === "partners" && (
             <PartnersPage lang={lang} onOpenAuth={(preRole, step) => {
               setPendingRole(preRole ?? null);
               setModalStep(step === "register" ? "register" : "login");
-            }} onLang={reopenLang} onNavigate={setPublicView} />
+            }} onLang={reopenLang} onNavigate={setPublicView} darkMode={darkMode} onDarkToggle={() => setDarkMode((d) => !d)} />
           )}
           {!loggedIn && publicView === "landing" && (
             <LandingPage lang={lang} onOpenAuth={(preRole, step) => {
               setPendingRole(preRole ?? null);
               setModalStep(step === "register" ? "register" : "login");
-            }} onLang={reopenLang} onNavigate={setPublicView} />
+            }} onLang={reopenLang} onNavigate={setPublicView} darkMode={darkMode} onDarkToggle={() => setDarkMode((d) => !d)} />
           )}
           {!loggedIn && !["about", "support", "partners", "landing"].includes(publicView) && (
             <NotFoundPage lang={lang} onGoHome={() => setPublicView("landing")} />

@@ -178,7 +178,8 @@ export async function getCandidates() {
   const { data, error } = await supabase
     .from("users_profiles")
     .select("*")
-    .eq("role", "candidate");
+    .eq("role", "candidate")
+    .not("email", "ilike", "%@astris.org");
 
   if (error) {
     console.error("Error fetching candidates:", error);
@@ -189,7 +190,10 @@ export async function getCandidates() {
 }
 
 export async function getCompanies() {
-  const { data, error } = await supabase.from("companies").select("*");
+  const { data, error } = await supabase
+    .from("companies")
+    .select("*, users_profiles!inner(email)")
+    .not("users_profiles.email", "ilike", "%@astris.org");
   if (error) {
     console.error("Error fetching companies:", error);
     return [];
@@ -212,8 +216,9 @@ export async function getMatchesForCandidate(candidateId: string) {
   if (companyIds.length > 0) {
     const { data: companies } = await supabase
       .from("companies")
-      .select("user_id, company_name, accommodations, philosophy, work_environment")
-      .in("user_id", companyIds);
+      .select("user_id, company_name, accommodations, philosophy, work_environment, users_profiles!inner(email)")
+      .in("user_id", companyIds)
+      .not("users_profiles.email", "ilike", "%@astris.org");
     (companies || []).forEach((c: any) => { companiesMap[c.user_id] = c; });
   }
 
@@ -242,7 +247,10 @@ export async function getMatchesForCandidate(candidateId: string) {
 }
 
 export async function getMatchesForCompany(companyId: string) {
-  const { data: cands } = await supabase.from("candidates").select("user_id, work_preference, interests, users_profiles(full_name)");
+  const { data: cands } = await supabase
+    .from("candidates")
+    .select("user_id, work_preference, interests, users_profiles!inner(full_name, email)")
+    .not("users_profiles.email", "ilike", "%@astris.org");
   if (!cands) return [];
 
   // Simple placeholder logic based on company data if needed, or random fallback

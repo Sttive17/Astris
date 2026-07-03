@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Globe, X } from "lucide-react";
+import { Globe, X, Sun, Moon } from "lucide-react";
 import { Lang, Role, PublicView } from "../../types";
 import { useT } from "../../i18n/useT";
 import astrisImg from "../../../imports/astris.png";
 
-export function PublicPageShell({ lang, currentView, onNavigate, onOpenAuth, onLang, title, subtitle, children }: {
+export function PublicPageShell({ lang, currentView, onNavigate, onOpenAuth, onLang, title, subtitle, children, darkMode, onDarkToggle }: {
   lang: Lang;
   currentView: PublicView;
   onNavigate: (view: PublicView) => void;
@@ -13,6 +13,8 @@ export function PublicPageShell({ lang, currentView, onNavigate, onOpenAuth, onL
   title: string;
   subtitle?: string;
   children: React.ReactNode;
+  darkMode: boolean;
+  onDarkToggle: () => void;
 }) {
   const t = useT(lang);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -40,6 +42,14 @@ export function PublicPageShell({ lang, currentView, onNavigate, onOpenAuth, onL
             ))}
           </nav>
           <div className="hidden lg:flex items-center gap-3">
+            <button
+              onClick={onDarkToggle}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium border border-border cursor-pointer hover:bg-secondary bg-transparent"
+              aria-label={darkMode ? "Modo claro" : "Modo oscuro"}
+              title={darkMode ? "Modo claro" : "Modo oscuro"}
+            >
+              {darkMode ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
             <button onClick={onLang} className="flex items-center gap-2 rounded-lg border border-border px-3 py-1.5 text-sm font-medium hover:bg-secondary cursor-pointer bg-transparent" aria-label="Cambiar idioma">
               <Globe size={16} />{lang.toUpperCase()}
             </button>
@@ -49,6 +59,9 @@ export function PublicPageShell({ lang, currentView, onNavigate, onOpenAuth, onL
           
           {/* Mobile menu toggle */}
           <div className="flex lg:hidden items-center gap-3">
+            <button onClick={onDarkToggle} className="flex items-center justify-center p-2 rounded-lg border border-border hover:bg-secondary cursor-pointer bg-transparent">
+               {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
             <button onClick={onLang} className="flex items-center justify-center p-2 rounded-lg border border-border hover:bg-secondary cursor-pointer bg-transparent">
                <Globe size={18} />
             </button>

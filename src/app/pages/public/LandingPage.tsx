@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { User, Building2, Star, ArrowRight, Globe, X } from "lucide-react";
+import { User, Building2, Star, ArrowRight, Globe, X, Sun, Moon } from "lucide-react";
 import { Lang, Role, PublicView } from "../../types";
 import { useT, C } from "../../i18n/useT";
 import astrisImg from "../../../imports/astris.png";
@@ -7,7 +7,7 @@ import genuineImg from "../../../imports/genuine.png";
 import vibralatinaImg from "../../../imports/vibralatina.png";
 import closerToTheStarsImg from "/closertothestars.png";
 
-export function LandingPage({ lang, onOpenAuth, onLang, onNavigate }: { lang: Lang; onOpenAuth: (preRole?: Role, step?: "auth" | "login" | "register") => void; onLang: () => void; onNavigate: (view: PublicView) => void }) {
+export function LandingPage({ lang, onOpenAuth, onLang, onNavigate, darkMode, onDarkToggle }: { lang: Lang; onOpenAuth: (preRole?: Role, step?: "auth" | "login" | "register") => void; onLang: () => void; onNavigate: (view: PublicView) => void; darkMode: boolean; onDarkToggle: () => void; }) {
   const t = useT(lang);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -30,6 +30,14 @@ export function LandingPage({ lang, onOpenAuth, onLang, onNavigate }: { lang: La
             ))}
           </nav>
           <div className="hidden lg:flex items-center gap-3">
+            <button
+              onClick={onDarkToggle}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium border border-border cursor-pointer hover:bg-secondary bg-transparent"
+              aria-label={darkMode ? "Modo claro" : "Modo oscuro"}
+              title={darkMode ? "Modo claro" : "Modo oscuro"}
+            >
+              {darkMode ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
             <button onClick={onLang} className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium border border-border cursor-pointer hover:bg-secondary bg-transparent" aria-label="Cambiar idioma">
               <Globe size={16} />{lang.toUpperCase()}
             </button>
@@ -39,6 +47,9 @@ export function LandingPage({ lang, onOpenAuth, onLang, onNavigate }: { lang: La
           
           {/* Mobile menu toggle */}
           <div className="flex lg:hidden items-center gap-2">
+            <button onClick={onDarkToggle} className="flex items-center justify-center p-2 rounded-lg border border-border hover:bg-secondary cursor-pointer bg-transparent">
+               {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
             <button onClick={onLang} className="flex items-center justify-center p-2 rounded-lg border border-border hover:bg-secondary cursor-pointer bg-transparent">
                <Globe size={18} />
             </button>

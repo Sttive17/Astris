@@ -6,7 +6,7 @@ import genuineImg from "../../../imports/genuine.png";
 import vibralatinaImg from "../../../imports/vibralatina.png";
 import closerImg from "../../../imports/closertothestars.png";
 
-export function AboutPage({ lang, onNavigate, onOpenAuth, onLang }: { lang: Lang; onNavigate: (view: PublicView) => void; onOpenAuth: (preRole?: Role, step?: "auth" | "login" | "register") => void; onLang: () => void }) {
+export function AboutPage({ lang, onNavigate, onOpenAuth, onLang, darkMode, onDarkToggle }: { lang: Lang; onNavigate: (view: PublicView) => void; onOpenAuth: (preRole?: Role, step?: "auth" | "login" | "register") => void; onLang: () => void; darkMode: boolean; onDarkToggle: () => void; }) {
   const t = useT(lang);
   const PILLARS = C(lang, "pillars") as Array<{ num: string; title: string; body: string }>;
   const PROBLEMS = C(lang, "problems") as string[];
@@ -16,7 +16,7 @@ export function AboutPage({ lang, onNavigate, onOpenAuth, onLang }: { lang: Lang
   const IMPACT_COMP = C(lang, "impactComp") as string[];
 
   return (
-    <PublicPageShell lang={lang} currentView="about" onNavigate={onNavigate} onOpenAuth={onOpenAuth} onLang={onLang} title={t("landing.nav.about")} subtitle="Astris nace para transformar la inserción laboral. Diseñamos un camino donde las características de las personas y las condiciones de los entornos se encuentran de forma transparente y humana.">
+    <PublicPageShell lang={lang} currentView="about" onNavigate={onNavigate} onOpenAuth={onOpenAuth} onLang={onLang} darkMode={darkMode} onDarkToggle={onDarkToggle} title={t("landing.nav.about")} subtitle="Astris nace para transformar la inserción laboral. Diseñamos un camino donde las características de las personas y las condiciones de los entornos se encuentran de forma transparente y humana.">
       <div className="flex flex-col gap-10 md:gap-20">
         
         {/* Pilar Section */}
