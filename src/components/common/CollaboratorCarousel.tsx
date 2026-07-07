@@ -1,5 +1,4 @@
-import { type ReactNode } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState, type ReactNode } from "react";
 import { Lang } from "@/types";
 import { useT } from "@/i18n/useT";
 import genuineImg from "@/assets/genuine.png";
@@ -47,80 +46,116 @@ const COLLABORATORS: Collaborator[] = [
 
 export function CollaboratorCarousel({ lang }: { lang: Lang }) {
   const t = useT(lang);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
-  // Triple the array to ensure smooth infinite scrolling without gaps
-  const duplicatedCollaborators = [...COLLABORATORS, ...COLLABORATORS, ...COLLABORATORS, ...COLLABORATORS, ...COLLABORATORS];
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  useEffect(() => {
+    if (paused || reducedMotion) return;
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % COLLABORATORS.length);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [paused, reducedMotion]);
 
   return (
     <div
       className="w-full select-none overflow-hidden"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
       role="region"
       aria-label={t("landing.supported")}
       style={{ perspective: "1000px" }}
     >
-      <style>
-        {`
-          @keyframes infinite-scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-100% / 5)); }
+      <div className="relative flex items-center justify-center min-h-[160px]">
+        {COLLABORATORS.map((item, idx) => {
+          // Calculate offset relative to activeIndex (0 to 3)
+          const offset = (idx - activeIndex + COLLABORATORS.length) % COLLABORATORS.length;
+          
+          let translateX = 0;
+          let scale = 1;
+          let opacity = 1;
+          let zIndex = 10;
+          let filter = "none";
+          let rotateY = 0;
+
+          if (offset === 0) {
+            // Active / Center
+            translateX = 0;
+            scale = 1.1;
+            opacity = 1;
+            zIndex = 30;
+            rotateY = 0;
+            filter = "none";
+          } else if (offset === 1) {
+            // Right Shadowed
+            translateX = 120;
+            scale = 0.85;
+            opacity = 0.5;
+            zIndex = 20;
+            rotateY = -15;
+            filter = "grayscale(0.6) blur(1px)";
+          } else if (offset === 3) {
+            // Left Shadowed
+            translateX = -120;
+            scale = 0.85;
+            opacity = 0.5;
+            zIndex = 20;
+            rotateY = 15;
+            filter = "grayscale(0.6) blur(1px)";
+          } else {
+            // Hidden (Behind)
+            translateX = 0;
+            scale = 0.5;
+            opacity = 0;
+            zIndex = 0;
+            rotateY = 0;
           }
-          .animate-infinite-scroll {
-            display: flex;
-            width: fit-content;
-            animation: infinite-scroll 40s linear infinite;
-          }
-          .animate-infinite-scroll:hover {
-            animation-play-state: paused;
-          }
-        `}
-      </style>
-      <div className="relative min-h-[160px] flex items-center overflow-hidden">
-        <div className="animate-infinite-scroll gap-8 md:gap-12 py-4 px-4">
-          {duplicatedCollaborators.map((item, idx) => (
-            <motion.a
-              key={`${item.name}-${idx}`}
+
+          return (
+            <a
+              key={item.name}
               href={item.url}
               target="_blank"
               rel="noreferrer"
               title={item.name}
-              className="flex items-center justify-center rounded-3xl border-2 border-border shadow-md bg-card p-6 shrink-0"
+              className="absolute flex items-center justify-center rounded-3xl border-2 border-border bg-card p-4 transition-all duration-700 ease-in-out hover:!opacity-100 hover:!filter-none"
               style={{
-                width: 180,
-                height: 120,
+                width: 140,
+                height: 100,
+                transform: `translateX(${translateX}px) scale(${scale}) rotateY(${rotateY}deg)`,
+                opacity,
+                zIndex,
+                filter,
+                boxShadow: offset === 0 ? "0 20px 40px -10px rgba(0,0,0,0.2)" : "none",
               }}
-              whileHover={{ 
-                scale: 1.1, 
-                rotateY: 15, 
-                rotateX: 5, 
-                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" 
-              }}
-              initial={{ 
-                rotateY: idx % 2 === 0 ? 10 : -10, 
-                y: idx % 2 === 0 ? -4 : 4 
-              }}
-              animate={{
-                rotateY: [idx % 2 === 0 ? 10 : -10, idx % 2 === 0 ? -10 : 10, idx % 2 === 0 ? 10 : -10],
-                y: [idx % 2 === 0 ? -4 : 4, idx % 2 === 0 ? 4 : -4, idx % 2 === 0 ? -4 : 4]
-              }}
-              transition={{ 
-                duration: 6, 
-                repeat: Infinity, 
-                ease: "easeInOut",
-                delay: idx * 0.2
-              }}
+              tabIndex={offset === 0 ? 0 : -1}
+              aria-hidden={offset !== 0}
             >
               {item.isSvg ? (
-                <div className="w-16 h-16 flex items-center justify-center">{item.svgContent}</div>
+                <div className="flex items-center justify-center transition-transform duration-500 w-12 h-12">
+                  {item.svgContent}
+                </div>
               ) : (
                 <img
                   src={item.imgSrc}
                   alt={item.name}
-                  className="object-contain w-full h-full max-h-16"
+                  className="object-contain transition-transform duration-500 w-full h-full max-h-12"
                 />
               )}
-            </motion.a>
-          ))}
-        </div>
+            </a>
+          );
+        })}
       </div>
     </div>
   );
