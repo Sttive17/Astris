@@ -645,7 +645,51 @@ export const T: Record<Lang, Record<string, any>> = {
 
 export const CONTENT = {
   es: {
-    pillars: [
+    aboutPage: {
+      heroTitle: "Sobre Nosotros",
+      heroSub: "Astris nace para transformar la inserción laboral. Diseñamos un camino donde las características de las personas y las condiciones de los entornos se encuentran de forma transparente y humana.",
+      heroQuote: "No preguntamos qué condición tienes. Preguntamos cómo trabajas mejor.",
+      heroDesc: "Nuestro propósito es facilitar una inserción laboral inclusiva, humana y equitativa, acompañando a cada persona en el reconocimiento y desarrollo de sus capacidades, y ayudando a las organizaciones a construir espacios donde todas las formas de pensar, aprender y contribuir sean respetadas y potenciadas.",
+      purposeLabel: "Propósito",
+      purposeTitle: "Empleo como derecho, no como privilegio",
+      purposeBody: "Creemos que el empleo no debe ser un privilegio condicionado por la diferencia, sino un derecho que permita a las personas neurodivergentes desarrollarse plenamente, alcanzar autonomía y transformar el mundo laboral. Cada decisión que tomamos busca garantizar que todas las formas de pensar, aprender y contribuir tengan un lugar.",
+      missionLabel: "Misión",
+      missionTitle: "Puentes entre talento y oportunidad",
+      missionBody: "Brindamos una plataforma integral que facilita la inserción laboral mediante acompañamiento, formación y conexión con empresas comprometidas con la inclusión. Identificamos y potenciamos las habilidades de cada persona, promoviendo entornos accesibles y equitativos que valoran la neurodiversidad como una fortaleza.",
+      visionLabel: "Visión 2036",
+      visionTitle: "Un mundo laboral sin barreras",
+      visionBody: "Para 2036 aspiramos a ser referentes en inclusión laboral y neurodiversidad, contribuyendo a una sociedad donde las personas neurodivergentes accedan a oportunidades dignas y acordes a sus talentos. Visualizamos un mundo donde la diversidad cognitiva impulse la innovación, eliminando barreras y prejuicios.",
+      philosophyTitle: "Nuestra Filosofía",
+      philosophyDesc: "Somos una comunidad que construye puentes entre el talento y las oportunidades. Nos adaptamos a ti para que aproveches todo tu potencial. La neurodiversidad no es un obstáculo que corregir, sino una fortaleza que potencia la innovación y el crecimiento colectivo.",
+      values: ["Respeto", "Equidad", "Empatía", "Valoración de la neurodiversidad"],
+      pillarsEyebrow: "Nuestro enfoque",
+      pillarsTitle: "Los cuatro pilares de Astris",
+      preparar: {
+        title: "PREPARAR",
+        body: "En Astris preparamos a las personas para que afronten el entorno laboral con confianza. A través de herramientas de formación, simulaciones y autoconocimiento, potenciamos sus habilidades y les brindamos las bases para una incorporación exitosa. Creemos que el conocimiento y la preparación son el primer paso hacia una inserción sostenible. No se trata de encajar en un molde, sino de descubrir y fortalecer las capacidades únicas de cada persona para que brillen en el entorno adecuado.",
+        values: ["Formación personalizada", "Simulaciones laborales", "Autoconocimiento y confianza", "Desarrollo de habilidades"]
+      },
+      adaptar: {
+        title: "ADAPTAR",
+        body: "La tecnología debe adaptarse a las personas, no al revés. Por eso ofrecemos una interfaz personalizable con paletas de colores accesibles, modos claro y oscuro, y ajustes sensoriales. Cada usuario configura la plataforma según sus necesidades, eliminando barreras visuales y cognitivas desde el primer momento. Además, las empresas definen los ajustes que pueden ofrecer antes de iniciar cualquier proceso, garantizando que el entorno esté preparado para recibir talento diverso.",
+        values: ["Interfaz personalizable", "Ajustes sensoriales", "Empresas preparadas", "Accesibilidad desde el inicio"]
+      },
+      acompanar: {
+        title: "ACOMPAÑAR",
+        body: "El acompañamiento humano es esencial para una inserción exitosa. Asignamos mentores especializados que guían a los candidatos desde la preparación hasta el seguimiento post-contratación. Nuestros mentores entienden la neurodiversidad y facilitan la comunicación entre el talento y las empresas, asegurando que ambas partes se sientan apoyadas en cada etapa del proceso. El acompañamiento no termina con la contratación: monitoreamos la adaptación durante los primeros 60 a 90 días.",
+        values: ["Mentores especializados", "Acompañamiento integral", "Seguimiento post-contratación", "Comunicación facilitada"]
+      },
+      conectar: {
+        title: "CONECTAR",
+        body: "Conectar talento con oportunidades es nuestro objetivo final. Nuestro sistema de matching cruza perfiles basados en habilidades y necesidades del entorno — no en diagnósticos — para encontrar coincidencias reales. Así aseguramos que la persona y el entorno laboral sean compatibles, generando relaciones duraderas y exitosas. Las empresas acceden a perfiles anónimos con datos objetivos de compatibilidad, sin nombres, fotos ni información clínica.",
+        values: ["Matching objetivo", "Perfiles basados en habilidades", "Privacidad total", "Relaciones duraderas"]
+      },
+      ctaTitle: "Únete a la comunidad",
+      ctaBody: "Ya seas talento buscando tu lugar ideal o una empresa comprometida con la inclusión real, en Astris encontrarás el camino.",
+      ctaCandidate: "Quiero registrarme",
+      ctaCompany: "Soy una empresa"
+    },
+      pillars: [
       { num: "01", title: "Preparar", body: "Caracterizamos cómo trabaja cada persona y qué entorno necesita. Sin diagnósticos, sin etiquetas clínicas." },
       { num: "02", title: "Adaptar", body: "La empresa define exactamente qué ajustes puede ofrecer antes de iniciar cualquier proceso de selección." },
       { num: "03", title: "Acompañar", body: "Un mentor humano guía al candidato y a la empresa durante todo el proceso, desde el match hasta el día 60." },
@@ -728,7 +772,51 @@ export const CONTENT = {
     companiesPageSub: "Empresas activas en procesos de inclusión",
   },
   en: {
-    pillars: [
+    aboutPage: {
+      heroTitle: "About Us",
+      heroSub: "Astris was born to transform labor market insertion. We design a path where people's characteristics and workplace conditions meet in a transparent and human way.",
+      heroQuote: "We don't ask what condition you have. We ask how you work best.",
+      heroDesc: "Our purpose is to facilitate inclusive, human, and equitable labor insertion, accompanying each person in the recognition and development of their abilities, and helping organizations build spaces where all ways of thinking, learning, and contributing are respected and empowered.",
+      purposeLabel: "Purpose",
+      purposeTitle: "Employment as a right, not a privilege",
+      purposeBody: "We believe employment should not be a privilege conditioned by difference, but a right that allows neurodivergent people to fully develop, achieve autonomy, and transform the world of work. Every decision we make seeks to ensure that all ways of thinking, learning, and contributing have a place.",
+      missionLabel: "Mission",
+      missionTitle: "Bridges between talent and opportunity",
+      missionBody: "We provide a comprehensive platform that facilitates labor insertion through accompaniment, training, and connection with companies committed to inclusion. We identify and enhance each person's skills, promoting accessible and equitable environments that value neurodiversity as a strength.",
+      visionLabel: "Vision 2036",
+      visionTitle: "A world of work without barriers",
+      visionBody: "By 2036 we aspire to be leaders in labor inclusion and neurodiversity, contributing to a society where neurodivergent people access dignified opportunities aligned with their talents. We envision a world where cognitive diversity drives innovation, eliminating barriers and prejudice.",
+      philosophyTitle: "Our Philosophy",
+      philosophyDesc: "We are a community that builds bridges between talent and opportunities. We adapt to you so you can reach your full potential. Neurodiversity is not an obstacle to correct, but a strength that drives innovation and collective growth.",
+      values: ["Respect", "Equity", "Empathy", "Valuing neurodiversity"],
+      pillarsEyebrow: "Our approach",
+      pillarsTitle: "The four pillars of Astris",
+      preparar: {
+        title: "PREPARE",
+        body: "At Astris we prepare people to face the work environment with confidence. Through training tools, simulations, and self-knowledge, we enhance their skills and provide them with the foundations for successful integration. We believe that knowledge and preparation are the first step toward sustainable insertion. It's not about fitting into a mold, but about discovering and strengthening each person's unique capabilities so they can shine in the right environment.",
+        values: ["Personalized training", "Work simulations", "Self-knowledge and confidence", "Skill development"]
+      },
+      adaptar: {
+        title: "ADAPT",
+        body: "Technology should adapt to people, not the other way around. That's why we offer a customizable interface with accessible color palettes, light and dark modes, and sensory adjustments. Each user configures the platform according to their needs, eliminating visual and cognitive barriers from the very first moment. Additionally, companies define the adjustments they can offer before starting any process, ensuring the environment is prepared to receive diverse talent.",
+        values: ["Customizable interface", "Sensory adjustments", "Prepared companies", "Accessibility from the start"]
+      },
+      acompanar: {
+        title: "ACCOMPANY",
+        body: "Human accompaniment is essential for successful insertion. We assign specialized mentors who guide candidates from preparation through post-hire follow-up. Our mentors understand neurodiversity and facilitate communication between talent and companies, ensuring both parties feel supported at every stage of the process. Accompaniment doesn't end with hiring: we monitor adaptation during the first 60 to 90 days.",
+        values: ["Specialized mentors", "Comprehensive accompaniment", "Post-hire follow-up", "Facilitated communication"]
+      },
+      conectar: {
+        title: "CONNECT",
+        body: "Connecting talent with opportunities is our ultimate goal. Our matching system cross-references profiles based on skills and environmental needs — not on diagnoses — to find real matches. This ensures the person and the work environment are compatible, generating lasting and successful relationships. Companies access anonymous profiles with objective compatibility data, without names, photos, or clinical information.",
+        values: ["Objective matching", "Skill-based profiles", "Total privacy", "Lasting relationships"]
+      },
+      ctaTitle: "Join the community",
+      ctaBody: "Whether you're talent looking for your ideal place or a company committed to real inclusion, at Astris you'll find the way.",
+      ctaCandidate: "I want to register",
+      ctaCompany: "I am a company"
+    },
+      pillars: [
       { num: "01", title: "Prepare", body: "We characterize how each person works and what environment they need. No diagnoses, no clinical labels." },
       { num: "02", title: "Adapt", body: "The company defines exactly what adjustments it can offer before starting any selection process." },
       { num: "03", title: "Accompany", body: "A human mentor guides the candidate and the company throughout the entire process, from match to day 60." },
@@ -811,7 +899,51 @@ export const CONTENT = {
     companiesPageSub: "Companies active in inclusion processes",
   },
   pt: {
-    pillars: [
+    aboutPage: {
+      heroTitle: "Sobre Nós",
+      heroSub: "A Astris nasceu para transformar a inserção laboral. Desenhamos um caminho onde as características das pessoas e as condições dos ambientes se encontram de forma transparente e humana.",
+      heroQuote: "Não perguntamos qual condição você tem. Perguntamos como você trabalha melhor.",
+      heroDesc: "Nosso propósito é facilitar uma inserção laboral inclusiva, humana e equitativa, acompanhando cada pessoa no reconhecimento e desenvolvimento de suas capacidades, e ajudando as organizações a construir espaços onde todas as formas de pensar, aprender e contribuir sejam respeitadas e potencializadas.",
+      purposeLabel: "Propósito",
+      purposeTitle: "Emprego como direito, não como privilégio",
+      purposeBody: "Acreditamos que o emprego não deve ser um privilégio condicionado pela diferença, mas um direito que permita às pessoas neurodivergentes desenvolverem-se plenamente, alcançar autonomia e transformar o mundo do trabalho. Cada decisão que tomamos busca garantir que todas as formas de pensar, aprender e contribuir tenham um lugar.",
+      missionLabel: "Missão",
+      missionTitle: "Pontes entre talento e oportunidade",
+      missionBody: "Oferecemos uma plataforma integral que facilita a inserção laboral mediante acompanhamento, formação e conexão com empresas comprometidas com a inclusão. Identificamos e potencializamos as habilidades de cada pessoa, promovendo ambientes acessíveis e equitativos que valorizam a neurodiversidade como uma fortaleza.",
+      visionLabel: "Visão 2036",
+      visionTitle: "Um mundo do trabalho sem barreiras",
+      visionBody: "Até 2036 aspiramos ser referentes em inclusão laboral e neurodiversidade, contribuindo para uma sociedade onde as pessoas neurodivergentes acessem oportunidades dignas e adequadas aos seus talentos. Visualizamos um mundo onde a diversidade cognitiva impulsione a inovação, eliminando barreiras e preconceitos.",
+      philosophyTitle: "Nossa Filosofia",
+      philosophyDesc: "Somos uma comunidade que constrói pontes entre o talento e as oportunidades. Nos adaptamos a você para que você aproveite todo o seu potencial. A neurodiversidade não é um obstáculo a corrigir, mas uma fortaleza que potencializa a inovação e o crescimento coletivo.",
+      values: ["Respeito", "Equidade", "Empatia", "Valorização da neurodiversidade"],
+      pillarsEyebrow: "Nosso enfoque",
+      pillarsTitle: "Os quatro pilares da Astris",
+      preparar: {
+        title: "PREPARAR",
+        body: "Na Astris preparamos as pessoas para enfrentar o ambiente de trabalho com confiança. Através de ferramentas de formação, simulações e autoconhecimento, potencializamos suas habilidades e oferecemos as bases para uma incorporação bem-sucedida. Acreditamos que o conhecimento e a preparação são o primeiro passo para uma inserção sustentável. Não se trata de encaixar em um molde, mas de descobrir e fortalecer as capacidades únicas de cada pessoa para que brilhem no ambiente adequado.",
+        values: ["Formação personalizada", "Simulações laborais", "Autoconhecimento e confiança", "Desenvolvimento de habilidades"]
+      },
+      adaptar: {
+        title: "ADAPTAR",
+        body: "A tecnologia deve se adaptar às pessoas, não o contrário. Por isso oferecemos uma interface personalizável com paletas de cores acessíveis, modos claro e escuro, e ajustes sensoriais. Cada usuário configura a plataforma segundo suas necessidades, eliminando barreiras visuais e cognitivas desde o primeiro momento. Além disso, as empresas definem os ajustes que podem oferecer antes de iniciar qualquer processo, garantindo que o ambiente esteja preparado para receber talento diverso.",
+        values: ["Interface personalizável", "Ajustes sensoriais", "Empresas preparadas", "Acessibilidade desde o início"]
+      },
+      acompanar: {
+        title: "ACOMPANHAR",
+        body: "O acompanhamento humano é essencial para uma inserção bem-sucedida. Atribuímos mentores especializados que guiam os candidatos desde a preparação até o acompanhamento pós-contratação. Nossos mentores entendem a neurodiversidade e facilitam a comunicação entre o talento e as empresas, assegurando que ambas as partes se sintam apoiadas em cada etapa do processo. O acompanhamento não termina com a contratação: monitoramos a adaptação durante os primeiros 60 a 90 dias.",
+        values: ["Mentores especializados", "Acompanhamento integral", "Acompanhamento pós-contratação", "Comunicação facilitada"]
+      },
+      conectar: {
+        title: "CONECTAR",
+        body: "Conectar talento com oportunidades é nosso objetivo final. Nosso sistema de matching cruza perfis baseados em habilidades e necessidades do ambiente — não em diagnósticos — para encontrar coincidências reais. Assim garantimos que a pessoa e o ambiente de trabalho sejam compatíveis, gerando relações duradouras e bem-sucedidas. As empresas acessam perfis anônimos com dados objetivos de compatibilidade, sem nomes, fotos ou informação clínica.",
+        values: ["Matching objetivo", "Perfis baseados em habilidades", "Privacidade total", "Relações duradouras"]
+      },
+      ctaTitle: "Junte-se à comunidade",
+      ctaBody: "Seja você talento buscando seu lugar ideal ou uma empresa comprometida com a inclusão real, na Astris você encontrará o caminho.",
+      ctaCandidate: "Quero me registrar",
+      ctaCompany: "Sou uma empresa"
+    },
+      pillars: [
       { num: "01", title: "Preparar", body: "Caracterizamos como cada pessoa trabalha e qual ambiente precisa. Sem diagnósticos, sem rótulos clínicos." },
       { num: "02", title: "Adaptar", body: "A empresa define exatamente quais ajustes pode oferecer antes de iniciar qualquer processo de seleção." },
       { num: "03", title: "Acompanhar", body: "Um mentor humano guia o candidato e a empresa durante todo o processo, do match ao dia 60." },
@@ -894,7 +1026,51 @@ export const CONTENT = {
     companiesPageSub: "Empresas ativas em processos de lançamento",
   },
   fr: {
-    pillars: [
+    aboutPage: {
+      heroTitle: "À propos de nous",
+      heroSub: "Astris est née pour transformer l'insertion professionnelle. Nous concevons un chemin où les caractéristiques des personnes et les conditions des environnements se rencontrent de manière transparente et humaine.",
+      heroQuote: "Nous ne demandons pas quelle condition vous avez. Nous demandons comment vous travaillez le mieux.",
+      heroDesc: "Notre objectif est de faciliter une insertion professionnelle inclusive, humaine et équitable, en accompagnant chaque personne dans la reconnaissance et le développement de ses capacités, et en aidant les organisations à construire des espaces où toutes les façons de penser, d'apprendre et de contribuer sont respectées et valorisées.",
+      purposeLabel: "Objectif",
+      purposeTitle: "L'emploi comme droit, non comme privilège",
+      purposeBody: "Nous croyons que l'emploi ne doit pas être un privilège conditionné par la différence, mais un droit qui permet aux personnes neurodivergentes de se développer pleinement, d'atteindre l'autonomie et de transformer le monde du travail. Chaque décision que nous prenons vise à garantir que toutes les façons de penser, d'apprendre et de contribuer aient leur place.",
+      missionLabel: "Mission",
+      missionTitle: "Des ponts entre talent et opportunité",
+      missionBody: "Nous offrons une plateforme intégrale qui facilite l'insertion professionnelle par l'accompagnement, la formation et la connexion avec des entreprises engagées dans l'inclusion. Nous identifions et renforçons les compétences de chaque personne, en promouvant des environnements accessibles et équitables qui valorisent la neurodiversité comme une force.",
+      visionLabel: "Vision 2036",
+      visionTitle: "Un monde du travail sans barrières",
+      visionBody: "D'ici 2036, nous aspirons à être des référents en inclusion professionnelle et neurodiversité, contribuant à une société où les personnes neurodivergentes accèdent à des opportunités dignes et adaptées à leurs talents. Nous envisageons un monde où la diversité cognitive stimule l'innovation, en éliminant les barrières et les préjugés.",
+      philosophyTitle: "Notre Philosophie",
+      philosophyDesc: "Nous sommes une communauté qui construit des ponts entre le talent et les opportunités. Nous nous adaptons à vous pour que vous atteigniez tout votre potentiel. La neurodiversité n'est pas un obstacle à corriger, mais une force qui stimule l'innovation et la croissance collective.",
+      values: ["Respect", "Équité", "Empathie", "Valorisation de la neurodiversité"],
+      pillarsEyebrow: "Notre approche",
+      pillarsTitle: "Les quatre piliers d'Astris",
+      preparar: {
+        title: "PRÉPARER",
+        body: "Chez Astris, nous préparons les personnes à affronter l'environnement de travail avec confiance. Grâce à des outils de formation, des simulations et la connaissance de soi, nous renforçons leurs compétences et leur donnons les bases d'une intégration réussie. Nous croyons que la connaissance et la préparation sont le premier pas vers une insertion durable. Il ne s'agit pas de rentrer dans un moule, mais de découvrir et de renforcer les capacités uniques de chaque personne pour qu'elle brille dans le bon environnement.",
+        values: ["Formation personnalisée", "Simulations professionnelles", "Connaissance de soi et confiance", "Développement des compétences"]
+      },
+      adaptar: {
+        title: "ADAPTER",
+        body: "La technologie doit s'adapter aux personnes, pas l'inverse. C'est pourquoi nous offrons une interface personnalisable avec des palettes de couleurs accessibles, des modes clair et sombre, et des ajustements sensoriels. Chaque utilisateur configure la plateforme selon ses besoins, éliminant les barrières visuelles et cognitives dès le premier instant. De plus, les entreprises définissent les aménagements qu'elles peuvent offrir avant de commencer tout processus, garantissant que l'environnement est prêt à recevoir des talents divers.",
+        values: ["Interface personnalisable", "Ajustements sensoriels", "Entreprises préparées", "Accessibilité dès le début"]
+      },
+      acompanar: {
+        title: "ACCOMPAGNER",
+        body: "L'accompagnement humain est essentiel pour une insertion réussie. Nous assignons des mentors spécialisés qui guident les candidats de la préparation au suivi post-embauche. Nos mentors comprennent la neurodiversité et facilitent la communication entre les talents et les entreprises, assurant que les deux parties se sentent soutenues à chaque étape du processus. L'accompagnement ne s'arrête pas à l'embauche : nous surveillons l'adaptation pendant les 60 à 90 premiers jours.",
+        values: ["Mentors spécialisés", "Accompagnement intégral", "Suivi post-embauche", "Communication facilitée"]
+      },
+      conectar: {
+        title: "CONNECTER",
+        body: "Connecter le talent aux opportunités est notre objectif final. Notre système de matching croise les profils basés sur les compétences et les besoins de l'environnement — non sur les diagnostics — pour trouver des correspondances réelles. Ainsi, nous assurons que la personne et l'environnement de travail soient compatibles, générant des relations durables et réussies. Les entreprises accèdent à des profils anonymes avec des données objectives de compatibilité, sans noms, photos ni informations cliniques.",
+        values: ["Matching objectif", "Profils basés sur les compétences", "Confidentialité totale", "Relations durables"]
+      },
+      ctaTitle: "Rejoignez la communauté",
+      ctaBody: "Que vous soyez un talent cherchant votre place idéale ou une entreprise engagée dans l'inclusion réelle, chez Astris vous trouverez le chemin.",
+      ctaCandidate: "Je veux m'inscrire",
+      ctaCompany: "Je suis une entreprise"
+    },
+      pillars: [
       { num: "01", title: "Préparer", body: "Nous caractérisons comment chaque personne travaille et quel environnement elle nécessite. Sans diagnostics, sans étiquettes cliniques." },
       { num: "02", title: "Adapter", body: "L'entreprise définit exactement quels aménagements elle peut offrir avant de démarrer tout processus de sélection." },
       { num: "03", title: "Accompagner", body: "Un mentor humain guide le candidat et l'entreprise tout au long du processus, du match au jour 60." },

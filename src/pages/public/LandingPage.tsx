@@ -3,9 +3,7 @@ import { User, Building2, Star, ArrowRight, Globe, X, Sun, Moon } from "lucide-r
 import { Lang, Role, PublicView } from "@/types";
 import { useT, C } from "@/i18n/useT";
 import astrisImg from "@/assets/astris.png";
-import genuineImg from "@/assets/genuine.png";
-import vibralatinaImg from "@/assets/vibralatina.png";
-import closerToTheStarsImg from "/closertothestars.png";
+import { CollaboratorCarousel } from "@/components/common/CollaboratorCarousel";
 
 export function LandingPage({ lang, onOpenAuth, onLang, onNavigate, darkMode, onDarkToggle }: { lang: Lang; onOpenAuth: (preRole?: Role, step?: "auth" | "login" | "register") => void; onLang: () => void; onNavigate: (view: PublicView) => void; darkMode: boolean; onDarkToggle: () => void; }) {
   const t = useT(lang);
@@ -116,46 +114,13 @@ export function LandingPage({ lang, onOpenAuth, onLang, onNavigate, darkMode, on
           </div>
         </section>
 
-        {/* Partners strip ── visible above the fold */}
+        {/* Collaborators carousel */}
         <section className="border-y border-border px-5 md:px-10" style={{ backgroundColor: "var(--card)", paddingTop: "clamp(2rem, 5vh, 4rem)", paddingBottom: "clamp(2rem, 5vh, 4rem)" }}>
           <div className="max-w-7xl mx-auto">
-            <p className="text-center text-[10px] font-bold uppercase tracking-[0.22em] text-muted-foreground mb-10">
+            <p className="text-center text-[10px] font-bold uppercase tracking-[0.22em] text-muted-foreground mb-6 md:mb-8">
               {t("landing.supported")}
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-6 md:gap-12">
-              {/* Closer to the Stars */}
-              <a href="https://closertothestars.org/" target="_blank" rel="noreferrer" title="Closer To The Stars"
-                className="group flex items-center justify-center rounded-3xl border-2 border-border bg-background transition-all hover:border-primary/60 hover:shadow-xl hover:-translate-y-1 hover:scale-105 shrink-0"
-                style={{ width: 120, height: 120 }}>
-                <img src={closerToTheStarsImg} alt="Closer To The Stars" className="object-contain transition-transform group-hover:scale-110" style={{ width: 80, height: 80 }} />
-              </a>
-
-              {/* Vibra Latina */}
-              <a href="https://www.vibralatinatx.com/" target="_blank" rel="noreferrer" title="Vibra Latina"
-                className="group flex items-center justify-center rounded-3xl border-2 border-border bg-background transition-all hover:border-primary/60 hover:shadow-xl hover:-translate-y-1 hover:scale-105 shrink-0"
-                style={{ width: 120, height: 120 }}>
-                <img src={vibralatinaImg} alt="Vibra Latina" className="object-contain transition-transform group-hover:scale-110" style={{ width: 80, height: 80 }} />
-              </a>
-
-              {/* Microsoft */}
-              <a href="https://support.microsoft.com/es-us/contactus/" target="_blank" rel="noreferrer" title="Microsoft"
-                className="group flex items-center justify-center rounded-3xl border-2 border-border bg-background transition-all hover:border-primary/60 hover:shadow-xl hover:-translate-y-1 hover:scale-105 shrink-0"
-                style={{ width: 120, height: 120 }}>
-                <svg width="60" height="60" viewBox="0 0 21 21" aria-hidden="true" className="transition-transform group-hover:scale-110">
-                  <rect x="1" y="1" width="9" height="9" fill="#F25022" />
-                  <rect x="11" y="1" width="9" height="9" fill="#7FBA00" />
-                  <rect x="1" y="11" width="9" height="9" fill="#00A4EF" />
-                  <rect x="11" y="11" width="9" height="9" fill="#FFB900" />
-                </svg>
-              </a>
-
-              {/* The Genuine Foundation */}
-              <a href="https://genuinecup.org/" target="_blank" rel="noreferrer" title="The Genuine Foundation"
-                className="group flex items-center justify-center rounded-3xl border-2 border-border bg-background transition-all hover:border-primary/60 hover:shadow-xl hover:-translate-y-1 hover:scale-105 shrink-0"
-                style={{ width: 120, height: 120 }}>
-                <img src={genuineImg} alt="The Genuine Foundation" className="object-contain transition-transform group-hover:scale-110" style={{ width: 80, height: 80, marginLeft: "15px" }} />
-              </a>
-            </div>
+            <CollaboratorCarousel lang={lang} />
           </div>
         </section>
 

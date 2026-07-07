@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none">
+  <!-- Background card -->
+  <rect x="30" y="30" width="740" height="540" rx="28" fill="var(--card)" stroke="var(--border)" stroke-width="3"/>
+  
+  <!-- Central UI screen / interface mockup -->
+  <rect x="180" y="80" width="440" height="340" rx="16" fill="var(--background)" stroke="var(--foreground)" stroke-width="3.5"/>
+  
+  <!-- Top bar -->
+  <rect x="180" y="80" width="440" height="42" rx="16" fill="var(--muted)" stroke="var(--foreground)" stroke-width="3"/>
+  <rect x="180" y="106" width="440" height="16" fill="var(--muted)"/>
+  <circle cx="210" cy="101" r="6" fill="var(--accent)"/>
+  <circle cx="232" cy="101" r="6" fill="var(--primary)"/>
+  <circle cx="254" cy="101" r="6" fill="var(--chart-3)"/>
+  
+  <!-- Palette swatches row -->
+  <rect x="210" y="150" width="380" height="8" rx="4" fill="var(--muted-foreground)" opacity="0.15"/>
+  <text x="210" y="145" font-size="12" font-family="sans-serif" fill="var(--muted-foreground)" font-weight="600">Tema</text>
+  
+  <!-- Color swatch circles -->
+  <circle cx="220" cy="195" r="18" fill="#5f3e2a" stroke="var(--foreground)" stroke-width="2"/>
+  <circle cx="270" cy="195" r="18" fill="#2E86AB" stroke="var(--foreground)" stroke-width="2"/>
+  <circle cx="320" cy="195" r="18" fill="#4A7A61" stroke="var(--foreground)" stroke-width="2"/>
+  <circle cx="370" cy="195" r="18" fill="#C9830A" stroke="var(--foreground)" stroke-width="2"/>
+  <circle cx="420" cy="195" r="18" fill="#6B7E9A" stroke="var(--foreground)" stroke-width="2"/>
+  <!-- Selected indicator on the second -->
+  <circle cx="270" cy="195" r="24" fill="none" stroke="var(--accent)" stroke-width="3" stroke-dasharray="6 3"/>
+  
+  <!-- Toggle row - dark/light switch -->
+  <rect x="210" y="240" width="380" height="8" rx="4" fill="var(--muted-foreground)" opacity="0.15"/>
+  <text x="210" y="235" font-size="12" font-family="sans-serif" fill="var(--muted-foreground)" font-weight="600">Modo</text>
+  
+  <rect x="210" y="262" width="180" height="40" rx="20" fill="var(--muted)" stroke="var(--foreground)" stroke-width="2"/>
+  <circle cx="235" cy="282" r="14" fill="var(--accent)" stroke="var(--foreground)" stroke-width="2"/>
+  <text x="340" y="269" font-size="13" font-family="sans-serif" fill="var(--foreground)" font-weight="500">Claro</text>
+  <text x="335" y="288" font-size="13" font-family="sans-serif" fill="var(--foreground)" font-weight="500">Oscuro</text>
+  
+  <!-- Accessibility checkboxes -->
+  <rect x="210" y="320" width="380" height="8" rx="4" fill="var(--muted-foreground)" opacity="0.15"/>
+  <text x="210" y="315" font-size="12" font-family="sans-serif" fill="var(--muted-foreground)" font-weight="600">Ajustes</text>
+  
+  <!-- Checkbox 1 -->
+  <rect x="215" y="340" width="20" height="20" rx="4" fill="var(--accent)" stroke="var(--foreground)" stroke-width="2"/>
+  <path d="M219 350 L224 356 L232 345" stroke="var(--accent-foreground)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="246" y="356" font-size="14" font-family="sans-serif" fill="var(--foreground)" font-weight="500">Alto contraste</text>
+  
+  <!-- Checkbox 2 (unchecked) -->
+  <rect x="395" y="340" width="20" height="20" rx="4" fill="var(--background)" stroke="var(--muted-foreground)" stroke-width="2"/>
+  <text x="426" y="356" font-size="14" font-family="sans-serif" fill="var(--muted-foreground)" font-weight="500">Texto grande</text>
+  
+  <!-- Checkbox 3 (checked) -->
+  <rect x="215" y="375" width="20" height="20" rx="4" fill="var(--accent)" stroke="var(--foreground)" stroke-width="2"/>
+  <path d="M219 385 L224 391 L232 380" stroke="var(--accent-foreground)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="246" y="391" font-size="14" font-family="sans-serif" fill="var(--foreground)" font-weight="500">Reducir animaciones</text>
+  
+  <!-- Person on the left interacting -->
+  <!-- Head -->
+  <circle cx="110" cy="340" r="32" fill="var(--primary)" opacity="0.2" stroke="var(--foreground)" stroke-width="2.5"/>
+  <circle cx="100" cy="335" r="4" fill="var(--foreground)"/>
+  <circle cx="120" cy="335" r="4" fill="var(--foreground)"/>
+  <path d="M102 348 Q110 356 118 348" stroke="var(--foreground)" stroke-width="2" stroke-linecap="round"/>
+  <!-- Body -->
+  <rect x="85" y="372" width="50" height="60" rx="14" fill="var(--primary)" opacity="0.25" stroke="var(--foreground)" stroke-width="2.5"/>
+  <!-- Arm pointing to screen -->
+  <path d="M135 390 L170 360 L185 310" stroke="var(--foreground)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Person on the right -->
+  <circle cx="690" cy="200" r="32" fill="var(--chart-4)" opacity="0.2" stroke="var(--foreground)" stroke-width="2.5"/>
+  <circle cx="680" cy="195" r="4" fill="var(--foreground)"/>
+  <circle cx="700" cy="195" r="4" fill="var(--foreground)"/>
+  <path d="M682 208 Q690 216 698 208" stroke="var(--foreground)" stroke-width="2" stroke-linecap="round"/>
+  <rect x="665" y="232" width="50" height="60" rx="14" fill="var(--chart-4)" opacity="0.25" stroke="var(--foreground)" stroke-width="2.5"/>
+  
+  <!-- Sparkles -->
+  <text x="150" y="280" font-size="22" fill="var(--accent)" opacity="0.4">✦</text>
+  <text x="630" y="140" font-size="18" fill="var(--primary)" opacity="0.35">✦</text>
+</svg>

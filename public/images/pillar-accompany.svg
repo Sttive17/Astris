@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none">
+  <!-- Background card -->
+  <rect x="30" y="30" width="740" height="540" rx="28" fill="var(--card)" stroke="var(--border)" stroke-width="3"/>
+  
+  <!-- Mentor (left, larger) -->
+  <!-- Head -->
+  <circle cx="240" cy="200" r="44" fill="var(--primary)" opacity="0.22" stroke="var(--foreground)" stroke-width="3"/>
+  <!-- Glasses -->
+  <circle cx="222" cy="195" r="12" fill="none" stroke="var(--foreground)" stroke-width="2.5"/>
+  <circle cx="258" cy="195" r="12" fill="none" stroke="var(--foreground)" stroke-width="2.5"/>
+  <line x1="234" y1="195" x2="246" y2="195" stroke="var(--foreground)" stroke-width="2.5"/>
+  <!-- Eyes behind glasses -->
+  <circle cx="222" cy="195" r="4" fill="var(--foreground)"/>
+  <circle cx="258" cy="195" r="4" fill="var(--foreground)"/>
+  <!-- Smile -->
+  <path d="M225 218 Q240 232 255 218" stroke="var(--foreground)" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Body -->
+  <rect x="195" y="248" width="90" height="110" rx="22" fill="var(--primary)" opacity="0.3" stroke="var(--foreground)" stroke-width="3"/>
+  <!-- Arm extending right (guiding gesture) -->
+  <path d="M285 300 L340 300 L400 320" stroke="var(--foreground)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Mentee (right, slightly smaller, learning) -->
+  <!-- Head -->
+  <circle cx="520" cy="230" r="38" fill="var(--chart-4)" opacity="0.2" stroke="var(--foreground)" stroke-width="2.8"/>
+  <!-- Eyes - looking up to mentor -->
+  <circle cx="508" cy="225" r="4.5" fill="var(--foreground)"/>
+  <circle cx="532" cy="225" r="4.5" fill="var(--foreground)"/>
+  <!-- Slight smile -->
+  <path d="M510 242 Q520 252 530 242" stroke="var(--foreground)" stroke-width="2.2" stroke-linecap="round"/>
+  <!-- Body -->
+  <rect x="480" y="272" width="80" height="95" rx="20" fill="var(--chart-4)" opacity="0.25" stroke="var(--foreground)" stroke-width="2.8"/>
+  
+  <!-- Connection elements - stars and path between them -->
+  <path d="M280 280 Q320 240 400 280 Q460 310 500 285" stroke="var(--accent)" stroke-width="2" fill="none" stroke-dasharray="8 6" opacity="0.5"/>
+  
+  <!-- Speech bubbles -->
+  <!-- Mentor bubble -->
+  <rect x="130" y="120" width="160" height="55" rx="18" fill="var(--background)" stroke="var(--border)" stroke-width="2.5"/>
+  <line x1="200" y1="175" x2="220" y2="195" stroke="var(--border)" stroke-width="2.5"/>
+  <text x="150" y="142" font-size="13" font-family="sans-serif" fill="var(--foreground)" font-weight="600">Cuentame,</text>
+  <text x="150" y="162" font-size="13" font-family="sans-serif" fill="var(--foreground)" font-weight="600">¿como te sientes?</text>
+  
+  <!-- Mentee bubble -->
+  <rect x="530" y="140" width="170" height="60" rx="18" fill="var(--background)" stroke="var(--border)" stroke-width="2.5"/>
+  <line x1="600" y1="200" x2="555" y2="225" stroke="var(--border)" stroke-width="2.5"/>
+  <text x="550" y="162" font-size="13" font-family="sans-serif" fill="var(--muted-foreground)">Me siento mas</text>
+  <text x="550" y="182" font-size="13" font-family="sans-serif" fill="var(--muted-foreground)">preparado/a ahora.</text>
+  
+  <!-- Path/progress dots -->
+  <circle cx="380" cy="420" r="10" fill="var(--accent)" stroke="var(--foreground)" stroke-width="2"/>
+  <circle cx="430" cy="420" r="10" fill="var(--accent)" stroke="var(--foreground)" stroke-width="2"/>
+  <circle cx="480" cy="420" r="10" fill="var(--accent)" opacity="0.35" stroke="var(--foreground)" stroke-width="2"/>
+  <circle cx="530" cy="420" r="10" fill="var(--muted)" stroke="var(--foreground)" stroke-width="2"/>
+  <circle cx="580" cy="420" r="10" fill="var(--muted)" stroke="var(--foreground)" stroke-width="2"/>
+  
+  <!-- Sparkles -->
+  <text x="350" y="350" font-size="24" fill="var(--accent)" opacity="0.4">✦</text>
+  <text x="500" y="160" font-size="18" fill="var(--primary)" opacity="0.3">✦</text>
+</svg>

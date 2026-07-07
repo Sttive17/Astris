@@ -26,7 +26,7 @@ export function useT(lang?: Lang) {
   return t;
 }
 
-export type ContentKey = keyof typeof CONTENT.es;
+export type ContentKey = keyof typeof CONTENT.es | "footerLinks";
 
 export function C(lang: Lang, key: ContentKey): any {
   return (CONTENT[lang] as any)[key] ?? (CONTENT.es as any)[key];
