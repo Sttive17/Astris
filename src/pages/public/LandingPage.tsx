@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { User, Building2, Star, ArrowRight, Globe, X, Sun, Moon } from "lucide-react";
-import { Lang, Role, PublicView } from "@/types";
+import { User, Building2, Star, ArrowRight, Globe, X, Sun, Moon, Type } from "lucide-react";
+import { Lang, PublicView, FontKey, Role } from "@/types";
 import { useT, C } from "@/i18n/useT";
 import astrisImg from "@/assets/astris.png";
 import { lazy, Suspense } from "react";
@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 
 const CollaboratorCarousel = lazy(() => import("@/components/common/CollaboratorCarousel").then(m => ({ default: m.CollaboratorCarousel })));
 
-export function LandingPage({ lang, onOpenAuth, onLang, onNavigate, darkMode, onDarkToggle }: { lang: Lang; onOpenAuth: (preRole?: Role, step?: "auth" | "login" | "register") => void; onLang: () => void; onNavigate: (view: PublicView) => void; darkMode: boolean; onDarkToggle: () => void; }) {
+export function LandingPage({ lang, onOpenAuth, onLang, onNavigate, darkMode, onDarkToggle, font, onFontToggle }: { lang: Lang; onOpenAuth: (preRole?: Role, step?: "auth" | "login" | "register") => void; onLang: () => void; onNavigate: (view: PublicView) => void; darkMode: boolean; onDarkToggle: () => void; font: FontKey; onFontToggle: () => void; }) {
   const t = useT(lang);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -18,7 +18,7 @@ export function LandingPage({ lang, onOpenAuth, onLang, onNavigate, darkMode, on
       <header className="fixed top-0 left-0 right-0 z-40 border-b border-border backdrop-blur-sm" style={{ backgroundColor: "var(--background)", opacity: 0.97 }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
           <button onClick={() => onNavigate("landing")} className="flex items-center gap-3 bg-transparent border-0 cursor-pointer p-0 text-left">
-            <img src={astrisImg} alt="Astris Logo" className="w-10 h-10 md:w-12 md:h-12 object-contain" />
+            <img src={astrisImg} alt="Astris Logo" className="w-12 h-12 md:w-14 md:h-14 object-contain" />
             <span className="text-lg md:text-xl font-bold text-foreground tracking-tight">Astris</span>
           </button>
           <nav className="hidden lg:flex items-center gap-6">
@@ -31,6 +31,19 @@ export function LandingPage({ lang, onOpenAuth, onLang, onNavigate, darkMode, on
             ))}
           </nav>
           <div className="hidden lg:flex items-center gap-3">
+            <button
+              onClick={onFontToggle}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium border border-border cursor-pointer transition-colors"
+              style={{
+                borderColor: font === "lexend" ? "var(--primary)" : "var(--border)",
+                backgroundColor: font === "lexend" ? "color-mix(in srgb, var(--primary) 12%, transparent)" : "transparent",
+                color: font === "lexend" ? "var(--primary)" : "var(--foreground)",
+              }}
+              aria-label={t("onboarding.dyslexia_font_title", "Modo Dislexia")}
+              title={t("onboarding.dyslexia_font_title", "Modo Dislexia")}
+            >
+              <Type size={16} />
+            </button>
             <button
               onClick={onDarkToggle}
               className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium border border-border cursor-pointer hover:bg-secondary bg-transparent"
@@ -48,6 +61,17 @@ export function LandingPage({ lang, onOpenAuth, onLang, onNavigate, darkMode, on
           
           {/* Mobile menu toggle */}
           <div className="flex lg:hidden items-center gap-2">
+            <button
+              onClick={onFontToggle}
+              className="flex items-center justify-center p-2 rounded-lg border border-border cursor-pointer transition-colors"
+              style={{
+                borderColor: font === "lexend" ? "var(--primary)" : "var(--border)",
+                backgroundColor: font === "lexend" ? "color-mix(in srgb, var(--primary) 12%, transparent)" : "transparent",
+                color: font === "lexend" ? "var(--primary)" : "var(--foreground)",
+              }}
+            >
+               <Type size={18} />
+            </button>
             <button onClick={onDarkToggle} className="flex items-center justify-center p-2 rounded-lg border border-border hover:bg-secondary cursor-pointer bg-transparent">
                {darkMode ? <Sun size={18} /> : <Moon size={18} />}
             </button>

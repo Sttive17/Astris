@@ -11,9 +11,9 @@ export function MentorCheckins({ lang }: { lang: Lang }) {
       </div>
       <div className="w-[95%] md:w-full md:max-w-4xl mx-auto w-full px-4 lg:px-20 py-10 flex flex-col gap-5">
         {[
-          { date: "Jun 18, 2025", cand: "CAND-A7X2", company: "Veritas Analytics", type: "Onboarding semana 2", time: "10:00 AM" },
-          { date: "Jun 20, 2025", cand: "CAND-B3M9", company: "Forma Studio", type: "Preparación de entrevista", time: "2:00 PM" },
-          { date: "Jun 24, 2025", cand: "CAND-C1K4", company: "Kestrel Systems", type: "Revisión de 30 días", time: "11:30 AM" },
+          { date: "Jun 18, 2025", cand: "CAND-A7X2", company: "Veritas Analytics", type: C(lang, "mentor.checkin.onboardingWeek2") as string, time: "10:00 AM" },
+          { date: "Jun 20, 2025", cand: "CAND-B3M9", company: "Forma Studio", type: C(lang, "mentor.checkin.interviewPrep") as string, time: "2:00 PM" },
+          { date: "Jun 24, 2025", cand: "CAND-C1K4", company: "Kestrel Systems", type: C(lang, "mentor.checkin.review30") as string, time: "11:30 AM" },
         ].map((item) => (
           <article key={item.cand} className="rounded-2xl border border-border p-6 flex items-center gap-3 md:gap-6" style={{ backgroundColor: "var(--card)" }}>
             <div className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: "var(--secondary)" }}>

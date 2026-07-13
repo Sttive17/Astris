@@ -1,5 +1,7 @@
 import { Lang, PaletteKey, QuizAnswers } from "@/types";
-import { T, CONTENT, PALETTES, QUIZ_AXES } from "./content";
+import { PALETTES, QUIZ_AXES } from "./content";
+import { useTranslation } from "react-i18next";
+import i18next from "i18next";
 
 export function getInitialLang(): Lang {
   if (typeof window === "undefined") return "es";
@@ -19,17 +21,15 @@ export function getInitialModalStep() {
   return window.localStorage.getItem("astris_lang") ? "none" : "language";
 }
 
-import { useTranslation } from "react-i18next";
-
 export function useT(lang?: Lang) {
   const { t } = useTranslation();
   return t;
 }
 
-export type ContentKey = keyof typeof CONTENT.es | "footerLinks";
+export type ContentKey = string;
 
 export function C(lang: Lang, key: ContentKey): any {
-  return (CONTENT[lang] as any)[key] ?? (CONTENT.es as any)[key];
+  return i18next.t(key, { lng: lang, returnObjects: true });
 }
 
 export function getPaletteName(p: PaletteKey, lang: Lang) {

@@ -1,0 +1,601 @@
+{
+  "lang.title": "Selecciona tu idioma",
+  "lang.sub": "Elige el idioma en que deseas usar Astris",
+  "auth.title": "Bienvenido/a a Astris",
+  "auth.q": "¿Es tu primera vez aquí?",
+  "auth.new": "Es mi primera vez",
+  "auth.new.sub": "Crea tu perfil y encuentra tu lugar de trabajo ideal",
+  "auth.existing": "Ya tengo una cuenta",
+  "auth.existing.sub": "Accede a tu panel y retoma donde lo dejaste",
+  "login.title": "Acceder a tu cuenta",
+  "login.email": "Correo electrónico",
+  "login.pass": "Contraseña",
+  "login.role": "Accedo como",
+  "login.submit": "Entrar",
+  "login.back": "Atrás",
+  "role.title": "¿Cómo vas a usar Astris?",
+  "role.sub": "Cada perfil tiene su propio flujo de trabajo",
+  "role.candidate": "Soy candidato/a",
+  "role.candidate.sub": "Busco empleo que se adapte a cómo trabajo mejor",
+  "role.company": "Soy una empresa",
+  "role.company.sub": "Quiero incorporar talento de forma genuinamente inclusiva",
+  "role.mentor": "Soy mentor/a",
+  "role.mentor.sub": "Acompaño procesos de inserción laboral adaptativa",
+  "role.admin": "Admin",
+  "nav.home": "Inicio",
+  "nav.profile": "Mi perfil",
+  "nav.vacancies": "Vacantes",
+  "nav.mentor": "Mi mentor",
+  "nav.tracking": "Seguimiento",
+  "nav.org": "Perfil organizacional",
+  "nav.post": "Publicar vacante",
+  "nav.candidates": "Candidatos",
+  "nav.dashboard": "Panel",
+  "nav.checkins": "Check-ins",
+  "nav.companies": "Empresas",
+  "nav.logout": "Cerrar sesión",
+  "dash.welcome": "Bienvenido,",
+  "dash.suggested": "Vacantes sugeridas",
+  "dash.matches": "Matches de perfil",
+  "dash.mentor": "Acompañamiento",
+  "dash.active": "Activo",
+  "landing.nav.about": "Sobre Astris",
+  "landing.nav.support": "Soporte",
+  "landing.nav.partners": "Partners",
+  "landing.nav.login": "Iniciar Sesión",
+  "landing.nav.register": "Comenzar",
+  "landing.hero.t1": "Nos adaptamos a ti",
+  "landing.hero.t2": "para conectar tu potencial con el lugar donde puede brillar.",
+  "landing.hero.sub": "",
+  "landing.hero.cand": "Soy candidato/a",
+  "landing.hero.comp": "Soy una empresa",
+  "landing.prob.title": "Las barreras invisibles del mercado laboral",
+  "landing.pillars.title": "Los cuatro pilares de Astris",
+  "landing.how.title": "Cómo funciona",
+  "landing.compare.title": "Modelo tradicional vs. Astris",
+  "landing.impact.title": "Impacto esperado",
+  "landing.impact.cand": "Para el talento",
+  "landing.impact.comp": "Para las empresas",
+  "landing.footer.program": "Closer to the Stars Educational Program",
+  "onboarding.dyslexia_font_title": "¿Necesitas una fuente especial para facilitar la lectura?",
+  "onboarding.dyslexia_font_desc": "(Recomendada para dislexia)",
+  "back": "Atrás",
+  "next": "Siguiente",
+  "continue": "Continuar",
+  "save": "Guardar cambios",
+  "start": "Iniciar proceso",
+  "choose": "Elegir",
+  "palette.title": "Personaliza tu interfaz",
+  "palette.sub": "Elige la paleta de colores con la que te sientas más cómodo/a. Tu elección se aplica a todas las pantallas de tu flujo.",
+  "palette.dark": "Modo claro / Modo oscuro",
+  "palette.font": "Fuente de lectura",
+  "quiz.step": "Paso",
+  "quiz.of": "de",
+  "quiz.axis1": "Procesamiento y Comunicación",
+  "quiz.axis2": "Tolerancia Ambiental",
+  "quiz.axis3": "Ejecución y Tareas",
+  "quiz.axis4": "Ajustes Razonables",
+  "quiz.radar.title": "Tu perfil en construcción",
+  "quiz.radar.sub": "Se actualiza con cada respuesta",
+  "profile.title": "Tu perfil de compatibilidad",
+  "profile.privacy": "Tu perfil describe cómo trabajas mejor. Esta información nunca se comparte como diagnóstico médico.",
+  "profile.adjustments": "Ajustes razonables declarados",
+  "vacancies.title": "Vacantes sugeridas para ti",
+  "vacancies.filters": "Filtros",
+  "vacancies.modality": "Modalidad",
+  "vacancies.sector": "Sector",
+  "vacancies.social": "Nivel de interacción",
+  "vacancy.match": "Compatibilidad",
+  "vacancy.why": "Por qué eres compatible",
+  "vacancy.start": "Iniciar proceso",
+  "mentor.title": "Elige tu mentor",
+  "mentor.sub": "Tu mentor te acompañará desde la preparación hasta los primeros 60 días en el rol.",
+  "mentor.choose": "Elegir como mi mentor",
+  "accomp.title": "Tu proceso de acompañamiento",
+  "accomp.sub": "El mentor coordina cada etapa contigo y con la empresa.",
+  "posthire.title": "Seguimiento post-contratación",
+  "posthire.status": "Estado de adaptación",
+  "comp.org.title": "Perfil organizacional",
+  "comp.org.sub": "Define el entorno de tu organización para que el sistema calcule compatibilidades precisas.",
+  "comp.vacancy.title": "Publicar vacante",
+  "comp.candidates.title": "Perfiles sugeridos",
+  "comp.candidates.sub": "Candidatos compatibles con la vacante activa. Sin datos médicos ni diagnósticos.",
+  "comp.detail.title": "Perfil del candidato",
+  "comp.posthire.title": "Seguimiento de integración",
+  "mentor.dash.title": "Panel del mentor",
+  "login.forgot": "¿Olvidaste tu contraseña?",
+  "login.forgotTitle": "Recuperar Contraseña",
+  "login.backLogin": "Volver a iniciar sesión",
+  "login.emailError": "Por favor ingresa tu correo electrónico.",
+  "login.recoverySent": "Enlace de recuperación enviado. Revisa tu bandeja de entrada.",
+  "login.sendLink": "Enviar enlace",
+  "updatePass.title": "Nueva Contraseña",
+  "updatePass.sub": "Ingresa tu nueva contraseña para acceder a tu cuenta.",
+  "updatePass.errorLength": "La contraseña debe tener al menos 6 caracteres.",
+  "updatePass.save": "Guardar y continuar",
+  "settings.title": "Configuración de Cuenta",
+  "settings.personal": "Información Personal",
+  "settings.name": "Nombre Completo",
+  "settings.visual": "Preferencias Visuales",
+  "settings.dark": "Modo oscuro",
+  "settings.light": "Modo claro",
+  "settings.palette": "Paleta de colores",
+  "settings.danger": "Zona de Peligro",
+  "settings.deleteWarn": "Una vez que elimines tu cuenta, no hay vuelta atrás. Por favor, asegúrate.",
+  "settings.delete": "Eliminar Cuenta",
+  "settings.deleteConfirm": "¿Estás absolutamente seguro de esto?",
+  "settings.deleteYes": "Sí, eliminar mi cuenta",
+  "settings.deleteCancel": "Cancelar",
+  "settings.saveSuccess": "Perfil actualizado correctamente.",
+  "settings.deleteError": "Error al eliminar cuenta. Asegúrate de haber ejecutado el script SQL en Supabase.",
+  "notfound.title": "Página no encontrada",
+  "notfound.sub": "Lo sentimos, la página que estás buscando no existe o ha sido movida.",
+  "notfound.home": "Volver al inicio",
+  "nav.settings": "Configuración",
+  "nav.account": "Mi Cuenta",
+  "comp.org.saveSuccess": "Cambios guardados exitosamente",
+  "comp.org.saveError": "Error al guardar",
+  "comp.post.socialReq": "Nivel de socialización requerido",
+  "comp.post.techReq": "Habilidades técnicas requeridas",
+  "comp.post.modality": "Modalidad",
+  "comp.post.schedule": "Horario",
+  "comp.post.submit": "Publicar vacante",
+  "comp.cand.viewProfile": "Ver perfil",
+  "comp.posthire.candSub": "Analista de Datos Junior · Día 14 de 60",
+  "comp.posthire.candObs": "El colaborador se encuentra en estado estable. Las herramientas asíncronas están configuradas correctamente. Se identificó un punto de fricción: reuniones sin agenda previa. El mentor está trabajando con RRHH para implementar un formato estructurado.",
+  "landing.supported": "Respaldado y apoyado por",
+  "about.orgsTitle": "Organizaciones que acompañan Astris",
+  "about.orgsSub": "El proyecto se apoya en comunidades y organizaciones que aportan visibilidad, acompañamiento y una mirada práctica de inclusión.",
+  "mentor.dash.pendingSessions": "Sesiones pendientes",
+  "mentor.dash.completed": "Completados (este año)",
+  "mentor.dash.retention": "Retención promedio",
+  "mentor.dash.activeSince": "Activo hace",
+  "mentor.co.active": "Activa",
+  "mentor.co.inProcess": "En proceso",
+  "mentor.co.probation": "Período de prueba",
+  "mentor.co.activeProcess": "proceso activo",
+  "mentor.checkin.onboardingWeek2": "Onboarding semana 2",
+  "mentor.checkin.interviewPrep": "Preparación de entrevista",
+  "mentor.checkin.review30": "Revisión de 30 días",
+  "vacancies": [
+    {
+      "id": "V-1042",
+      "title": "Analista de Datos Junior",
+      "company": "Veritas Analytics",
+      "sector": "Tecnología",
+      "modality": "Remoto",
+      "type": "Tiempo completo",
+      "match": 94,
+      "socialLevel": "Bajo",
+      "adjustments": [
+        "100% remoto",
+        "Comunicación asíncrona",
+        "Horario flexible",
+        "Instrucciones escritas"
+      ],
+      "desc": "Análisis de bases de datos, generación de reportes y visualización de métricas clave. Ambiente de trabajo tranquilo, equipo pequeño de 6 personas.",
+      "companyDesc": "Empresa de análisis de datos con 7 años en el mercado. Cultura de trabajo orientada a resultados, no a presencia."
+    },
+    {
+      "id": "V-0873",
+      "title": "Diseñadora UX",
+      "company": "Forma Studio",
+      "sector": "Diseño",
+      "modality": "Híbrido",
+      "type": "Tiempo completo",
+      "match": 87,
+      "socialLevel": "Medio",
+      "adjustments": [
+        "Espacio de trabajo tranquilo",
+        "Briefs escritos",
+        "Evaluación por entregables"
+      ],
+      "desc": "Diseño de experiencias digitales para clientes de salud y educación. 3 días remoto, 2 en oficina con escritorio individual.",
+      "companyDesc": "Estudio de diseño boutique con enfoque en accesibilidad digital. 45 colaboradores, ambiente flexible."
+    }
+  ],
+  "mentors": [
+    {
+      "id": "M-01",
+      "name": "Carmen Ruiz",
+      "specialty": "Inclusión laboral y funciones ejecutivas",
+      "years": 8,
+      "modality": "Virtual",
+      "bio": "Psicóloga organizacional especializada en estrategias de inserción laboral para perfiles con estilos cognitivos diversos. Certificada en acompañamiento de transiciones profesionales."
+    },
+    {
+      "id": "M-02",
+      "name": "David Morales",
+      "specialty": "Aprendizaje adaptativo en entornos corporativos",
+      "years": 5,
+      "modality": "Presencial y virtual",
+      "bio": "Consultor de inclusión con experiencia en mediación empresa-candidato. Ha acompañado más de 60 procesos de contratación adaptativa exitosos."
+    }
+  ],
+  "candAdjustments": [
+    "Trabajo remoto o híbrido",
+    "Comunicación asíncrona",
+    "Flexibilidad de horario",
+    "Instrucciones escritas",
+    "Espacio individual silencioso"
+  ],
+  "compCandsData": [
+    {
+      "id": "CAND-A7X2",
+      "match": 96,
+      "strengths": "Alto enfoque en tareas detalladas. Prefere entorno silencioso. Requiere instrucciones escritas.",
+      "radar": [
+        {
+          "axis": "Procesamiento",
+          "value": 88
+        },
+        {
+          "axis": "T. Ambiental",
+          "value": 22
+        },
+        {
+          "axis": "Ejecución",
+          "value": 92
+        },
+        {
+          "axis": "Ajustes",
+          "value": 70
+        }
+      ],
+      "env": [
+        {
+          "req": "Trabajo remoto disponible",
+          "met": true
+        },
+        {
+          "req": "Comunicación asíncrona",
+          "met": true
+        },
+        {
+          "req": "Espacio individual silencioso",
+          "met": false
+        },
+        {
+          "req": "Horario flexible",
+          "met": true
+        }
+      ]
+    },
+    {
+      "id": "CAND-B3M9",
+      "match": 89,
+      "strengths": "Excelente tolerancia a entornos variables. Habilidad multitarea alta. Comunicación verbal fluida.",
+      "radar": [
+        {
+          "axis": "Procesamiento",
+          "value": 65
+        },
+        {
+          "axis": "T. Ambiental",
+          "value": 82
+        },
+        {
+          "axis": "Ejecución",
+          "value": 68
+        },
+        {
+          "axis": "Ajustes",
+          "value": 85
+        }
+      ],
+      "env": [
+        {
+          "req": "Trabajo remoto disponible",
+          "met": true
+        },
+        {
+          "req": "Comunicación asíncrona",
+          "met": false
+        },
+        {
+          "req": "Instrucciones escritas",
+          "met": true
+        },
+        {
+          "req": "Evaluación por entregables",
+          "met": true
+        }
+      ]
+    }
+  ],
+  "prestaciones": [
+    "Audífonos con cancelación de ruido",
+    "Teclados especializados",
+    "Pantallas anti-reflejo",
+    "Rampas y ascensores",
+    "Salas de descanso sensorial",
+    "Modalidad remota e híbrida disponible"
+  ],
+  "politicas": [
+    "Pausas activas programadas",
+    "Flexibilidad de horario"
+  ],
+  "skills": [
+    "Mecanografía",
+    "Microsoft Office",
+    "Lectura intensiva",
+    "Redacción técnica",
+    "Análisis de datos",
+    "Diseño visual",
+    "Comunicación verbal"
+  ],
+  "aboutPage": {
+    "heroTitle": "Sobre Nosotros",
+    "heroSub": "",
+    "heroQuote": "",
+    "heroDesc": "",
+    "purposeLabel": "Propósito",
+    "purposeTitle": "Derecho, no privilegio",
+    "purposeBody": "Garantizar que el empleo sea un derecho, no un privilegio. Facilitamos una inserción laboral inclusiva acompañando a las personas neurodivergentes a potenciar sus capacidades y ayudando a las empresas a construir espacios donde todas las formas de pensar y aprender sean valoradas.",
+    "missionLabel": "Misión",
+    "missionTitle": "El puente del talento",
+    "missionBody": "Ser el puente entre el talento neurodivergente y las empresas comprometidas con la inclusión. A través de nuestra plataforma: formamos y acompañamos a los candidatos; sensibilizamos a las organizaciones para lograr procesos de selección más equitativos. Nota central: No adaptamos a las personas a sistemas excluyentes; transformamos los espacios de trabajo para aprovechar la riqueza de la diversidad cognitiva.",
+    "visionLabel": "Visión",
+    "visionTitle": "Plataforma referente para 2036",
+    "visionBody": "Para el año 2036, ser la plataforma referente en inclusión laboral y neurodiversidad. Visualizamos un mundo sin barreras ni prejuicios, donde la diversidad cognitiva sea reconocida como un motor de innovación y creatividad. Aspiramos a una sociedad donde cada persona encuentre un empleo digno que impulse su bienestar y autonomía, y donde las empresas ofrezcan entornos más humanos y accesibles para todos.",
+    "philosophyTitle": "Nuestra Filosofía",
+    "philosophyDesc": "",
+    "values": [
+      "Respeto",
+      "Equidad",
+      "Empatía",
+      "Valoración de la neurodiversidad"
+    ],
+    "pillarsEyebrow": "Nuestro enfoque",
+    "pillarsTitle": "Los cuatro pilares de Astris",
+    "preparar": {
+      "title": "PREPARAR",
+      "body": "En Astris preparamos a las personas para que afronten el entorno laboral con confianza. A través de herramientas de formación, simulaciones y autoconocimiento, potenciamos sus habilidades y les brindamos las bases para una incorporación exitosa. Creemos que el conocimiento y la preparación son el primer paso hacia una inserción sostenible. No se trata de encajar en un molde, sino de descubrir y fortalecer las capacidades únicas de cada persona para que brillen en el entorno adecuado.",
+      "values": [
+        "Formación personalizada",
+        "Simulaciones laborales",
+        "Autoconocimiento y confianza",
+        "Desarrollo de habilidades"
+      ]
+    },
+    "adaptar": {
+      "title": "ADAPTAR",
+      "body": "La tecnología debe adaptarse a las personas, no al revés. Por eso ofrecemos una interfaz personalizable con paletas de colores accesibles, modos claro y oscuro, y ajustes sensoriales. Cada usuario configura la plataforma según sus necesidades, eliminando barreras visuales y cognitivas desde el primer momento. Además, las empresas definen los ajustes que pueden ofrecer antes de iniciar cualquier proceso, garantizando que el entorno esté preparado para recibir talento diverso.",
+      "values": [
+        "Interfaz personalizable",
+        "Ajustes sensoriales",
+        "Empresas preparadas",
+        "Accesibilidad desde el inicio"
+      ]
+    },
+    "acompanar": {
+      "title": "ACOMPAÑAR",
+      "body": "El acompañamiento humano es esencial para una inserción exitosa. Asignamos mentores especializados que guían a los candidatos desde la preparación hasta el seguimiento post-contratación. Nuestros mentores entienden la neurodiversidad y facilitan la comunicación entre el talento y las empresas, asegurando que ambas partes se sientan apoyadas en cada etapa del proceso. El acompañamiento no termina con la contratación: monitoreamos la adaptación durante los primeros 60 a 90 días.",
+      "values": [
+        "Mentores especializados",
+        "Acompañamiento integral",
+        "Seguimiento post-contratación",
+        "Comunicación facilitada"
+      ]
+    },
+    "conectar": {
+      "title": "CONECTAR",
+      "body": "Conectar talento con oportunidades es nuestro objetivo final. Nuestro sistema de matching cruza perfiles basados en habilidades y necesidades del entorno — no en diagnósticos — para encontrar coincidencias reales. Así aseguramos que la persona y el entorno laboral sean compatibles, generando relaciones duraderas y exitosas. Las empresas acceden a perfiles anónimos con datos objetivos de compatibilidad, sin nombres, fotos ni información clínica.",
+      "values": [
+        "Matching objetivo",
+        "Perfiles basados en habilidades",
+        "Privacidad total",
+        "Relaciones duraderas"
+      ]
+    },
+    "ctaTitle": "Únete a la comunidad",
+    "ctaBody": "Ya seas talento buscando tu lugar ideal o una empresa comprometida con la inclusión real, en Astris encontrarás el camino.",
+    "ctaCandidate": "Quiero registrarme",
+    "ctaCompany": "Soy una empresa"
+  },
+  "pillars": [
+    {
+      "num": "01",
+      "title": "Preparar",
+      "body": "Caracterizamos cómo trabaja cada persona y qué entorno necesita. Sin diagnósticos, sin etiquetas clínicas."
+    },
+    {
+      "num": "02",
+      "title": "Adaptar",
+      "body": "La empresa define exactamente qué ajustes puede ofrecer antes de iniciar cualquier proceso de selección."
+    },
+    {
+      "num": "03",
+      "title": "Acompañar",
+      "body": "Un mentor humano guía al candidato y a la empresa durante todo el proceso, desde el match hasta el día 60."
+    },
+    {
+      "num": "04",
+      "title": "Conectar",
+      "body": "El sistema cruza perfiles y sugiere compatibilidades reales, no percepciones. Ambas partes saben qué esperar."
+    }
+  ],
+  "problems": [
+    "Los procesos de selección estándar no están diseñados para evaluar el talento — están diseñados para filtrar diferencias.",
+    "Más del 85% de las personas con estilos cognitivos diversos en edad laboral están desempleadas o subempleadas, no por falta de capacidades, sino por falta de compatibilidad.",
+    "Las entrevistas convencionales, los entornos no adaptados y la comunicación ambigua excluyen sistemáticamente perfiles con alto potencial.",
+    "Una contratación fallida por ausencia de ajustes razonables cuesta entre 3 y 5 veces el salario anual del cargo."
+  ],
+  "how": [
+    {
+      "phase": "1. Perfil y Adaptación",
+      "desc": "El candidato caracteriza su estilo de trabajo en 4 ejes. La empresa documenta su entorno y ajustes disponibles."
+    },
+    {
+      "phase": "2. Matching Laboral",
+      "desc": "El sistema cruza ambos perfiles y sugiere compatibilidades con porcentaje visible para el candidato."
+    },
+    {
+      "phase": "3. Entrenamiento Personalizado",
+      "desc": "El mentor acompaña la preparación para el proceso de selección, adaptado al candidato y a la empresa."
+    },
+    {
+      "phase": "4. Inserción y Seguimiento",
+      "desc": "Post-contratación, el mentor monitorea la adaptación durante los primeros 60 a 90 días del nuevo rol."
+    }
+  ],
+  "compare": [
+    {
+      "aspect": "Proceso de selección",
+      "trad": "Entrevista única, sin adaptación",
+      "astris": "Perfilamiento en 4 ejes, formato adaptado"
+    },
+    {
+      "aspect": "Información del candidato",
+      "trad": "Diagnóstico y historial clínico",
+      "astris": "Cómo trabaja mejor y qué necesita el entorno"
+    },
+    {
+      "aspect": "Compatibilidad",
+      "trad": "Determinada por el reclutador",
+      "astris": "Calculada por el sistema con datos objetivos"
+    },
+    {
+      "aspect": "Ajustes razonables",
+      "trad": "Reactivos o inexistentes",
+      "astris": "Definidos y comprometidos desde el inicio"
+    },
+    {
+      "aspect": "Seguimiento",
+      "trad": "Ninguno o informal",
+      "astris": "Protocolo de 8 etapas con mentor asignado"
+    },
+    {
+      "aspect": "Privacidad del candidato",
+      "trad": "Variable",
+      "astris": "Nunca se comparten datos médicos"
+    }
+  ],
+  "impactCand": [
+    "Reducción del 60% en tiempo de búsqueda de empleo compatible",
+    "Acceso a roles que genuinamente se ajustan a su estilo de trabajo",
+    "Acompañamiento desde el primer día de proceso",
+    "Sin necesidad de revelar diagnósticos médicos en ningún momento"
+  ],
+  "impactComp": [
+    "Acceso a talento altamente especializado y motivado",
+    "Reducción del 40% en rotación durante los primeros 6 meses",
+    "Marco legal claro para implementar ajustes razonables",
+    "Asesoría continua del mentor durante todo el período de integración"
+  ],
+  "privacyTitle": "Tu privacidad es el cimiento, no un complemento.",
+  "privacyBody": "Ningún diagnóstico médico se almacena ni se comparte. Las empresas nunca ven nombres reales ni fotografías — solo perfiles de compatibilidad anónimos. O candidato controla qué información es visible en cada etapa.",
+  "accompStages": [
+    {
+      "label": "Análisis de perfil",
+      "done": true,
+      "current": false
+    },
+    {
+      "label": "Primer contacto con el mentor",
+      "done": true,
+      "current": false
+    },
+    {
+      "label": "Plan de acompañamiento",
+      "done": true,
+      "current": false
+    },
+    {
+      "label": "Reunión de explicación con la empresa",
+      "done": false,
+      "current": true
+    },
+    {
+      "label": "Consentimiento y acuerdo",
+      "done": false,
+      "current": false
+    },
+    {
+      "label": "Inicio de capacitación adaptada",
+      "done": false,
+      "current": false
+    },
+    {
+      "label": "Vinculación laboral",
+      "done": false,
+      "current": false
+    },
+    {
+      "label": "Seguimiento post-contratación",
+      "done": false,
+      "current": false
+    }
+  ],
+  "statusLabels": [
+    "Adaptándome",
+    "Estable",
+    "Consolidado"
+  ],
+  "postHireQ1": "¿Como estuvo tu semana en términos de comodidad en el entorno de trabajo?",
+  "postHireQ2": "¿Hubo algo que te generó dificultad o incomodidad?",
+  "postHireTextPlaceholder": "Escribe aquí tu respuesta...",
+  "postHireSend": "Enviar reporte",
+  "postHireCheckins": "Historial de check-ins",
+  "postHireHistory": [
+    {
+      "date": "Jun 10, 2025",
+      "note": "Primera semana positiva. Herramientas asíncronas configuradas correctamente."
+    },
+    {
+      "date": "Jun 3, 2025",
+      "note": "Onboarding completado. Plan de acompañamiento acordado con mentor."
+    }
+  ],
+  "previewNav": [
+    "Mi perfil",
+    "Vacantes",
+    "Mi mentor"
+  ],
+  "previewTitle": "Vacantes sugeridas para ti",
+  "previewSubtitle": "3 vacantes compatibles esta semana",
+  "mentorAssigned": "Tu mentor asignado",
+  "openNotes": "Abrir notas de sesión",
+  "scheduleCheckin": "Agendar check-in",
+  "orgSections": [
+    "Datos generales",
+    "Filosofía y cultura",
+    "Entorno físico",
+    "Prestaciones de accesibilidad",
+    "Políticas"
+  ],
+  "orgSectionIds": [
+    "general",
+    "cultura",
+    "entorno",
+    "prestaciones",
+    "politicas"
+  ],
+  "compPostHireStatus": "Estado de adaptación",
+  "compPostHireObs": "Observaciones de la empresa",
+  "compPostHireObsPlaceholder": "Escribe tus observaciones sobre el proceso de adaptación...",
+  "compPostHireSend": "Enviar observaciones",
+  "compPostHireContact": "Contacto con el mentor",
+  "compPostHireSendMsg": "Enviar mensaje",
+  "mentorProcesses": "Procesos activos",
+  "mentorCheckins": "Próximos check-ins",
+  "mentorCompanies": "Empresas",
+  "mentorImpact": "Impacto este mes",
+  "activeFor": "Activo hace",
+  "sessionNotes": "Notas de sesión",
+  "nextAction": "Próxima acción",
+  "scheduleSession": "Agendar sesión",
+  "notes": "Notas",
+  "registerName": "Nombre completo",
+  "registerTitle": "Crea tu cuenta",
+  "registerSubmit": "Crear cuenta",
+  "footerLinks": [
+    "Accesibilidad",
+    "Privacidad",
+    "Términos de uso"
+  ],
+  "checkinPageTitle": "Check-ins",
+  "checkinPageSub": "Sesiones programadas con tus candidatos",
+  "companiesPageTitle": "Empresas colaboradoras",
+  "companiesPageSub": "Empresas activas en procesos de inclusión"
+}

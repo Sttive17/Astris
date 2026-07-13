@@ -1,16 +1,17 @@
 import { useState } from "react";
 import {
-  BarChart2, Briefcase, Users, Activity, Building2, FileText, Calendar, Sun, Moon, Globe, LogOut, Settings, User, X
+  BarChart2, Briefcase, Users, Activity, Building2, FileText, Calendar, Sun, Moon, Globe, LogOut, Settings, User, X, Type
 } from "lucide-react";
-import { Lang, Role } from "@/types";
+import { Lang, Role, FontKey } from "@/types";
 import { useT } from "@/i18n/useT";
 import astrisImg from "@/assets/astris.png";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 
-export function NavBar({ lang, role, screen, onNav, onLang, onLogout, darkMode, onDarkToggle, userName, userAvatar }: {
+export function NavBar({ lang, role, screen, onNav, onLang, onLogout, darkMode, onDarkToggle, font, onFontToggle, userName, userAvatar }: {
   lang: Lang; role: Role; screen: string;
   onNav: (s: string) => void; onLang: () => void; onLogout: () => void;
   darkMode: boolean; onDarkToggle: () => void;
+  font: FontKey; onFontToggle: () => void;
   userName?: string; userAvatar?: string;
 }) {
   const t = useT(lang);
@@ -47,8 +48,8 @@ export function NavBar({ lang, role, screen, onNav, onLang, onLogout, darkMode, 
     <header className="sticky top-0 z-40 border-b border-border" style={{ backgroundColor: "var(--background)" }}>
       <div className="px-4 md:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-6">
-          <button onClick={() => onNav("home")} className="flex items-center gap-2 text-lg font-bold text-foreground tracking-tight cursor-pointer bg-transparent border-0 p-0">
-            <img src={astrisImg} alt="Astris Logo" className="w-10 h-10 object-contain" />
+          <button onClick={() => onNav("home")} className="flex items-center gap-2 text-xl font-bold text-foreground tracking-tight cursor-pointer bg-transparent border-0 p-0">
+            <img src={astrisImg} alt="Astris Logo" className="w-12 h-12 object-contain" />
             <span>Astris</span>
           </button>
 
@@ -71,6 +72,20 @@ export function NavBar({ lang, role, screen, onNav, onLang, onLogout, darkMode, 
         </div>
 
         <div className="flex items-center gap-2">
+          {/* Dyslexia font toggle */}
+          <button
+            onClick={onFontToggle}
+            className="flex items-center justify-center p-2 lg:px-3 lg:py-2 rounded-xl text-sm font-semibold cursor-pointer border-2 transition-colors"
+            style={{
+              borderColor: font === "lexend" ? "var(--primary)" : "var(--border)",
+              backgroundColor: font === "lexend" ? "color-mix(in srgb, var(--primary) 12%, transparent)" : "var(--card)",
+              color: font === "lexend" ? "var(--primary)" : "var(--muted-foreground)",
+            }}
+            aria-label={t("onboarding.dyslexia_font_title", "Modo Dislexia")}
+            title={t("onboarding.dyslexia_font_title", "Modo Dislexia")}
+          >
+            <Type size={16} aria-hidden="true" />
+          </button>
           {/* Dark / Light mode toggle */}
           <button
             onClick={onDarkToggle}

@@ -16,7 +16,7 @@ export function MentorDashboard({ lang }: { lang: Lang }) {
       </div>
       <div className="border-b border-border" style={{ backgroundColor: "var(--background)" }}>
         <div className="px-4 lg:px-20 py-5 max-w-7xl mx-auto flex gap-5 md:gap-10">
-          {([["3", C(lang, "mentorProcesses"), "var(--primary)"], ["2", t("auto.sesiones_pendie._40"), "var(--accent)"], ["12", t("auto.completados_est._41"), "var(--muted-foreground)"], ["91%", t("auto.retenci_n_prome._42"), "var(--accent)"]] as const).map(([val, label, color]) => (
+          {([["3", C(lang, "mentorProcesses"), "var(--primary)"], ["2", C(lang, "mentor.dash.pendingSessions"), "var(--accent)"], ["12", C(lang, "mentor.dash.completed"), "var(--muted-foreground)"], ["91%", C(lang, "mentor.dash.retention"), "var(--accent)"]] as const).map(([val, label, color]) => (
             <div key={label as string} className="flex flex-col gap-1">
               <div className="text-2xl font-bold" style={{ color: color as string, fontFamily: "DM Mono, monospace" }}>{val}</div>
               <div className="text-xs text-muted-foreground">{label as string}</div>
@@ -40,7 +40,7 @@ export function MentorDashboard({ lang }: { lang: Lang }) {
                     <div className="text-muted-foreground text-sm">{proc.company}</div>
                   </div>
                   <div className="text-right shrink-0">
-                    <div className="text-xs text-muted-foreground">{t("auto.activo_hace._46")}</div>
+                    <div className="text-xs text-muted-foreground">{C(lang, "mentor.dash.activeSince") as string}</div>
                     <div className="text-2xl font-bold text-foreground" style={{ fontFamily: "DM Mono, monospace" }}>{proc.days}d</div>
                   </div>
                 </div>

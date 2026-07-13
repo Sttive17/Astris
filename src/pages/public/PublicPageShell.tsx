@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Globe, X, Sun, Moon } from "lucide-react";
-import { Lang, Role, PublicView } from "@/types";
+import { Globe, X, Sun, Moon, Type } from "lucide-react";
+import { Lang, Role, PublicView, FontKey } from "@/types";
 import { useT } from "@/i18n/useT";
 import astrisImg from "@/assets/astris.png";
 
-export function PublicPageShell({ lang, currentView, onNavigate, onOpenAuth, onLang, title, subtitle, children, darkMode, onDarkToggle }: {
+export function PublicPageShell({ lang, currentView, onNavigate, onOpenAuth, onLang, title, subtitle, children, darkMode, onDarkToggle, font, onFontToggle }: {
   lang: Lang;
   currentView: PublicView;
   onNavigate: (view: PublicView) => void;
@@ -15,6 +15,8 @@ export function PublicPageShell({ lang, currentView, onNavigate, onOpenAuth, onL
   children: React.ReactNode;
   darkMode: boolean;
   onDarkToggle: () => void;
+  font: FontKey;
+  onFontToggle: () => void;
 }) {
   const t = useT(lang);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -23,7 +25,7 @@ export function PublicPageShell({ lang, currentView, onNavigate, onOpenAuth, onL
       <header className="sticky top-0 z-40 border-b border-border" style={{ backgroundColor: "var(--background)" }}>
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-8">
           <button onClick={() => onNavigate("landing")} className="flex items-center gap-3 bg-transparent border-0 cursor-pointer p-0 text-left">
-            <img src={astrisImg} alt="Astris Logo" className="h-10 w-10 md:h-14 md:w-14 object-contain" />
+            <img src={astrisImg} alt="Astris Logo" className="w-12 h-12 md:h-14 md:w-14 object-contain" />
             <span className="text-lg md:text-xl font-bold tracking-tight text-foreground">Astris</span>
           </button>
           <nav className="hidden lg:flex items-center gap-6">
@@ -43,6 +45,19 @@ export function PublicPageShell({ lang, currentView, onNavigate, onOpenAuth, onL
           </nav>
           <div className="hidden lg:flex items-center gap-3">
             <button
+              onClick={onFontToggle}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium border border-border cursor-pointer transition-colors"
+              style={{
+                borderColor: font === "lexend" ? "var(--primary)" : "var(--border)",
+                backgroundColor: font === "lexend" ? "color-mix(in srgb, var(--primary) 12%, transparent)" : "transparent",
+                color: font === "lexend" ? "var(--primary)" : "var(--foreground)",
+              }}
+              aria-label={t("onboarding.dyslexia_font_title", "Modo Dislexia")}
+              title={t("onboarding.dyslexia_font_title", "Modo Dislexia")}
+            >
+              <Type size={16} />
+            </button>
+            <button
               onClick={onDarkToggle}
               className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium border border-border cursor-pointer hover:bg-secondary bg-transparent"
               aria-label={darkMode ? "Modo claro" : "Modo oscuro"}
@@ -58,8 +73,19 @@ export function PublicPageShell({ lang, currentView, onNavigate, onOpenAuth, onL
           </div>
           
           {/* Mobile menu toggle */}
-          <div className="flex lg:hidden items-center gap-3">
-            <button onClick={onDarkToggle} className="flex items-center justify-center p-2 rounded-lg border border-border hover:bg-secondary cursor-pointer bg-transparent">
+          <div className="flex lg:hidden items-center gap-2">
+            <button
+              onClick={onFontToggle}
+              className="flex items-center justify-center p-2 rounded-lg border border-border cursor-pointer transition-colors"
+              style={{
+                borderColor: font === "lexend" ? "var(--primary)" : "var(--border)",
+                backgroundColor: font === "lexend" ? "color-mix(in srgb, var(--primary) 12%, transparent)" : "transparent",
+                color: font === "lexend" ? "var(--primary)" : "var(--foreground)",
+              }}
+            >
+               <Type size={18} />
+            </button>
+            <button onClick={onDarkToggle} className="flex items-center justify-center rounded-lg border border-border p-2 hover:bg-secondary cursor-pointer bg-transparent">
                {darkMode ? <Sun size={18} /> : <Moon size={18} />}
             </button>
             <button onClick={onLang} className="flex items-center justify-center p-2 rounded-lg border border-border hover:bg-secondary cursor-pointer bg-transparent">
@@ -98,10 +124,7 @@ export function PublicPageShell({ lang, currentView, onNavigate, onOpenAuth, onL
       </header>
 
       <main className="mx-auto max-w-7xl px-4 md:px-8 py-10 md:py-16">
-        <div className="mb-10 md:mb-16">
-          <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">{title}</h1>
-          {subtitle && <p className="mt-4 max-w-3xl text-lg md:text-xl text-muted-foreground leading-relaxed">{subtitle}</p>}
-        </div>
+
         {children}
       </main>
     </div>

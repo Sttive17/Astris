@@ -99,7 +99,7 @@ export function CollaboratorCarousel({ lang }: { lang: Lang }) {
             filter = "none";
           } else if (offset === 1) {
             // Right Shadowed
-            translateX = 120;
+            translateX = 140;
             scale = 0.85;
             opacity = 0.5;
             zIndex = 20;
@@ -107,7 +107,7 @@ export function CollaboratorCarousel({ lang }: { lang: Lang }) {
             filter = "grayscale(0.6) blur(1px)";
           } else if (offset === 3) {
             // Left Shadowed
-            translateX = -120;
+            translateX = -140;
             scale = 0.85;
             opacity = 0.5;
             zIndex = 20;
@@ -131,8 +131,8 @@ export function CollaboratorCarousel({ lang }: { lang: Lang }) {
               title={item.name}
               className="absolute flex items-center justify-center rounded-3xl border-2 border-border bg-card p-4 transition-all duration-700 ease-in-out hover:!opacity-100 hover:!filter-none"
               style={{
-                width: 140,
-                height: 100,
+                width: 168,
+                height: 120,
                 transform: `translateX(${translateX}px) scale(${scale}) rotateY(${rotateY}deg)`,
                 opacity,
                 zIndex,
@@ -143,14 +143,14 @@ export function CollaboratorCarousel({ lang }: { lang: Lang }) {
               aria-hidden={offset !== 0}
             >
               {item.isSvg ? (
-                <div className="flex items-center justify-center transition-transform duration-500 w-12 h-12">
+                <div className="flex items-center justify-center transition-transform duration-500 w-16 h-16">
                   {item.svgContent}
                 </div>
               ) : (
                 <img
                   src={item.imgSrc}
                   alt={item.name}
-                  className="object-contain transition-transform duration-500 w-full h-full max-h-12"
+                  className="object-contain transition-transform duration-500 w-full h-full max-h-16"
                 />
               )}
             </a>

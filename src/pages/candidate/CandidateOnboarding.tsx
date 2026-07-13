@@ -60,21 +60,20 @@ export function CandidateOnboarding({ lang, palette, darkMode, font, onPalette, 
               })}
             </div>
           </div>
-          {/* Font */}
-          <div>
-            <h3 className="text-sm font-bold text-foreground mb-3 uppercase tracking-wide flex items-center gap-2"><Type size={14} aria-hidden="true" /> {t("palette.font")}</h3>
-            {([["atkinson", "Atkinson Hyperlegible", t("auto.alta_legibilida._19")], ["lexend", t("auto.modo_dislexia__._20"), t("auto.tipograf_a_amig._21")]] as const).map(([fk, fname, fdesc]) => {
-              const sel = font === fk;
-              return (
-                <button key={fk} onClick={() => onFont(fk)} className="w-full flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer text-left mb-3 transition-all hover:scale-[1.02]" style={{ borderColor: sel ? "var(--primary)" : "var(--border)", backgroundColor: sel ? "var(--card)" : "var(--background)", boxShadow: sel ? "0 4px 16px rgba(0,0,0,0.06)" : "none" }}>
-                  <div className="flex-1">
-                    <div className="font-semibold text-foreground text-sm" style={{ fontFamily: fk === "lexend" ? "'Lexend', sans-serif" : "'Atkinson Hyperlegible', sans-serif" }}>{fname}</div>
-                    <div className="text-xs text-muted-foreground mt-0.5">{fdesc}</div>
-                  </div>
-                  {sel && <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: "var(--primary)" }}><Check size={11} aria-hidden="true" style={{ color: "var(--primary-foreground)" }} /></div>}
-                </button>
-              );
-            })}
+          {/* Font Checkbox */}
+          <div className="mt-4 p-4 rounded-2xl border-2 border-border bg-card">
+            <label className="flex items-start gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={font === "lexend"}
+                onChange={(e) => onFont(e.target.checked ? "lexend" : "inter")}
+                className="mt-1 w-5 h-5 rounded border-2 border-primary text-primary focus:ring-primary"
+              />
+              <div className="flex-1">
+                <div className="font-bold text-foreground text-sm">{t("onboarding.dyslexia_font_title", "¿Necesitas una fuente especial para facilitar la lectura?")}</div>
+                <div className="text-xs text-muted-foreground mt-0.5">{t("onboarding.dyslexia_font_desc", "(Recomendada para dislexia)")}</div>
+              </div>
+            </label>
           </div>
           <div className="mt-auto pt-6">
             <button onClick={onContinue} className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl font-bold text-base cursor-pointer transition-all hover:scale-[1.02] hover:opacity-90 shadow-lg" style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)" }}>

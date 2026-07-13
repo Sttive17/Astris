@@ -1,14 +1,16 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import { T } from './content';
+import es from './es.json';
+import en from './en.json';
+import pt from './pt.json';
+import fr from './fr.json';
 
-// T is currently Record<Lang, Record<string, any>>
 const resources = {
-  es: { translation: T.es },
-  en: { translation: T.en },
-  pt: { translation: T.pt },
-  fr: { translation: T.fr }
+  es: { translation: es },
+  en: { translation: en },
+  pt: { translation: pt },
+  fr: { translation: fr }
 };
 
 i18n

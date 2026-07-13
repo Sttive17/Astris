@@ -7,12 +7,21 @@ import { MissionCards } from "./about/MissionCards";
 import { PhilosophySlogan } from "./about/PhilosophySlogan";
 import { PillarsSection } from "./about/PillarsSection";
 
-import prepararImg from '@/assets/preparar.jpg';
-import adaptarImg from '@/assets/adaptar.jpg';
-import acompanarImg from '@/assets/acompanar.jpg';
-import conectarImg from '@/assets/conectar.jpg';
+import prepararImg from '@/assets/preparar.webp';
+import adaptarImg from '@/assets/adaptar.webp';
+import acompanarImg from '@/assets/acompanar.webp';
+import conectarImg from '@/assets/conectar.webp';
 
-export function AboutPage({ lang, onNavigate, onOpenAuth, onLang, darkMode, onDarkToggle }: { lang: Lang; onNavigate: (view: PublicView) => void; onOpenAuth: (preRole?: Role, step?: "auth" | "login" | "register") => void; onLang: () => void; darkMode: boolean; onDarkToggle: () => void; }) {
+export function AboutPage({ lang, onNavigate, onOpenAuth, onLang, darkMode, onDarkToggle, font, onFontToggle }: {
+  lang: Lang;
+  onNavigate: (view: PublicView) => void;
+  onOpenAuth: (preRole?: Role, step?: "auth" | "login" | "register") => void;
+  onLang: () => void;
+  darkMode: boolean;
+  onDarkToggle: () => void;
+  font: any;
+  onFontToggle: () => void;
+}) {
   const t = useT(lang);
   const about = C(lang, "aboutPage") as any;
 
@@ -47,7 +56,7 @@ export function AboutPage({ lang, onNavigate, onOpenAuth, onLang, darkMode, onDa
   ];
 
   return (
-    <PublicPageShell lang={lang} currentView="about" onNavigate={onNavigate} onOpenAuth={onOpenAuth} onLang={onLang} darkMode={darkMode} onDarkToggle={onDarkToggle}
+    <PublicPageShell lang={lang} currentView="about" onNavigate={onNavigate} onOpenAuth={onOpenAuth} onLang={onLang} darkMode={darkMode} onDarkToggle={onDarkToggle} font={font} onFontToggle={onFontToggle}
       title={about.heroTitle ?? t("landing.nav.about")}
       subtitle={about.heroSub}>
       

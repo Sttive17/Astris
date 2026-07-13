@@ -23,9 +23,20 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          ui: ['lucide-react', 'recharts', 'framer-motion'],
-          supabase: ['@supabase/supabase-js']
+        manualChunks(id: string) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
+              return 'vendor-react';
+            }
+            if (id.includes('@mui') || id.includes('@emotion') || id.includes('@radix-ui') || id.includes('framer-motion') || id.includes('recharts') || id.includes('lucide-react')) {
+              return 'vendor-ui';
+            }
+            if (id.includes('@supabase')) {
+              return 'vendor-supabase';
+            }
+            return 'vendor-other';
+          }
+          return undefined;
         }
       }
     }

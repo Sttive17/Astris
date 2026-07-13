@@ -5,7 +5,16 @@ import { PublicPageShell } from "./PublicPageShell";
 import genuineImg from "@/assets/genuine.png";
 import vibralatinaImg from "@/assets/vibralatina.png";
 
-export function SupportPage({ lang, onNavigate, onOpenAuth, onLang, darkMode, onDarkToggle }: { lang: Lang; onNavigate: (view: PublicView) => void; onOpenAuth: (preRole?: Role, step?: "auth" | "login" | "register") => void; onLang: () => void; darkMode: boolean; onDarkToggle: () => void; }) {
+export function SupportPage({ lang, onNavigate, onOpenAuth, onLang, darkMode, onDarkToggle, font, onFontToggle }: {
+  lang: Lang;
+  onNavigate: (view: PublicView) => void;
+  onOpenAuth: (preRole?: Role, step?: "auth" | "login" | "register") => void;
+  onLang: () => void;
+  darkMode: boolean;
+  onDarkToggle: () => void;
+  font: any;
+  onFontToggle: () => void;
+}) {
   const t = useT(lang);
   const orgs = [
     { name: "Vibra Latina", href: "https://www.vibralatinatx.com/", icon: <img src={vibralatinaImg} alt="Vibra Latina" className="h-16 w-16 object-contain" /> },
@@ -14,7 +23,7 @@ export function SupportPage({ lang, onNavigate, onOpenAuth, onLang, darkMode, on
   ];
 
   return (
-    <PublicPageShell lang={lang} currentView="support" onNavigate={onNavigate} onOpenAuth={onOpenAuth} onLang={onLang} darkMode={darkMode} onDarkToggle={onDarkToggle} title={t("landing.nav.support")}>
+    <PublicPageShell lang={lang} currentView="support" onNavigate={onNavigate} onOpenAuth={onOpenAuth} onLang={onLang} darkMode={darkMode} onDarkToggle={onDarkToggle} font={font} onFontToggle={onFontToggle} title={t("landing.nav.support")}>
       <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-3 max-w-5xl mx-auto py-8">
         {orgs.map((org) => (
           <div key={org.name} className="flex flex-col items-center justify-center text-center rounded-[2.5rem] border-2 border-border bg-card p-10 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">

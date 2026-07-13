@@ -4,7 +4,16 @@ import { Lang, Role, PublicView } from "@/types";
 import { useT } from "@/i18n/useT";
 import { PublicPageShell } from "./PublicPageShell";
 
-export function PartnersPage({ lang, onNavigate, onOpenAuth, onLang, darkMode, onDarkToggle }: { lang: Lang; onNavigate: (view: PublicView) => void; onOpenAuth: (preRole?: Role, step?: "auth" | "login" | "register") => void; onLang: () => void; darkMode: boolean; onDarkToggle: () => void; }) {
+export function PartnersPage({ lang, onNavigate, onOpenAuth, onLang, darkMode, onDarkToggle, font, onFontToggle }: {
+  lang: Lang;
+  onNavigate: (view: PublicView) => void;
+  onOpenAuth: (preRole?: Role, step?: "auth" | "login" | "register") => void;
+  onLang: () => void;
+  darkMode: boolean;
+  onDarkToggle: () => void;
+  font: any;
+  onFontToggle: () => void;
+}) {
   const t = useT(lang);
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({ company: "", name: "", email: "", why: "" });
@@ -15,8 +24,11 @@ export function PartnersPage({ lang, onNavigate, onOpenAuth, onLang, darkMode, o
   };
 
   return (
-    <PublicPageShell lang={lang} currentView="partners" onNavigate={onNavigate} onOpenAuth={onOpenAuth} onLang={onLang} darkMode={darkMode} onDarkToggle={onDarkToggle} title={t("landing.nav.partners")} subtitle="Si tu empresa quiere participar de Astris, completa este formulario y nos pondremos en contacto para conversar sobre colaboración.">
+    <PublicPageShell lang={lang} currentView="partners" onNavigate={onNavigate} onOpenAuth={onOpenAuth} onLang={onLang} darkMode={darkMode} onDarkToggle={onDarkToggle} font={font} onFontToggle={onFontToggle} title={t("landing.nav.partners")} subtitle="Si tu empresa quiere participar de Astris, completa este formulario y nos pondremos en contacto para conversar sobre colaboración.">
       <div className="max-w-2xl mx-auto w-full">
+        <p className="mb-8 text-center text-lg text-muted-foreground leading-relaxed">
+          Si tu empresa quiere participar de Astris, completa este formulario y nos pondremos en contacto para conversar sobre colaboración.
+        </p>
         <div className="rounded-3xl border border-border bg-background p-4 md:p-8 shadow-sm">
           {submitted ? (
             <div className="rounded-2xl border border-primary/20 bg-primary/5 p-6 text-center">

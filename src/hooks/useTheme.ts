@@ -4,13 +4,13 @@ import { PALETTES } from "@/i18n/content";
 
 export function useTheme() {
   const [palette, setPaletteState] = useState<PaletteKey>(
-    () => (typeof window !== "undefined" && window.localStorage.getItem("astris_palette") as PaletteKey) || "azul"
+    () => (typeof window !== "undefined" && window.localStorage.getItem("astris_palette") as PaletteKey) || "verde"
   );
   const [darkMode, setDarkModeState] = useState(
     () => typeof window !== "undefined" && window.localStorage.getItem("astris_dark") === "true"
   );
   const [font, setFontState] = useState<FontKey>(
-    () => (typeof window !== "undefined" && window.localStorage.getItem("astris_font") as FontKey) || "atkinson"
+    () => (typeof window !== "undefined" && window.localStorage.getItem("astris_font") as FontKey) || "inter"
   );
 
   const setPalette = (p: PaletteKey) => { 
@@ -31,7 +31,7 @@ export function useTheme() {
     window.localStorage.setItem("astris_font", f); 
   };
 
-  const fontFamily = font === "lexend" ? "'Lexend', Inter, sans-serif" : "'Atkinson Hyperlegible', Inter, sans-serif";
+  const fontFamily = font === "lexend" ? "'Lexend', Inter, sans-serif" : "'Inter', sans-serif";
 
   const darkRootStyle: Record<string, string> = darkMode ? {
     "--background": "#0D1824",

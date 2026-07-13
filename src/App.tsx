@@ -4,6 +4,9 @@ import { getInitialLang, getInitialModalStep } from "@/i18n/useT";
 import { QUIZ_AXES } from "@/i18n/content";
 import { saveCandidateProfile, getCurrentUser } from "@/services/supabase";
 import { useTranslation } from "react-i18next";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { useCanGoBack } from "@/hooks/useCanGoBack";
+
 
 import { useTheme } from "@/hooks/useTheme";
 import { useAuth } from "@/hooks/useAuth";
@@ -48,8 +51,21 @@ export default function App() {
     i18n.changeLanguage(init);
     return init;
   });
-  const [screen, setScreen] = useState("home");
-  const [publicView, setPublicView] = useState<PublicView>("landing");
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const canGoBack = useCanGoBack();
+
+  const screen = searchParams.get("screen") || "home";
+  const publicView = (searchParams.get("view") || "landing") as PublicView;
+
+  const setScreen = (s: string) => {
+    setSearchParams(prev => { prev.set("screen", s); return prev; });
+  };
+  const setPublicView = (v: PublicView) => {
+    setSearchParams(prev => { prev.set("view", v); return prev; });
+  };
+
 
   const [quizAnswers, setQuizAnswers] = useState<QuizAnswers>({});
   const [quizAxis, setQuizAxis] = useState(0);
@@ -93,6 +109,15 @@ export default function App() {
     setScreen(s);
   };
 
+  const handleBackTo = (fallbackScreen: string) => {
+    if (canGoBack) {
+      navigate(-1);
+    } else {
+      setScreen(fallbackScreen);
+    }
+  };
+
+
   const reopenLang = () => setModalStep("language");
   const showModal = modalStep !== "none";
 
@@ -135,23 +160,23 @@ export default function App() {
           </div>
         }>
           {!loggedIn && publicView === "about" && (
-            <AboutPage lang={lang} onOpenAuth={(preRole, step) => { setPendingRole(preRole ?? null); setModalStep(step === "register" ? "register" : "login"); }} onLang={reopenLang} onNavigate={setPublicView} darkMode={darkMode} onDarkToggle={() => setDarkMode((d) => !d)} />
+            <AboutPage lang={lang} onOpenAuth={(preRole, step) => { setPendingRole(preRole ?? null); setModalStep(step === "register" ? "register" : "login"); }} onLang={reopenLang} onNavigate={setPublicView} darkMode={darkMode} onDarkToggle={() => setDarkMode((d) => !d)} font={font} onFontToggle={() => setFont(font === "lexend" ? "inter" : "lexend")} />
           )}
           {!loggedIn && publicView === "support" && (
-            <SupportPage lang={lang} onOpenAuth={(preRole, step) => { setPendingRole(preRole ?? null); setModalStep(step === "register" ? "register" : "login"); }} onLang={reopenLang} onNavigate={setPublicView} darkMode={darkMode} onDarkToggle={() => setDarkMode((d) => !d)} />
+            <SupportPage lang={lang} onOpenAuth={(preRole, step) => { setPendingRole(preRole ?? null); setModalStep(step === "register" ? "register" : "login"); }} onLang={reopenLang} onNavigate={setPublicView} darkMode={darkMode} onDarkToggle={() => setDarkMode((d) => !d)} font={font} onFontToggle={() => setFont(font === "lexend" ? "inter" : "lexend")} />
           )}
           {!loggedIn && publicView === "partners" && (
-            <PartnersPage lang={lang} onOpenAuth={(preRole, step) => { setPendingRole(preRole ?? null); setModalStep(step === "register" ? "register" : "login"); }} onLang={reopenLang} onNavigate={setPublicView} darkMode={darkMode} onDarkToggle={() => setDarkMode((d) => !d)} />
+            <PartnersPage lang={lang} onOpenAuth={(preRole, step) => { setPendingRole(preRole ?? null); setModalStep(step === "register" ? "register" : "login"); }} onLang={reopenLang} onNavigate={setPublicView} darkMode={darkMode} onDarkToggle={() => setDarkMode((d) => !d)} font={font} onFontToggle={() => setFont(font === "lexend" ? "inter" : "lexend")} />
           )}
           {!loggedIn && publicView === "landing" && (
-            <LandingPage lang={lang} onOpenAuth={(preRole, step) => { setPendingRole(preRole ?? null); setModalStep(step === "register" ? "register" : "login"); }} onLang={reopenLang} onNavigate={setPublicView} darkMode={darkMode} onDarkToggle={() => setDarkMode((d) => !d)} />
+            <LandingPage lang={lang} onOpenAuth={(preRole, step) => { setPendingRole(preRole ?? null); setModalStep(step === "register" ? "register" : "login"); }} onLang={reopenLang} onNavigate={setPublicView} darkMode={darkMode} onDarkToggle={() => setDarkMode((d) => !d)} font={font} onFontToggle={() => setFont(font === "lexend" ? "inter" : "lexend")} />
           )}
           {!loggedIn && !["about", "support", "partners", "landing"].includes(publicView) && (
             <NotFoundPage lang={lang} onGoHome={() => setPublicView("landing")} />
           )}
           {loggedIn && role && (
             <div>
-              <NavBar lang={lang} role={role} screen={screen} onNav={handleNav} onLang={reopenLang} onLogout={() => handleLogout(setPublicView)} darkMode={darkMode} onDarkToggle={() => setDarkMode((d) => !d)} userName={userName} userAvatar={userAvatar} />
+              <NavBar lang={lang} role={role} screen={screen} onNav={handleNav} onLang={reopenLang} onLogout={() => handleLogout(setPublicView)} darkMode={darkMode} onDarkToggle={() => setDarkMode((d) => !d)} font={font} onFontToggle={() => setFont(font === "lexend" ? "inter" : "lexend")} userName={userName} userAvatar={userAvatar} />
               <main style={palStyle as React.CSSProperties}>
                 {role === "candidate" && screen === "onboarding" && (
                   <CandidateOnboarding lang={lang} palette={palette} darkMode={darkMode} font={font} onPalette={setPalette} onDark={setDarkMode} onFont={setFont} onContinue={() => { setQuizAxis(0); setScreen("quiz"); }} />
@@ -173,7 +198,7 @@ export default function App() {
                 )}
                 {role === "candidate" && screen === "profile" && <CandidateProfile lang={lang} answers={quizAnswers} vocation={userVocation} userName={userName} userAvatar={userAvatar} />}
                 {role === "candidate" && screen === "vacancies" && <CandidateVacancies lang={lang} onSelect={(id) => { setSelectedVacancy(id); setScreen("vacancy-detail"); }} />}
-                {role === "candidate" && screen === "vacancy-detail" && <VacancyDetail lang={lang} vacancyId={selectedVacancy} onBack={() => setScreen("vacancies")} onStart={() => setScreen("mentor-select")} />}
+                {role === "candidate" && screen === "vacancy-detail" && <VacancyDetail lang={lang} vacancyId={selectedVacancy} onBack={() => handleBackTo("vacancies")} onStart={() => setScreen("mentor-select")} />}
                 {role === "candidate" && screen === "mentor-select" && <MentorSelect lang={lang} onSelect={() => setScreen("accompaniment")} />}
                 {role === "candidate" && screen === "accompaniment" && <CandidateAccompaniment lang={lang} />}
                 {role === "candidate" && (screen === "post-hire" || screen === "tracking") && <CandidatePostHire lang={lang} />}
@@ -181,7 +206,7 @@ export default function App() {
                 {role === "company" && screen === "org-profile" && <CompanyOrgProfile lang={lang} />}
                 {role === "company" && screen === "post-vacancy" && <CompanyPostVacancy lang={lang} />}
                 {role === "company" && screen === "candidates" && <CompanyCandidates lang={lang} onSelect={(id) => { setSelectedCandidate(id); setScreen("candidate-detail"); }} />}
-                {role === "company" && screen === "candidate-detail" && <CompanyCandidateDetail lang={lang} candidateId={selectedCandidate} onBack={() => setScreen("candidates")} onStart={() => setScreen("comp-post-hire")} />}
+                {role === "company" && screen === "candidate-detail" && <CompanyCandidateDetail lang={lang} candidateId={selectedCandidate} onBack={() => handleBackTo("candidates")} onStart={() => setScreen("comp-post-hire")} />}
                 {role === "company" && (screen === "comp-post-hire" || screen === "post-hire") && <CompanyPostHire lang={lang} />}
 
                 {role === "mentor" && screen === "dashboard" && <MentorDashboard lang={lang} />}
@@ -189,7 +214,7 @@ export default function App() {
                 {role === "mentor" && screen === "companies" && <MentorCompanies lang={lang} />}
                 {role === "mentor" && !["dashboard", "checkins", "companies"].includes(screen) && <MentorDashboard lang={lang} />}
 
-                {role === "admin" && <AdminDashboard onLogout={() => handleLogout(setPublicView)} onBack={() => setScreen("landing")} />}
+                {role === "admin" && <AdminDashboard onLogout={() => handleLogout(setPublicView)} onBack={() => handleBackTo("home")} />}
 
                 {screen === "settings" && <SettingsPage lang={lang} palette={palette} darkMode={darkMode} font={font} onPalette={setPalette} onDark={setDarkMode} onFont={setFont} onLogout={() => handleLogout(setPublicView)} />}
                 
